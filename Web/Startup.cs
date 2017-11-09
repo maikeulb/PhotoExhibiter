@@ -27,6 +27,9 @@ namespace Web {
         public void ConfigureServices (IServiceCollection services) {
             /* var connection = @"Server=db;Database=master;User=sa;Password=p@ssword;"; */
 
+    /* services.AddDbContext<ApplicationDbContext>( */
+    /*     options => options.UseSqlServer(connection)); */
+
             services.AddDbContext<ApplicationDbContext> (options =>
                 options.UseSqlServer (_config.GetConnectionString ("ApplicationConnectionString")));
 
