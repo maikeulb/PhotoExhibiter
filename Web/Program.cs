@@ -8,18 +8,27 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Web
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
+namespace Web {
+    public class Program {
+        public static void Main (string[] args) {
+            BuildWebHost (args).Run ();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+        public static IWebHost BuildWebHost (string[] args) =>
+            WebHost.CreateDefaultBuilder (args)
+            .ConfigureAppConfiguration (SetupConfiguration)
+            .UseStartup<Startup> ()
+            .Build ();
+
+        public static void SetupConfiguration (
+            WebHostBuilderContext context,
+            IConfigurationBuilder builder)
+
+        {
+            builder.Sources.Clear ();
+
+            builder.AddJsonFile ("config.json", false, true)
+                .AddEnvironmentVariables ();
+        }
     }
 }
