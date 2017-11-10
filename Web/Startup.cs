@@ -25,42 +25,44 @@ namespace Web {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
-            /* var connection = @"Server=db;Database=master;User=sa;Password=p@ssword;"; */
 
-    /* services.AddDbContext<ApplicationDbContext>( */
-    /*     options => options.UseSqlServer(connection)); */
+            /* var connection = @"Server=localhost;Database=photohub;Uid=root;Pwd=P@ssw0rd!;"; */
+
+            /* services.AddDbContext<ApplicationDbContext> (options => */
+            /*     options.UseMySql(connection)); */
+
 
             services.AddDbContext<ApplicationDbContext> (options =>
-                options.UseSqlServer (_config.GetConnectionString ("ApplicationConnectionString")));
+                options.UseMySql(_config.GetConnectionString ("ApplicationConnectionString")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole> ()
+                services.AddIdentity<ApplicationUser, IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ()
                 .AddDefaultTokenProviders ();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender> ();
+                // Add application services.
+                services.AddTransient<IEmailSender, EmailSender> ();
 
-            services.AddMvc ();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
-            if (env.IsDevelopment ()) {
-                app.UseDeveloperExceptionPage ();
-                app.UseDatabaseErrorPage ();
-            } else {
-                app.UseExceptionHandler ("/Home/Error");
+                services.AddMvc ();
             }
 
-            app.UseStaticFiles ();
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+                if (env.IsDevelopment ()) {
+                    app.UseDeveloperExceptionPage ();
+                    app.UseDatabaseErrorPage ();
+                } else {
+                    app.UseExceptionHandler ("/Home/Error");
+                }
 
-            app.UseAuthentication ();
+                app.UseStaticFiles ();
 
-            app.UseMvc (routes => {
-                routes.MapRoute (
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+                app.UseAuthentication ();
+
+                app.UseMvc (routes => {
+                    routes.MapRoute (
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
+            }
         }
     }
-}

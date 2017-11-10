@@ -15,8 +15,8 @@
                 Version="2.0.0" PrivateAssets="All" />
                 <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design"
                 Version="2.0.0" PrivateAssets="All" />
-                <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"
-                Version="2.0.0" />
+                <PackageReference Include="Pomelo.EntityFrameworkCore.MySql"
+                Version="2.0.0-rtm-*" />
         </ItemGroup>
         <ItemGroup>
                 <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet"

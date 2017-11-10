@@ -9,8 +9,9 @@ services:
       - db
 
   db:
-    image: mysql
+    image: "microsoft/mssql-server-linux"
     ports:
-      - "3306:3306"
+      - "1401:1433"
     environment:
-      MYSQL_ROOT_PASSWORD: "P@ssw0rd!"
+      SA_PASSWORD: "Passw0rd!"
+      ACCEPT_EULA: "Y"
