@@ -6,15 +6,21 @@ namespace Web.Models
 public class Gig
 {
     public int Id { get; set; }
-    [Required]
+
     public ApplicationUser Photographer { get; set; }
+
+    [Required]
+    public string PhotographerId { get; set; }
+
     public DateTime DateTime { get; set; }
 
     [Required]
     [StringLength(255)]
-    public string Venue { get; set; }
-    [Required]
+    public string Location { get; set; }
+
     public Genre Genre { get; set; }
 
+    [Required]
+    public int GenreId { get; set; }
 }
 }

@@ -11,8 +11,8 @@ using Web.Data;
 namespace Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171110010758_SeedDB")]
-    partial class SeedDB
+    [Migration("20171110041548_AddForeinKeyPropertiesToGig")]
+    partial class AddForeinKeyPropertiesToGig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -203,12 +203,12 @@ namespace Web.Data.Migrations
 
                     b.Property<int>("GenreId");
 
-                    b.Property<string>("PhotographerId")
-                        .IsRequired();
-
-                    b.Property<string>("Venue")
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(255);
+
+                    b.Property<string>("PhotographerId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

@@ -202,12 +202,12 @@ namespace Web.Data.Migrations
 
                     b.Property<int>("GenreId");
 
-                    b.Property<string>("PhotographerId")
-                        .IsRequired();
-
-                    b.Property<string>("Venue")
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(255);
+
+                    b.Property<string>("PhotographerId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

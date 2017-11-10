@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Data;
 using Web.Models;
@@ -16,11 +18,31 @@ namespace Web.Controllers {
             _context = new ApplicationDbContext ();
         }
 
+        [Authorize]
         public IActionResult Create () {
 
             var viewModel = new GigFormViewModel();
 
             return View (viewModel);
+        }
+
+         [Authorize]
+         [HttpPost]
+         public IActionResult Create (GigFormViewModel viewModel)
+
+        {
+            var gig = new Gig
+            {
+                PhotographerId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                DateTime = viewModel.DateTime,
+                GenreId = viewModel.Genre,
+                Location = viewModel.Location
+            };
+
+            _context.Gigs.Add(gig);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
     }
