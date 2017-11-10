@@ -1,0 +1,36 @@
+@model Web.ViewModels.GigFormViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Add a Gig</h2>
+
+
+<form>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Venue)
+        @Html.TextBoxFor(m => m.Venue, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Date)
+        @Html.TextBoxFor(m => m.Date, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Time)
+        @Html.TextBoxFor(m => m.Time, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+                    @{
+                        var genres= new List<SelectListItem>()
+                        {
+                            new SelectListItem() { Text = "Slide" },
+                            new SelectListItem() { Text = "Color Negative" },
+                            new SelectListItem() { Text = "Black & White" }
+                        };
+                    }
+        @Html.LabelFor(m => m.Genre)
+        @Html.DropDownListFor(m => m.Genre, genres, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
