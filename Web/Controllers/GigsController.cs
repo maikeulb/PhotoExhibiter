@@ -57,10 +57,10 @@ namespace Web.Controllers {
 
             var viewModel = new GigFormViewModel
             {
-                Genres = _context.Genres.ToList ()
+                Genres = _context.Genres.ToList()
             };
 
-            return View (viewModel);
+            return View(viewModel);
         }
 
         [Authorize]
