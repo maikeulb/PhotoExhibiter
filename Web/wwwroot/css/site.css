@@ -1,4 +1,7 @@
 ﻿`--parser` with value `postcss` is deprecated. Prettier now treats it as: `--parser=css`.
+`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
+`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
+`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser`: `--parser=css`. body {
   padding-top: 50px;
   padding-bottom: 20px;
@@ -49,6 +52,34 @@
   color: #fff;
 }
 
+.navbar-inverse .btn-link {
+  color: #fff;
+}
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  background-color: rgba(205, 40, 39, 0.55);
+}
+
+.dropdown-menu {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+
+body {
+  font-size: 17px;
+}
+
 body,
 h1,
 h2,
@@ -62,5 +93,28 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: Open+Sans, inherit;
+  font-family: Lato;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  font-size: 17px;
+  padding: 20px 15px;
+  -ms-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.btn {
+  font-size: 17px;
+  padding: 7px 20px;
+  -ms-border-radius: 9px;
+  border-radius: 9px;
 }
