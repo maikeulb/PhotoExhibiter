@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -9,10 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Web.Models;
-using Web.Models.AccountViewModels;
 using Web.Services;
+using Web.ViewModels.AccountViewModels;
 
 namespace Web.Controllers
 {
@@ -220,8 +217,8 @@ namespace Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { 
-                    UserName = model.Email, 
+                var user = new ApplicationUser {
+                    UserName = model.Email,
                     Email = model.Email,
                     Name = model.Name
                 };
