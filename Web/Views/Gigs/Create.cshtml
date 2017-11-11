@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm("Create", "Gigs"))
 {
+     @Html.AngiForgerToken()
     <div class="form-group">
         @Html.LabelFor(m => m.Location)
         @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })

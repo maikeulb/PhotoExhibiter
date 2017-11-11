@@ -32,6 +32,7 @@ namespace Web.Controllers {
 
         [Authorize]
         [HttpPost]
+         [ValidateAntiForgeryToken]
         public IActionResult Create (GigFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
