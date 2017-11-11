@@ -13,6 +13,8 @@
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
+`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
+`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser`: `--parser=css`. 
 
 body {
@@ -181,4 +183,18 @@ h6,
 
 .gigs > li .details .genre {
   font-size: 15px;
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: #ff4342;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: rgba(205, 40, 39, 0.55);
+}
+
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+  border-color: rgba(205, 40, 39, 0.55);
 }
