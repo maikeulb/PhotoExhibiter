@@ -14,35 +14,38 @@ namespace Web.Controllers {
     public class GigsController : Controller {
         private readonly ApplicationDbContext _context;
 
-        public GigsController () {
-            _context = new ApplicationDbContext ();
+        public GigsController (ApplicationDbContext context) {
+            _context = context;
         }
 
         [Authorize]
-        public IActionResult Create () {
+        public IActionResult Create ()
+        {
 
-            var viewModel = new GigFormViewModel();
+            var viewModel = new GigFormViewModel
+            {
+                Genres = _context.Genres.ToList ()
+            };
 
             return View (viewModel);
         }
 
-         [Authorize]
-         [HttpPost]
-         public IActionResult Create (GigFormViewModel viewModel)
+        [Authorize]
+        [HttpPost]
+        public IActionResult Create (GigFormViewModel viewModel)
 
         {
-            var gig = new Gig
-            {
-                PhotographerId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+            var gig = new Gig {
+                PhotographerId = User.FindFirstValue (ClaimTypes.NameIdentifier),
                 DateTime = viewModel.DateTime,
                 GenreId = viewModel.Genre,
                 Location = viewModel.Location
             };
 
-            _context.Gigs.Add(gig);
-            _context.SaveChanges();
+            _context.Gigs.Add (gig);
+            _context.SaveChanges ();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction ("Index", "Home");
         }
 
     }
