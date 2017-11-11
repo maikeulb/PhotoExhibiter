@@ -10,7 +10,7 @@ namespace Web.Models
         public Gig Gig { get; set; }
 
         [Key]
-        public int AttendeeId { get; set; }
+        public string AttendeeId { get; set; }
         public ApplicationUser Attendee { get; set; }
 
     }

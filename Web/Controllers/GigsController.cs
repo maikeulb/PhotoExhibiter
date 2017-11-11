@@ -5,17 +5,50 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.Data;
 using Web.Models;
 using Web.ViewModels;
 
 namespace Web.Controllers {
-    public class GigsController : Controller {
-        private readonly ApplicationDbContext _context;
 
-        public GigsController (ApplicationDbContext context) {
+    public class GigsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public GigsController (ApplicationDbContext context,
+                UserManager<ApplicationUser> userManager,
+                SignInManager<ApplicationUser> signInManager)
+        {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        [Authorize]
+        public ActionResult Attending()
+        {
+            var userId = _userManager.GetUserId(User);
+            /* PhotographerId = User.FindFirstValue(ClaimTypes.NameIdentifier) */
+            var gigs = _context.Attendances
+                .Where(a => a.AttendeeId == userId)
+                .Select(a => a.Gig)
+                .Include(g => g.Photographer)
+                .Include(g => g.Genre)
+                .ToList();
+
+            var viewModel = new GigsViewModel()
+            {
+                UpcomingGigs = gigs,
+                ShowActions = _signInManager.IsSignedIn(User),
+                Heading = "Shows I'm Attending"
+            };
+
+            return View("Gigs", viewModel);
         }
 
         [Authorize]
@@ -32,7 +65,7 @@ namespace Web.Controllers {
 
         [Authorize]
         [HttpPost]
-         [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public IActionResult Create (GigFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -41,8 +74,9 @@ namespace Web.Controllers {
                 return View("Create", viewModel);
             }
 
-            var gig = new Gig {
-                PhotographerId = User.FindFirstValue (ClaimTypes.NameIdentifier),
+            var gig = new Gig
+            {
+                PhotographerId= _userManager.GetUserId(User),
                 DateTime = viewModel.GetDateTime(),
                 GenreId = viewModel.Genre,
                 Location = viewModel.Location
