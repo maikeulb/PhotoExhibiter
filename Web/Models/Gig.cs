@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
@@ -22,5 +23,7 @@ public class Gig
 
     [Required]
     public int GenreId { get; set; }
+
+    public ICollection<Attendance> Attendances { get; set; }
 }
 }

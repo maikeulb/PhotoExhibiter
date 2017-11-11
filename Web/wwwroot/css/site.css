@@ -6,6 +6,7 @@
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
+`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser`: `--parser=css`. 
 
 body {
@@ -42,6 +43,11 @@ body {
   .carousel-caption {
     display: none;
   }
+}
+
+span.field-validation-error {
+  color: red;
+  font-weight: bold;
 }
 
 /* Bootstrap Overrides */
@@ -172,9 +178,4 @@ h6,
 
 .gigs > li .details .genre {
   font-size: 15px;
-}
-
-span.field-validation-error {
-  color: red;
-  font-weight: bold;
 }
