@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Models;
-using PhotoExhibiter.Services;
 using PhotoExhibiter.ViewModels.ManageViewModels;
 using PhotoExhibitTracker.Services;
+using Web.Services;
 
 namespace PhotoExhibiter.Controllers
 {

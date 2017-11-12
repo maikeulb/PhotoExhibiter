@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PhotoExhibiter.Data;
 using PhotoExhibiter.Models;
-using PhotoExhibiter.Services;
+using PhotoExhibitTracker.Services;
 
-namespace PhotoExhibiter {
+namespace PhotoExhibiter
+{
     public class Startup {
 
         private readonly IConfiguration _config;

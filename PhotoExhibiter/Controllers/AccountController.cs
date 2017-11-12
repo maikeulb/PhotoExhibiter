@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Models;
-using PhotoExhibiter.Services;
 using PhotoExhibiter.ViewModels.AccountViewModels;
 using PhotoExhibitTracker.Services;
+using Web.Services;
 
 namespace PhotoExhibiter.Controllers
 {

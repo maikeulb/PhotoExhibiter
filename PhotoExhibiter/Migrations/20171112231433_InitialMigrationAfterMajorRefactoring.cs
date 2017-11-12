@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace Web.Migrations
+namespace PhotoExhibiter.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrationAfterMajorRefactoring : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,7 @@ namespace Web.Migrations
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     PasswordHash = table.Column<string>(type: "longtext", nullable: true),
@@ -168,7 +169,32 @@ namespace Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Gigs",
+                name: "Followings",
+                columns: table => new
+                {
+                    FollowerId = table.Column<string>(type: "varchar(127)", nullable: false),
+                    FolloweeId = table.Column<string>(type: "varchar(127)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Followings", x => new { x.FollowerId, x.FolloweeId });
+                    table.UniqueConstraint("AK_Followings_FolloweeId_FollowerId", x => new { x.FolloweeId, x.FollowerId });
+                    table.ForeignKey(
+                        name: "FK_Followings_AspNetUsers_FolloweeId",
+                        column: x => x.FolloweeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Followings_AspNetUsers_FollowerId",
+                        column: x => x.FollowerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Exhibits",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -180,19 +206,44 @@ namespace Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Gigs", x => x.Id);
+                    table.PrimaryKey("PK_Exhibits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Gigs_Genres_GenreId",
+                        name: "FK_Exhibits_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Gigs_AspNetUsers_PhotographerId",
+                        name: "FK_Exhibits_AspNetUsers_PhotographerId",
                         column: x => x.PhotographerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attendances",
+                columns: table => new
+                {
+                    ExhibitId = table.Column<int>(type: "int", nullable: false),
+                    AttendeeId = table.Column<string>(type: "varchar(127)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attendances", x => new { x.ExhibitId, x.AttendeeId });
+                    table.UniqueConstraint("AK_Attendances_AttendeeId_ExhibitId", x => new { x.AttendeeId, x.ExhibitId });
+                    table.ForeignKey(
+                        name: "FK_Attendances_AspNetUsers_AttendeeId",
+                        column: x => x.AttendeeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Attendances_Exhibits_ExhibitId",
+                        column: x => x.ExhibitId,
+                        principalTable: "Exhibits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -233,13 +284,13 @@ namespace Web.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Gigs_GenreId",
-                table: "Gigs",
+                name: "IX_Exhibits_GenreId",
+                table: "Exhibits",
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Gigs_PhotographerId",
-                table: "Gigs",
+                name: "IX_Exhibits_PhotographerId",
+                table: "Exhibits",
                 column: "PhotographerId");
         }
 
@@ -261,10 +312,16 @@ namespace Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Gigs");
+                name: "Attendances");
+
+            migrationBuilder.DropTable(
+                name: "Followings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Exhibits");
 
             migrationBuilder.DropTable(
                 name: "Genres");

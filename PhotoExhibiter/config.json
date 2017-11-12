@@ -1,6 +1,6 @@
 {
   "ConnectionStrings": {
     "ApplicationConnectionString":
-      "Server=localhost;Database=photohub;Uid=root;Pwd=P@ssw0rd!;"
+      "Server=localhost;Database=photoexhibiter;Uid=root;Pwd=P@ssw0rd!;"
   }
 }

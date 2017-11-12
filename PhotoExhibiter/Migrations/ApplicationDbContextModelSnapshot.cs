@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using PhotoExhibiter.Data;
 using System;
-using Web.Data;
 
-namespace Web.Migrations
+namespace PhotoExhibiter.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -127,7 +127,7 @@ namespace Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Web.Models.ApplicationUser", b =>
+            modelBuilder.Entity("PhotoExhibiter.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -181,47 +181,20 @@ namespace Web.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Web.Models.Attendance", b =>
+            modelBuilder.Entity("PhotoExhibiter.Models.Attendance", b =>
                 {
-                    b.Property<int>("GigId");
+                    b.Property<int>("ExhibitId");
 
                     b.Property<string>("AttendeeId");
 
-                    b.HasKey("GigId", "AttendeeId");
+                    b.HasKey("ExhibitId", "AttendeeId");
 
-                    b.HasAlternateKey("AttendeeId", "GigId");
+                    b.HasAlternateKey("AttendeeId", "ExhibitId");
 
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("Web.Models.Following", b =>
-                {
-                    b.Property<string>("FollowerId");
-
-                    b.Property<string>("FolloweeId");
-
-                    b.HasKey("FollowerId", "FolloweeId");
-
-                    b.HasAlternateKey("FolloweeId", "FollowerId");
-
-                    b.ToTable("Followings");
-                });
-
-            modelBuilder.Entity("Web.Models.Genre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genres");
-                });
-
-            modelBuilder.Entity("Web.Models.Gig", b =>
+            modelBuilder.Entity("PhotoExhibiter.Models.Exhibit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -243,7 +216,34 @@ namespace Web.Migrations
 
                     b.HasIndex("PhotographerId");
 
-                    b.ToTable("Gigs");
+                    b.ToTable("Exhibits");
+                });
+
+            modelBuilder.Entity("PhotoExhibiter.Models.Following", b =>
+                {
+                    b.Property<string>("FollowerId");
+
+                    b.Property<string>("FolloweeId");
+
+                    b.HasKey("FollowerId", "FolloweeId");
+
+                    b.HasAlternateKey("FolloweeId", "FollowerId");
+
+                    b.ToTable("Followings");
+                });
+
+            modelBuilder.Entity("PhotoExhibiter.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -256,7 +256,7 @@ namespace Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Web.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -264,7 +264,7 @@ namespace Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Web.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -277,7 +277,7 @@ namespace Web.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Web.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -285,49 +285,49 @@ namespace Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Web.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Web.Models.Attendance", b =>
+            modelBuilder.Entity("PhotoExhibiter.Models.Attendance", b =>
                 {
-                    b.HasOne("Web.Models.ApplicationUser", "Attendee")
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Attendee")
                         .WithMany("Attendances")
                         .HasForeignKey("AttendeeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Web.Models.Gig", "Gig")
+                    b.HasOne("PhotoExhibiter.Models.Exhibit", "Exhibit")
                         .WithMany("Attendances")
-                        .HasForeignKey("GigId")
+                        .HasForeignKey("ExhibitId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Web.Models.Following", b =>
+            modelBuilder.Entity("PhotoExhibiter.Models.Exhibit", b =>
                 {
-                    b.HasOne("Web.Models.ApplicationUser", "Followee")
-                        .WithMany("Followers")
-                        .HasForeignKey("FolloweeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Web.Models.ApplicationUser", "Follower")
-                        .WithMany("Followees")
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Web.Models.Gig", b =>
-                {
-                    b.HasOne("Web.Models.Genre", "Genre")
+                    b.HasOne("PhotoExhibiter.Models.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Web.Models.ApplicationUser", "Photographer")
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Photographer")
                         .WithMany()
                         .HasForeignKey("PhotographerId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PhotoExhibiter.Models.Following", b =>
+                {
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Followee")
+                        .WithMany("Followers")
+                        .HasForeignKey("FolloweeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Follower")
+                        .WithMany("Followees")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }
