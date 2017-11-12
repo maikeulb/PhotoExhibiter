@@ -17,15 +17,43 @@
             </div>
             <div class="details">
                 <span class="photographer">
-                    @gig.Photographer.Name
+                  @gig.Photographer.Name
                 </span>
                 <span class="genre">
                     @gig.Genre.Name
                 </span>
+                <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right js-toggle-attendance">Going?</button>
             </div>
         </li>
     }
 </ul>
 @section scripts
 {
+    <script>
+        $(document).ready(function() {
+            $(".js-toggle-attendance").click(function(e) {
+                var button = $(e.target);
+                var contentTypeAttribute = 'application/json; charset=utf-8';
+                var dataAttribute = JSON.stringify({
+                     GigId: button.attr("data-gig-id")
+                });
+
+                $.ajax({
+                    url: "/api/attendances",
+                    method: "POST",
+                    contentType: contentTypeAttribute,
+                    data: dataAttribute
+                })
+                    .done(function() {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Going");
+                    })
+                    .fail(function() {
+                        alert("Something failed!");
+                    });
+            });
+        });
+    </script>
 }

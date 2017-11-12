@@ -34,15 +34,20 @@ namespace Web.Controllers
           try
           {
             var userId = _userManager.GetUserId(User);
-
+        
             if (_context.Attendances.Any(a => a.AttendeeId == userId && a.GigId == DTO.GigId))
                 return BadRequest("The attendance already exists.");
+
+             _logger.LogInformation("Getting user item {ID}", userId);
+             _logger.LogInformation("*******************");
+             _logger.LogInformation("Getting gid item {ID}", DTO.GigId);
 
             var attendance = new Attendance
             {
                 GigId = DTO.GigId,
                 AttendeeId = userId
             };
+
             _context.Attendances.Add(attendance);
             _context.SaveChanges();
 
