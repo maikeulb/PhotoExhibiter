@@ -1,10 +1,10 @@
-using Web.Models;
+using PhotoExhibiter.Models;
 using System.Linq;
-using Web.Data;
+using PhotoExhibiter.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 
-namespace Web.Controllers
+namespace PhotoExhibiter.Controllers
 {
     public class FolloweesController : Controller
     {
