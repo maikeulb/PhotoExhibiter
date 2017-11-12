@@ -27,7 +27,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(FollowingDTO DTO)
+        public IActionResult Post([FromBody]FollowingDTO DTO)
         {
 
           try
