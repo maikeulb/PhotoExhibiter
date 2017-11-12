@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Web.Models;
+using PhotoExhibiter.Models;
 
-namespace Web.Data
+namespace PhotoExhibiter.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
 
         public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options) : base (options) { }
 
-        public DbSet<Gig> Gigs { get; set; }
+        public DbSet<Exhibit> Exhibits { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Attendance> Attendances{ get; set; }
         public DbSet<Following> Followings { get; set; }
@@ -16,12 +16,12 @@ namespace Web.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Attendance>()
-                .HasKey(a => new { a.GigId, a.AttendeeId});
+                .HasKey(a => new { a.ExhibitId, a.AttendeeId});
 
             modelBuilder.Entity<Attendance>()
-                .HasOne(a => a.Gig)
+                .HasOne(a => a.Exhibit)
                 .WithMany(g=> g.Attendances)
-                .HasForeignKey(a => a.GigId)
+                .HasForeignKey(a => a.ExhibitId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Attendance>()

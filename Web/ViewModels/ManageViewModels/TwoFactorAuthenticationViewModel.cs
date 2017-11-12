@@ -1,4 +1,4 @@
-﻿namespace Web.ViewModels.ManageViewModels
+﻿namespace PhotoExhibiter.ViewModels.ManageViewModels
 {
     public class TwoFactorAuthenticationViewModel
     {

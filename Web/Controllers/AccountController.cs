@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Web.Models;
-using Web.Services;
-using Web.ViewModels.AccountViewModels;
+using PhotoExhibiter.Models;
+using PhotoExhibiter.Services;
+using PhotoExhibiter.ViewModels.AccountViewModels;
+using PhotoExhibitTracker.Services;
 
-namespace Web.Controllers
+namespace PhotoExhibiter.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
@@ -19,12 +20,13 @@ namespace Web.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IEmailSender _emailSender;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {

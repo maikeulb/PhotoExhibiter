@@ -1,14 +1,14 @@
-using Web.Models;
+using PhotoExhibiter.Models;
 using System.Linq;
-using Web.Data;
+using PhotoExhibiter.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Web.Dtos;
+using PhotoExhibiter.Dtos;
 using System;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Web.Controllers
+namespace PhotoExhibiter.Controllers
 {
     [Route("api/[Controller]")]
     [Authorize]
@@ -27,25 +27,25 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]FollowingDTO DTO)
+        public IActionResult Follow([FromBody]FollowingDto dto)
         {
 
           try
           {
             var userId = _userManager.GetUserId(User);
 
-            if (_context.Followings.Any(f => f.FolloweeId == userId && f.FolloweeId == DTO.FolloweeId))
+            if (_context.Followings.Any(f => f.FolloweeId == userId && f.FolloweeId == dto.FolloweeId))
                 {
                   return BadRequest("Following already exists.");
                 }
 
              _logger.LogInformation("Getting UserId {ID}", userId);
-             _logger.LogInformation("Getting FolloweeId {ID}", DTO.FolloweeId);
+             _logger.LogInformation("Getting FolloweeId {ID}", dto.FolloweeId);
 
             var following = new Following
             {
                 FollowerId = userId,
-                FolloweeId = DTO.FolloweeId
+                FolloweeId = dto.FolloweeId
             };
 
             _context.Followings.Add(following);

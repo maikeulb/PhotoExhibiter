@@ -2,14 +2,14 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Web.Data;
+using PhotoExhibiter.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Web.Models;
-using Web.DTOs;
+using PhotoExhibiter.Models;
+using PhotoExhibiter.Dtos;
 using System;
 
-namespace Web.Controllers
+namespace PhotoExhibiter.Controllers
 {
     [Route("api/[Controller]")]
     [Authorize]
@@ -29,24 +29,24 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]AttendanceDTO DTO)
+        public IActionResult Attend([FromBody]AttendanceDto dto)
         {
           try
           {
             var userId = _userManager.GetUserId(User);
-        
-            if (_context.Attendances.Any(a => a.AttendeeId == userId && a.GigId == DTO.GigId))
+
+            if (_context.Attendances.Any(a => a.AttendeeId == userId && a.ExhibitId == dto.ExhibitId))
                 {
                   return BadRequest("The attendance already exists.");
                 }
 
              _logger.LogInformation("Getting UserId {ID}", userId);
-             _logger.LogInformation("Getting GidId {ID}", DTO.GigId);
+             _logger.LogInformation("Getting GidId {ID}", dto.ExhibitId);
 
             var attendance = new Attendance
             {
                 AttendeeId = userId,
-                GigId = DTO.GigId
+                ExhibitId = dto.ExhibitId
             };
 
             _context.Attendances.Add(attendance);

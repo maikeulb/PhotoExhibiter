@@ -1,15 +1,16 @@
-@model Web.ViewModels.GigFormViewModel
+@model Web.ViewModels.ExibitsFormViewModel
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Add a Show</h2>
-@using (Html.BeginForm("Create", "Gigs"))
+<h2>Add an Exhibit</h2>
+@using (Html.BeginForm("Create", "Exhibits"))
 {
      @Html.AntiForgeryToken()
     <div class="form-group">
         @Html.LabelFor(m => m.Location)
-        @Html.TextBoxFor(m => m.Location, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.TextBoxFor(m => m.Location, new { @class = "form-control", placeholder = "Aperture Gallery",
+        autofocus = "autofocus" })
         @Html.ValidationMessageFor(m => m.Location)
     </div>
     <div class="form-group">

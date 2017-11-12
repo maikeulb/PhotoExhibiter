@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.Data;
-using Web.Models;
-using Web.ViewModels;
+using PhotoExhibiter.Data;
+using PhotoExhibiter.Models;
+using PhotoExhibiter.ViewModels;
 
-namespace Web.Controllers {
+namespace PhotoExhibiter.Controllers {
 
-    public class GigsController : Controller
+    public class ExhibitsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public GigsController (ApplicationDbContext context,
+        public ExhibitsController (ApplicationDbContext context,
                 UserManager<ApplicationUser> userManager,
                 SignInManager<ApplicationUser> signInManager)
         {
@@ -34,28 +34,28 @@ namespace Web.Controllers {
         {
             var userId = _userManager.GetUserId(User);
             /* PhotographerId = User.FindFirstValue(ClaimTypes.NameIdentifier) */
-            var gigs = _context.Attendances
+            var exhibits = _context.Attendances
                 .Where(a => a.AttendeeId == userId)
-                .Select(a => a.Gig)
+                .Select(a => a.Exhibit)
                 .Include(g => g.Photographer)
                 .Include(g => g.Genre)
                 .ToList();
 
-            var viewModel = new GigsViewModel()
+            var viewModel = new ExhibitsViewModel()
             {
-                UpcomingGigs = gigs,
+                UpcomingExhibits = exhibits,
                 ShowActions = _signInManager.IsSignedIn(User),
-                Heading = "Shows I'm Attending"
+                Heading = "Exhibitions I'm Attending"
             };
 
-            return View("Gigs", viewModel);
+            return View("Exhibits", viewModel);
         }
 
         [Authorize]
         public IActionResult Create ()
         {
 
-            var viewModel = new GigFormViewModel
+            var viewModel = new ExhibitFormViewModel
             {
                 Genres = _context.Genres.ToList()
             };
@@ -66,7 +66,7 @@ namespace Web.Controllers {
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create (GigFormViewModel viewModel)
+        public IActionResult Create (ExhibitFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace Web.Controllers {
                 return View("Create", viewModel);
             }
 
-            var gig = new Gig
+            var exhibit = new Exhibit
             {
                 PhotographerId= _userManager.GetUserId(User),
                 DateTime = viewModel.GetDateTime(),
@@ -82,7 +82,7 @@ namespace Web.Controllers {
                 Location = viewModel.Location
             };
 
-            _context.Gigs.Add (gig);
+            _context.Exhibits.Add (exhibit);
             _context.SaveChanges ();
 
             return RedirectToAction ("Index", "Home");

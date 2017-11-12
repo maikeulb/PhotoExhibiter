@@ -16,7 +16,7 @@
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
 `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser`: `--parser=css`. 
+`--parser`: `--parser=css`.
 
 body {
   padding-top: 50px;
@@ -148,16 +148,16 @@ h6,
 }
 
 /* Page-level styles */
-.gigs {
+.exhibits {
   list-style: none;
 }
 
-.gigs > li {
+.exhibits > li {
   position: relative;
   margin-bottom: 30px;
 }
 
-.gigs > li .date {
+.exhibits > li .date {
   background: red;
   color: white;
   text-align: center;
@@ -166,32 +166,32 @@ h6,
   border-radius: 8px;
 }
 
-.gigs > li .date .month {
+.exhibits > li .date .month {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: bold;
   padding: 2px 6px;
 }
 
-.gigs > li .date .day {
+.exhibits > li .date .day {
   background: #f7f7f7;
   color: #333;
   font-size: 20px;
   padding: 6px 12px;
 }
 
-.gigs > li .details {
+.exhibits > li .details {
   position: absolute;
   top: 0;
   left: 70px;
 }
 
-.gigs > li .details .photographer {
+.exhibits > li .details .photographer {
   font-weight: bold;
   display: block;
 }
 
-.gigs > li .details .genre {
+.exhibits > li .details .genre {
   font-size: 15px;
 }
 

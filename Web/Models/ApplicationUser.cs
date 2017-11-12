@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace Web.Models
+namespace PhotoExhibiter.Models
 {
     public class ApplicationUser : IdentityUser
     {

@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Web.Models;
-using Web.Services;
-using Web.ViewModels.ManageViewModels;
+using PhotoExhibiter.Models;
+using PhotoExhibiter.Services;
+using PhotoExhibiter.ViewModels.ManageViewModels;
+using PhotoExhibitTracker.Services;
 
-namespace Web.Controllers
+namespace PhotoExhibiter.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
@@ -20,7 +21,6 @@ namespace Web.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
 
@@ -29,7 +29,6 @@ namespace Web.Controllers
         public ManageController(
           UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
-          IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
         {

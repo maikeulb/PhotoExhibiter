@@ -1,6 +1,6 @@
 using System;
 
-namespace Web.ViewModels
+namespace PhotoExhibiter.ViewModels
 {
     public class ErrorViewModel
     {

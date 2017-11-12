@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Web.Data;
-using Web.Models;
-using Web.Services;
+using PhotoExhibiter.Data;
+using PhotoExhibiter.Models;
+using PhotoExhibiter.Services;
 
-namespace Web {
+namespace PhotoExhibiter {
     public class Startup {
 
         private readonly IConfiguration _config;
@@ -33,9 +33,8 @@ namespace Web {
             services.AddDbContext<ApplicationDbContext> (options =>
                 options.UseMySql (_config.GetConnectionString ("ApplicationConnectionString")));
 
-            // Add application services.
+ // Add application services.
             services.AddTransient<IEmailSender, EmailSender> ();
-
             services.AddMvc ();
         }
 

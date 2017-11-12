@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models
+namespace PhotoExhibiter.Models
 {
-public class Gig
+public class Exhibit
 {
     public int Id { get; set; }
 

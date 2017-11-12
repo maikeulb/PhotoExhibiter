@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Web.Models;
+using PhotoExhibiter.Models;
 
-namespace Web.ViewModels
+namespace PhotoExhibiter.ViewModels
 {
-    public class GigFormViewModel
+    public class ExhibitFormViewModel
     {
         [Required]
         public string Location { get; set; }

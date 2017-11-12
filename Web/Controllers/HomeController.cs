@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.Data;
-using Web.Models;
-using Web.ViewModels;
+using PhotoExhibiter.Data;
+using PhotoExhibiter.Models;
+using PhotoExhibiter.ViewModels;
 
-namespace Web.Controllers
+namespace PhotoExhibiter.Controllers
 {
     public class HomeController : Controller
     {
@@ -26,19 +26,19 @@ namespace Web.Controllers
 
         public IActionResult Index()
         {
-            var upcomingGigs = _context.Gigs
+            var upcomingExhibits = _context.Exhibits
                 .Include(g => g.Photographer)
                 .Include(g => g.Genre)
                 .Where(g => g.DateTime > DateTime.Now);
 
-            var viewModel = new GigsViewModel
+            var viewModel = new ExhibitsViewModel
             {
-                UpcomingGigs = upcomingGigs,
+                UpcomingExhibits = upcomingExhibits,
                 ShowActions = _signInManager.IsSignedIn(User),
                 Heading = "Upcoming Shows"
             };
 
-            return View("Gigs",viewModel);
+            return View("Exhibits",viewModel);
         }
 
         public IActionResult About()

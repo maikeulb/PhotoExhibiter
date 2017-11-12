@@ -1,36 +1,36 @@
-@model Web.ViewModels.GigsViewModel
+@model Web.ViewModels.ExhibitsViewModel
 @{
     ViewBag.Title = "Home Page";
 }
 <h1>@Model.Heading</h1>
-<ul class="gigs voffset4">
-    @foreach (var gig in Model.UpcomingGigs)
+<ul class="exhibits voffset4">
+    @foreach (var exhibit in Model.UpcomingExhibit)
     {
         <li>
             <div class="date">
                 <div class="month">
-                    @gig.DateTime.ToString("MMM")
+                    @exhibit.DateTime.ToString("MMM")
                 </div>
                 <div class="day">
-                    @gig.DateTime.ToString("d ")
+                    @exhibit.DateTime.ToString("d ")
                 </div>
             </div>
             <div class="details">
                 <span class="photographer">
-                  @gig.Photographer.Name
+                  @exhibit.Photographer.Name
 
                   @if (Model.ShowActions)
                   {
                       <button class="btn btn-link btn-sm js-toggle-follow"
-                        data-user-id="@gig.PhotographerId">Follow</button>
+                        data-user-id="@exhibit.PhotographerId">Follow</button>
                   }
                 </span>
                 <span class="genre">
-                    @gig.Genre.Name
+                    @exhibit.Genre.Name
                 </span>
                 @if (Model.ShowActions)
                 {
-                <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right js-toggle-attendance">Going?</button>
+                <button data-exhibit-id="@exhibit.Id" class="btn btn-default btn-sm pull-right js-toggle-attendance">Going?</button>
                 }
             </div>
         </li>
@@ -44,7 +44,7 @@
                 var button = $(e.target);
                 var contentTypeAttribute = 'application/json; charset=utf-8';
                 var dataAttribute = JSON.stringify({
-                     GigId: button.attr("data-gig-id")
+                     ExhibitId: button.attr("data-exhibit-id")
                 });
 
                 $.ajax({

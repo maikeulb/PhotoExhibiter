@@ -1,13 +1,13 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models
+namespace PhotoExhibiter.Models
 {
     public class Attendance
     {
         [Key]
-        public int GigId { get; set; }
-        public Gig Gig { get; set; }
+        public int ExhibitId { get; set; }
+        public Exhibit Exhibit { get; set; }
 
         [Key]
         public string AttendeeId { get; set; }

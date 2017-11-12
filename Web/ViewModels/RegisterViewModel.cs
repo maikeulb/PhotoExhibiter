@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.ViewModels
+namespace PhotoExhibiter.ViewModels
 {
     public class RegisterViewModel
     {

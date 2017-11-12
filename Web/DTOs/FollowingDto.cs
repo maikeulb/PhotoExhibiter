@@ -1,6 +1,6 @@
-namespace Web.Dtos
+namespace PhotoExhibiter.Dtos
 {
-    public class FollowingDTO
+    public class FollowingDto
     {
         public string FolloweeId { get; set; }
     }
