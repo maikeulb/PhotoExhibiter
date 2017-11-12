@@ -11,6 +11,7 @@ namespace Web.Data
         public DbSet<Gig> Gigs { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Attendance> Attendances{ get; set; }
+        public DbSet<Following> Followings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,14 +24,26 @@ namespace Web.Data
                 .HasForeignKey(a => a.GigId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             modelBuilder.Entity<Attendance>()
                 .HasOne(a => a.Attendee)
                 .WithMany(au => au.Attendances)
                 .HasForeignKey(a => a.AttendeeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(au => au.Followers)
+                .WithOne(f => f.Followee)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(au => au.Followees)
+                .WithOne(f => f.Follower)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Following>()
+                .HasKey(f => new { f.FollowerId , f.FolloweeId});
+
+                base.OnModelCreating(modelBuilder);
         }
     }
 }
