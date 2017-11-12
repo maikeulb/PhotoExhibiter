@@ -7,7 +7,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
 
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
@@ -17,8 +17,8 @@
               role="button" aria-haspopup="true"
               aria-expanded="false">@UserManager.GetUserName(User)<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a href="#">Galleries I'm Going</a></li>
-                <li><a href="#">Photographers I'm Following</a></li>
+                <li><a href="@Url.Action("Attending", "Gigs")">Galleries I'm Going</a></li>
+                <li><a href="@Url.Action("Index", "Followees")">Photographers I'm Following</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
             </ul>

@@ -18,11 +18,20 @@
             <div class="details">
                 <span class="photographer">
                   @gig.Photographer.Name
+
+                  @if (Model.ShowActions)
+                  {
+                      <button class="btn btn-link btn-sm js-toggle-follow"
+                        data-user-id="@gig.PhotographerId">Follow</button>
+                  }
                 </span>
                 <span class="genre">
                     @gig.Genre.Name
                 </span>
+                @if (Model.ShowActions)
+                {
                 <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right js-toggle-attendance">Going?</button>
+                }
             </div>
         </li>
     }
@@ -49,6 +58,26 @@
                             .removeClass("btn-default")
                             .addClass("btn-info")
                             .text("Going");
+                    })
+                    .fail(function() {
+                        alert("Something failed!");
+                    });
+            });
+            $(".js-toggle-follow").click(function(e) {
+                var button = $(e.target);
+                var contentTypeAttribute = 'application/json; charset=utf-8';
+                var dataAttribute = JSON.stringify({
+                     FolloweeId: button.attr("data-user-id")
+                });
+
+                $.ajax({
+                    url: "/api/followings",
+                    method: "POST",
+                    contentType: contentTypeAttribute,
+                    data: dataAttribute
+                })
+                    .done(function() {
+                        button.text("Following");
                     })
                     .fail(function() {
                         alert("Something failed!");
