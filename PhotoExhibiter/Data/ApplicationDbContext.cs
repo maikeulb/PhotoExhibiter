@@ -17,37 +17,38 @@ namespace PhotoExhibiter.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Attendance>()
-                .HasKey(a => new { a.ExhibitId, a.AttendeeId});
+            modelBuilder.Entity<Attendance>( m =>
+            {
+                m.HasKey(e => new { e.ExhibitId, e.AttendeeId});
 
-            modelBuilder.Entity<Attendance>()
-                .HasOne(a => a.Exhibit)
-                .WithMany(g=> g.Attendances)
-                .HasForeignKey(a => a.ExhibitId)
-                .OnDelete(DeleteBehavior.Restrict);
+                m.HasOne(e => e.Exhibit)
+                    .WithMany(e => e.Attendances)
+                    .HasForeignKey(e => e.ExhibitId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Attendance>()
-                .HasOne(a => a.Attendee)
-                .WithMany(au => au.Attendances)
-                .HasForeignKey(a => a.AttendeeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                m.HasOne(e => e.Attendee)
+                    .WithMany(e => e.Attendances)
+                    .HasForeignKey(e => e.AttendeeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(au => au.Followers)
-                .WithOne(f => f.Followee)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<ApplicationUser>( m => 
+            {
+                m.HasMany(e => e.Followers)
+                    .WithOne(e => e.Followee)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(au => au.Followees)
-                .WithOne(f => f.Follower)
-                .OnDelete(DeleteBehavior.Restrict);
+                m.HasMany(e => e.Followees)
+                    .WithOne(e => e.Follower)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
             modelBuilder.Entity<Following>()
-                .HasKey(f => new { f.FollowerId , f.FolloweeId});
+                .HasKey(e => new { e.FollowerId , e.FolloweeId});
 
-            modelBuilder.Entity<UserNotification>(m =>
+            modelBuilder.Entity<UserNotification>( m =>
             {
-                m.HasKey(e => new {e.UserId, e.NotificationId});
+                m.HasKey(e => new { e.UserId, e.NotificationId});
 
                 m.HasOne(e => e.User)
                     .WithMany()
