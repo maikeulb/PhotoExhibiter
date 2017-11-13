@@ -10,17 +10,17 @@ using PhotoExhibiter.Models;
 
 namespace PhotoExhibiter.Controllers.Api
 {
-    [Route("api/[Controller]")]
+    [Route ("api/[Controller]")]
     [Authorize]
-    public class FollowingsController : Controller 
+    public class FollowingsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<AttendancesController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public FollowingsController(ApplicationDbContext context,
+        public FollowingsController (ApplicationDbContext context,
             ILogger<AttendancesController> logger,
-            UserManager<ApplicationUser> userManager) 
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _logger = logger;
@@ -28,13 +28,13 @@ namespace PhotoExhibiter.Controllers.Api
         }
 
         [HttpPost]
-        public IActionResult Follow([FromBody]FollowingDto dto) 
+        public IActionResult Follow ([FromBody] FollowingDto dto)
         {
-            try 
+            try
             {
                 var userId = _userManager.GetUserId (User);
 
-                if (_context.Followings.Any (f => f.FolloweeId == userId && f.FolloweeId == dto.FolloweeId)) 
+                if (_context.Followings.Any (f => f.FolloweeId == userId && f.FolloweeId == dto.FolloweeId))
                 {
                     return BadRequest ("Following already exists.");
                 }
@@ -42,7 +42,7 @@ namespace PhotoExhibiter.Controllers.Api
                 _logger.LogInformation ("Getting UserId {ID}", userId);
                 _logger.LogInformation ("Getting FolloweeId {ID}", dto.FolloweeId);
 
-                var following = new Following 
+                var following = new Following
                 {
                     FollowerId = userId,
                     FolloweeId = dto.FolloweeId
@@ -52,8 +52,8 @@ namespace PhotoExhibiter.Controllers.Api
                 _context.SaveChanges ();
 
                 return Ok ();
-            } 
-            catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 _logger.LogError ($"Failed to add following: {ex}");
             }

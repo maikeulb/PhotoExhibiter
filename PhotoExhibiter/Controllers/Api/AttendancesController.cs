@@ -10,7 +10,7 @@ using PhotoExhibiter.Models;
 
 namespace PhotoExhibiter.Controllers.Api
 {
-    [Route("api/[Controller]")]
+    [Route ("api/[Controller]")]
     [Authorize]
     public class AttendancesController : Controller
     {
@@ -18,7 +18,7 @@ namespace PhotoExhibiter.Controllers.Api
         private readonly ILogger<AttendancesController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AttendancesController(ApplicationDbContext context,
+        public AttendancesController (ApplicationDbContext context,
             ILogger<AttendancesController> logger,
             UserManager<ApplicationUser> userManager)
         {
@@ -28,19 +28,19 @@ namespace PhotoExhibiter.Controllers.Api
         }
 
         [HttpPost]
-        public IActionResult Attend([FromBody]AttendanceDto dto)
+        public IActionResult Attend ([FromBody] AttendanceDto dto)
         {
             try
             {
-                var userId = _userManager.GetUserId(User);
+                var userId = _userManager.GetUserId (User);
 
-                if (_context.Attendances.Any(a => a.AttendeeId == userId && a.ExhibitId == dto.ExhibitId))
+                if (_context.Attendances.Any (a => a.AttendeeId == userId && a.ExhibitId == dto.ExhibitId))
                 {
-                    return BadRequest("The attendance already exists.");
+                    return BadRequest ("The attendance already exists.");
                 }
 
-                _logger.LogInformation("Getting UserId {ID}", userId);
-                _logger.LogInformation("Getting GidId {ID}", dto.ExhibitId);
+                _logger.LogInformation ("Getting UserId {ID}", userId);
+                _logger.LogInformation ("Getting GidId {ID}", dto.ExhibitId);
 
                 var attendance = new Attendance
                 {
@@ -48,17 +48,17 @@ namespace PhotoExhibiter.Controllers.Api
                     ExhibitId = dto.ExhibitId
                 };
 
-                _context.Attendances.Add(attendance);
-                _context.SaveChanges();
+                _context.Attendances.Add (attendance);
+                _context.SaveChanges ();
 
-                return Ok();
+                return Ok ();
             }
             catch (Exception ex)
             {
-            _logger.LogError($"Failed to add attendee: {ex}");
+                _logger.LogError ($"Failed to add attendee: {ex}");
             }
 
-            return BadRequest("Failed to add attendee");
+            return BadRequest ("Failed to add attendee");
         }
     }
 }

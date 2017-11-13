@@ -13,11 +13,11 @@ using PhotoExhibiter.ViewModels.ManageViewModels;
 using PhotoExhibitTracker.Services;
 using Web.Services;
 
-namespace PhotoExhibiter.Controllers 
+namespace PhotoExhibiter.Controllers
 {
     [Authorize]
     [Route ("[controller]/[action]")]
-    public class ManageController : Controller 
+    public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -32,7 +32,8 @@ namespace PhotoExhibiter.Controllers
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<ManageController> logger,
-            UrlEncoder urlEncoder) {
+            UrlEncoder urlEncoder)
+        {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
@@ -44,14 +45,16 @@ namespace PhotoExhibiter.Controllers
         public string StatusMessage { get; set; }
 
         [HttpGet]
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index ()
         {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new IndexViewModel {
+            var model = new IndexViewModel
+            {
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -64,29 +67,35 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model) 
+        public async Task<IActionResult> Index (IndexViewModel model)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return View (model);
             }
 
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var email = user.Email;
-            if (model.Email != email) {
+            if (model.Email != email)
+            {
                 var setEmailResult = await _userManager.SetEmailAsync (user, model.Email);
-                if (!setEmailResult.Succeeded) {
+                if (!setEmailResult.Succeeded)
+                {
                     throw new ApplicationException ($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
                 }
             }
 
             var phoneNumber = user.PhoneNumber;
-            if (model.PhoneNumber != phoneNumber) {
+            if (model.PhoneNumber != phoneNumber)
+            {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync (user, model.PhoneNumber);
-                if (!setPhoneResult.Succeeded) {
+                if (!setPhoneResult.Succeeded)
+                {
                     throw new ApplicationException ($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
             }
@@ -97,14 +106,16 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendVerificationEmail(IndexViewModel model) 
+        public async Task<IActionResult> SendVerificationEmail (IndexViewModel model)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return View (model);
             }
 
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
@@ -118,15 +129,17 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword() 
+        public async Task<IActionResult> ChangePassword ()
         {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var hasPassword = await _userManager.HasPasswordAsync (user);
-            if (!hasPassword) {
+            if (!hasPassword)
+            {
                 return RedirectToAction (nameof (SetPassword));
             }
 
@@ -136,19 +149,22 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model) 
+        public async Task<IActionResult> ChangePassword (ChangePasswordViewModel model)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return View (model);
             }
 
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var changePasswordResult = await _userManager.ChangePasswordAsync (user, model.OldPassword, model.NewPassword);
-            if (!changePasswordResult.Succeeded) {
+            if (!changePasswordResult.Succeeded)
+            {
                 AddErrors (changePasswordResult);
                 return View (model);
             }
@@ -161,16 +177,18 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SetPassword() 
+        public async Task<IActionResult> SetPassword ()
         {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var hasPassword = await _userManager.HasPasswordAsync (user);
 
-            if (hasPassword) {
+            if (hasPassword)
+            {
                 return RedirectToAction (nameof (ChangePassword));
             }
 
@@ -180,19 +198,22 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SetPassword(SetPasswordViewModel model) 
+        public async Task<IActionResult> SetPassword (SetPasswordViewModel model)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return View (model);
             }
 
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var addPasswordResult = await _userManager.AddPasswordAsync (user, model.NewPassword);
-            if (!addPasswordResult.Succeeded) {
+            if (!addPasswordResult.Succeeded)
+            {
                 AddErrors (addPasswordResult);
                 return View (model);
             }
@@ -204,13 +225,15 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ExternalLogins() {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+        public async Task<IActionResult> ExternalLogins ()
+        {
+            var user = await _userManager.GetUserAsync (User);
+            if (user == null)
+            {
+                throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync(user) };
+            var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync (user) };
             model.OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync ())
                 .Where (auth => model.CurrentLogins.All (ul => auth.Name != ul.LoginProvider))
                 .ToList ();
@@ -222,7 +245,8 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LinkLogin (string provider) {
+        public async Task<IActionResult> LinkLogin (string provider)
+        {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync (IdentityConstants.ExternalScheme);
 
@@ -233,19 +257,23 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> LinkLoginCallback () {
+        public async Task<IActionResult> LinkLoginCallback ()
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var info = await _signInManager.GetExternalLoginInfoAsync (user.Id);
-            if (info == null) {
+            if (info == null)
+            {
                 throw new ApplicationException ($"Unexpected error occurred loading external login info for user with ID '{user.Id}'.");
             }
 
             var result = await _userManager.AddLoginAsync (user, info);
-            if (!result.Succeeded) {
+            if (!result.Succeeded)
+            {
                 throw new ApplicationException ($"Unexpected error occurred adding external login for user with ID '{user.Id}'.");
             }
 
@@ -258,14 +286,17 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveLogin (RemoveLoginViewModel model) {
+        public async Task<IActionResult> RemoveLogin (RemoveLoginViewModel model)
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var result = await _userManager.RemoveLoginAsync (user, model.LoginProvider, model.ProviderKey);
-            if (!result.Succeeded) {
+            if (!result.Succeeded)
+            {
                 throw new ApplicationException ($"Unexpected error occurred removing external login for user with ID '{user.Id}'.");
             }
 
@@ -275,13 +306,16 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> TwoFactorAuthentication () {
+        public async Task<IActionResult> TwoFactorAuthentication ()
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new TwoFactorAuthenticationViewModel {
+            var model = new TwoFactorAuthenticationViewModel
+            {
                 HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync (user) != null,
                 Is2faEnabled = user.TwoFactorEnabled,
                 RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync (user),
@@ -291,13 +325,16 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Disable2faWarning () {
+        public async Task<IActionResult> Disable2faWarning ()
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (!user.TwoFactorEnabled) {
+            if (!user.TwoFactorEnabled)
+            {
                 throw new ApplicationException ($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
             }
 
@@ -306,14 +343,17 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Disable2fa () {
+        public async Task<IActionResult> Disable2fa ()
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var disable2faResult = await _userManager.SetTwoFactorEnabledAsync (user, false);
-            if (!disable2faResult.Succeeded) {
+            if (!disable2faResult.Succeeded)
+            {
                 throw new ApplicationException ($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
             }
 
@@ -322,19 +362,23 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EnableAuthenticator () {
+        public async Task<IActionResult> EnableAuthenticator ()
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync (user);
-            if (string.IsNullOrEmpty (unformattedKey)) {
+            if (string.IsNullOrEmpty (unformattedKey))
+            {
                 await _userManager.ResetAuthenticatorKeyAsync (user);
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync (user);
             }
 
-            var model = new EnableAuthenticatorViewModel {
+            var model = new EnableAuthenticatorViewModel
+            {
                 SharedKey = FormatKey (unformattedKey),
                 AuthenticatorUri = GenerateQrCodeUri (user.Email, unformattedKey)
             };
@@ -344,13 +388,16 @@ namespace PhotoExhibiter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EnableAuthenticator (EnableAuthenticatorViewModel model) {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> EnableAuthenticator (EnableAuthenticatorViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
                 return View (model);
             }
 
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
@@ -360,7 +407,8 @@ namespace PhotoExhibiter.Controllers
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync (
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-            if (!is2faTokenValid) {
+            if (!is2faTokenValid)
+            {
                 ModelState.AddModelError ("model.Code", "Verification code is invalid.");
                 return View (model);
             }
@@ -371,15 +419,18 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResetAuthenticatorWarning () {
+        public IActionResult ResetAuthenticatorWarning ()
+        {
             return View (nameof (ResetAuthenticator));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetAuthenticator () {
+        public async Task<IActionResult> ResetAuthenticator ()
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
@@ -391,13 +442,16 @@ namespace PhotoExhibiter.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GenerateRecoveryCodes () {
+        public async Task<IActionResult> GenerateRecoveryCodes ()
+        {
             var user = await _userManager.GetUserAsync (User);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (!user.TwoFactorEnabled) {
+            if (!user.TwoFactorEnabled)
+            {
                 throw new ApplicationException ($"Cannot generate recovery codes for user with ID '{user.Id}' as they do not have 2FA enabled.");
             }
 
@@ -411,27 +465,33 @@ namespace PhotoExhibiter.Controllers
 
         #region Helpers
 
-        private void AddErrors (IdentityResult result) {
-            foreach (var error in result.Errors) {
+        private void AddErrors (IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
                 ModelState.AddModelError (string.Empty, error.Description);
             }
         }
 
-        private string FormatKey (string unformattedKey) {
+        private string FormatKey (string unformattedKey)
+        {
             var result = new StringBuilder ();
             int currentPosition = 0;
-            while (currentPosition + 4 < unformattedKey.Length) {
+            while (currentPosition + 4 < unformattedKey.Length)
+            {
                 result.Append (unformattedKey.Substring (currentPosition, 4)).Append (" ");
                 currentPosition += 4;
             }
-            if (currentPosition < unformattedKey.Length) {
+            if (currentPosition < unformattedKey.Length)
+            {
                 result.Append (unformattedKey.Substring (currentPosition));
             }
 
             return result.ToString ().ToLowerInvariant ();
         }
 
-        private string GenerateQrCodeUri (string email, string unformattedKey) {
+        private string GenerateQrCodeUri (string email, string unformattedKey)
+        {
             return string.Format (
                 AuthenicatorUriFormat,
                 _urlEncoder.Encode ("Web"),
