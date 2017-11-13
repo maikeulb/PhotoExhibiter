@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Models;
+using PhotoExhibiter.ViewModels;
 using PhotoExhibiter.ViewModels.AccountViewModels;
 using PhotoExhibitTracker.Services;
 using Web.Services;
