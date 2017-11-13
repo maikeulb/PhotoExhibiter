@@ -29,28 +29,28 @@ namespace PhotoExhibiter.Controllers {
             _signInManager = signInManager;
         }
 
-
         [Authorize]
-        public ActionResult Mine()
+        public IActionResult Mine()
         {
             var userId = _userManager.GetUserId(User);
             var exhibits = _context.Exhibits
-                .Where(g => g.PhotographerId == userId && g.DateTime > DateTime.Now)
-                .Include(g => g.Genre)
+                .Where(e => e.PhotographerId == userId &&
+                        e.DateTime > DateTime.Now)
+                .Include(e => e.Genre)
                 .ToList();
 
             return View(exhibits);
         }
 
         [Authorize]
-        public ActionResult Attending()
+        public IActionResult Attending()
         {
             var userId = _userManager.GetUserId(User);
             var exhibits = _context.Attendances
                 .Where(a => a.AttendeeId == userId)
                 .Select(a => a.Exhibit)
-                .Include(g => g.Photographer)
-                .Include(g => g.Genre)
+                .Include(e => e.Photographer)
+                .Include(e => e.Genre)
                 .ToList();
 
             var viewModel = new ExhibitsViewModel()
@@ -64,21 +64,42 @@ namespace PhotoExhibiter.Controllers {
         }
 
         [Authorize]
-        public IActionResult Create ()
+        public IActionResult Create()
         {
+            var viewModel = new ExhibitFormViewModel
+            {
+                Genres = _context.Genres.ToList(),
+                Heading = "Add an Exhibit"
+            };
+
+            return View("ExhibitForm", viewModel);
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var exhibit = _context.Exhibits.Single(e => e.Id == id &&
+                    e.PhotographerId == userId);
 
             var viewModel = new ExhibitFormViewModel
             {
-                Genres = _context.Genres.ToList()
+                Heading = "Edit an Exhibit",
+                Id = exhibit.Id,
+                Genres = _context.Genres.ToList(),
+                Date = exhibit.DateTime.ToString("d MMM yyyy"),
+                Time = exhibit.DateTime.ToString("HH:mm"),
+                Genre = exhibit.GenreId,
+                Location = exhibit.Location
             };
 
-            return View(viewModel);
+            return View("ExhibitForm", viewModel);
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create (ExhibitFormViewModel viewModel)
+        public IActionResult Create(ExhibitFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -100,5 +121,27 @@ namespace PhotoExhibiter.Controllers {
             return RedirectToAction ("Mine", "Exhibit");
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(ExhibitFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Genres = _context.Genres.ToList();
+                return View("ExhibitForm", viewModel);
+            }
+
+            var userId = _userManager.GetUserId(User);
+            var exhibit = _context.Exhibits.Single(e => e.Id == viewModel.Id &&
+                    e.PhotographerId == userId);
+            exhibit.Location = viewModel.Location;
+            exhibit.DateTime = viewModel.GetDateTime();
+            exhibit.GenreId = viewModel.Genre;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Mine", "Exhibits");
+        }
     }
 }

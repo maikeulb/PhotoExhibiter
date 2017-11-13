@@ -1,24 +1,4 @@
-﻿`--parser` with value `postcss` is deprecated. Prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-`--parser`: `--parser=css`.
-
-body {
+﻿body {
   padding-top: 50px;
   padding-bottom: 20px;
 }
@@ -59,14 +39,24 @@ span.field-validation-error {
   font-weight: bold;
 }
 
-
-.voffset { margin-top: 2px; }
-.voffset1 { margin-top: 5px; }
-.voffset2 { margin-top: 10px; }
-.voffset3 { margin-top: 20px; }
-.voffset4 { margin-top: 40px; }
-.voffset5 { margin-top: 80px; }
-
+.voffset {
+  margin-top: 2px;
+}
+.voffset1 {
+  margin-top: 5px;
+}
+.voffset2 {
+  margin-top: 10px;
+}
+.voffset3 {
+  margin-top: 20px;
+}
+.voffset4 {
+  margin-top: 40px;
+}
+.voffset5 {
+  margin-top: 80px;
+}
 
 /* Bootstrap Overrides */
 .navbar-inverse {
@@ -147,6 +137,20 @@ h6,
   border-radius: 9px;
 }
 
+.navbar-inverse .navbar-toggle {
+  border-color: #ff4342;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: rgba(205, 40, 39, 0.55);
+}
+
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+  border-color: rgba(205, 40, 39, 0.55);
+}
+
 /* Page-level styles */
 .exhibits {
   list-style: none;
@@ -195,16 +199,11 @@ h6,
   font-size: 15px;
 }
 
-.navbar-inverse .navbar-toggle {
-  border-color: #ff4342;
+.exhibits > li .actions {
+  font-size: 15px;
+  display: none;
 }
 
-.navbar-inverse .navbar-toggle:hover,
-.navbar-inverse .navbar-toggle:focus {
-  background-color: rgba(205, 40, 39, 0.55);
-}
-
-.navbar-inverse .navbar-collapse,
-.navbar-inverse .navbar-form {
-  border-color: rgba(205, 40, 39, 0.55);
+.exhibits > li:hover .actions {
+  display: block;
 }

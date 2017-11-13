@@ -4,7 +4,7 @@
 }
 
 <h2>My Upcoming Exhibits</h2>
-<ul class="gigs voffset4">
+<ul class="exhibits voffset4">
     @foreach (var exhibit in Model)
     {
         <li>
@@ -23,6 +23,11 @@
                 <span class="genre">
                     @exhibit.Genre.Name
                 </span>
+                <div class="actions">
+                    <a href="@Url.Action("Edit", "Exhibits", new { id = exhibit.Id })">
+                        Edit
+                    </a>
+                </div>
             </div>
         </li>
     }

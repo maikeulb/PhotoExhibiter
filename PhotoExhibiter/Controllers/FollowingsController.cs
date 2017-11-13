@@ -1,64 +1,55 @@
-using PhotoExhibiter.Models;
-using System.Linq;
-using PhotoExhibiter.Data;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using PhotoExhibiter.Dtos;
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using PhotoExhibiter.Data;
+using PhotoExhibiter.Dtos;
+using PhotoExhibiter.Models;
 
-namespace PhotoExhibiter.Controllers
-{
-    [Route("api/[Controller]")]
+namespace PhotoExhibiter.Controllers {
+    [Route ("api/[Controller]")]
     [Authorize]
-    public class FollowingsController : Controller
-    {
+    public class FollowingsController : Controller {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<AttendancesController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
-        public FollowingsController(ApplicationDbContext context,
+        public FollowingsController (ApplicationDbContext context,
             ILogger<AttendancesController> logger,
-            UserManager<ApplicationUser> userManager)
-        {
+            UserManager<ApplicationUser> userManager) {
             _context = context;
             _logger = logger;
             _userManager = userManager;
         }
 
         [HttpPost]
-        public IActionResult Follow([FromBody]FollowingDto dto)
-        {
+        public IActionResult Follow ([FromBody] FollowingDto dto) {
 
-          try
-          {
-            var userId = _userManager.GetUserId(User);
+            try {
+                var userId = _userManager.GetUserId (User);
 
-            if (_context.Followings.Any(f => f.FolloweeId == userId && f.FolloweeId == dto.FolloweeId))
-                {
-                  return BadRequest("Following already exists.");
+                if (_context.Followings.Any (f => f.FolloweeId == userId && f.FolloweeId == dto.FolloweeId)) {
+                    return BadRequest ("Following already exists.");
                 }
 
-             _logger.LogInformation("Getting UserId {ID}", userId);
-             _logger.LogInformation("Getting FolloweeId {ID}", dto.FolloweeId);
+                _logger.LogInformation ("Getting UserId {ID}", userId);
+                _logger.LogInformation ("Getting FolloweeId {ID}", dto.FolloweeId);
 
-            var following = new Following
-            {
-                FollowerId = userId,
-                FolloweeId = dto.FolloweeId
-            };
+                var following = new Following {
+                    FollowerId = userId,
+                    FolloweeId = dto.FolloweeId
+                };
 
-            _context.Followings.Add(following);
-            _context.SaveChanges();
+                _context.Followings.Add (following);
+                _context.SaveChanges ();
 
-            return Ok();
-            }
-          catch (Exception ex)
-            {
-              _logger.LogError($"Failed to add following: {ex}");
+                return Ok ();
+            } catch (Exception ex) {
+                _logger.LogError ($"Failed to add following: {ex}");
             }
 
-          return BadRequest("Failed to add following");
+            return BadRequest ("Failed to add following");
         }
     }
 }
