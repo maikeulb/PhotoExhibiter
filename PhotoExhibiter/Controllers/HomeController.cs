@@ -33,7 +33,7 @@ namespace PhotoExhibiter.Controllers
             {
                 UpcomingExhibits = upcomingExhibits,
                 ShowActions = _signInManager.IsSignedIn (User),
-                Heading = "Upcoming Shows"
+                Heading = "Upcoming Exhibits"
             };
 
             return View ("Exhibits", viewModel);

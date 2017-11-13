@@ -53,7 +53,7 @@ namespace PhotoExhibiter.Controllers
             {
                 UpcomingExhibits = exhibits,
                 ShowActions = _signInManager.IsSignedIn (User),
-                Heading = "Exhibitions I'm Attending"
+                Heading = "Exhibits I'm Attending"
             };
 
             return View ("Exhibits", viewModel);
@@ -100,7 +100,7 @@ namespace PhotoExhibiter.Controllers
             if (!ModelState.IsValid)
             {
                 viewModel.Genres = _context.Genres.ToList ();
-                return View ("Create", viewModel);
+                return View ("ExhibitForm", viewModel);
             }
 
             var exhibit = new Exhibit
@@ -114,7 +114,7 @@ namespace PhotoExhibiter.Controllers
             _context.Exhibits.Add (exhibit);
             _context.SaveChanges ();
 
-            return RedirectToAction ("Mine", "Exhibit");
+            return RedirectToAction ("Mine", "Exhibits");
         }
 
         [Authorize]

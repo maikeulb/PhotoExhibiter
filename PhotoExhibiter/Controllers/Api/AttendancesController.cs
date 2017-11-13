@@ -28,7 +28,7 @@ namespace PhotoExhibiter.Controllers.Api
         }
 
         [HttpPost]
-        public IActionResult Attend ([FromBody] AttendanceDto dto)
+        public IActionResult Attend ([FromBody]AttendanceDto dto)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace PhotoExhibiter.Controllers.Api
                 }
 
                 _logger.LogInformation ("Getting UserId {ID}", userId);
-                _logger.LogInformation ("Getting GidId {ID}", dto.ExhibitId);
+                _logger.LogInformation ("Getting ExhibitId {ID}", dto.ExhibitId);
 
                 var attendance = new Attendance
                 {

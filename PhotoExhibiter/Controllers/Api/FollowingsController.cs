@@ -28,7 +28,7 @@ namespace PhotoExhibiter.Controllers.Api
         }
 
         [HttpPost]
-        public IActionResult Follow ([FromBody] FollowingDto dto)
+        public IActionResult Follow ([FromBody]FollowingDto dto)
         {
             try
             {
