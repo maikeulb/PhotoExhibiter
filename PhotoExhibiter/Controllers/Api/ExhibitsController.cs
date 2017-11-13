@@ -43,6 +43,30 @@ namespace PhotoExhibiter.Controllers.Api
                 _logger.LogInformation ("Getting UserId {ID}", userId);
 
                 exhibit.IsCanceled = true;
+
+                var notification = new Notification
+                {
+                    DateTime = DateTime.Now,
+                    Exhibit = exhibit,
+                    Type = NotificationType.ExhibitCanceled
+                };
+
+                var attendees = _context.Attendances
+                    .Where(a => a.ExhibitId == exhibit.Id)
+                    .Select(a => a.Attendee)
+                    .ToList();
+
+                foreach (var attendee in attendees)
+                {
+                    var userNotification = new UserNotification
+                    {
+                        User = attendee,
+                        Notification = notification
+                    };
+
+                    _context.UserNotifications.Add(userNotification);
+                }
+
                 _context.SaveChanges ();
 
                 return Ok ();
