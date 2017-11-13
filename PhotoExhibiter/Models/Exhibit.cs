@@ -8,8 +8,6 @@ namespace PhotoExhibiter.Models
     {
         public int Id { get; set; }
 
-        public bool IsCanceled { get; set; }
-
         public ApplicationUser Photographer { get; set; }
 
         [Required]
@@ -21,11 +19,13 @@ namespace PhotoExhibiter.Models
         [StringLength (255)]
         public string Location { get; set; }
 
-        public Genre Genre { get; set; }
-
         [Required]
         public int GenreId { get; set; }
 
+        public Genre Genre { get; set; }
+
         public ICollection<Attendance> Attendances { get; set; }
+
+        public bool IsCanceled { get; set; }
     }
 }

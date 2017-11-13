@@ -11,6 +11,5 @@ namespace PhotoExhibiter.Models
         [Key]
         public string AttendeeId { get; set; }
         public ApplicationUser Attendee { get; set; }
-
     }
 }

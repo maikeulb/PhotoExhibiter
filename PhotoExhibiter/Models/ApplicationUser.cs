@@ -14,6 +14,5 @@ namespace PhotoExhibiter.Models
         public ICollection<Following> Followees { get; set; }
 
         public ICollection<Attendance> Attendances { get; set; }
-
     }
 }
