@@ -1,5 +1,5 @@
-using PhotoExhibiter.Models;
 using System.Linq;
+using PhotoExhibiter.Models;
 using PhotoExhibiter.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;

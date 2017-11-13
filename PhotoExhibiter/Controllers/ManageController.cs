@@ -13,10 +13,12 @@ using PhotoExhibiter.ViewModels.ManageViewModels;
 using PhotoExhibitTracker.Services;
 using Web.Services;
 
-namespace PhotoExhibiter.Controllers {
+namespace PhotoExhibiter.Controllers 
+{
     [Authorize]
     [Route ("[controller]/[action]")]
-    public class ManageController : Controller {
+    public class ManageController : Controller 
+    {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
@@ -42,7 +44,8 @@ namespace PhotoExhibiter.Controllers {
         public string StatusMessage { get; set; }
 
         [HttpGet]
-        public async Task<IActionResult> Index () {
+        public async Task<IActionResult> Index() 
+        {
             var user = await _userManager.GetUserAsync (User);
             if (user == null) {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -61,7 +64,8 @@ namespace PhotoExhibiter.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index (IndexViewModel model) {
+        public async Task<IActionResult> Index(IndexViewModel model) 
+        {
             if (!ModelState.IsValid) {
                 return View (model);
             }
@@ -93,7 +97,8 @@ namespace PhotoExhibiter.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendVerificationEmail (IndexViewModel model) {
+        public async Task<IActionResult> SendVerificationEmail(IndexViewModel model) 
+        {
             if (!ModelState.IsValid) {
                 return View (model);
             }
@@ -113,7 +118,8 @@ namespace PhotoExhibiter.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword () {
+        public async Task<IActionResult> ChangePassword() 
+        {
             var user = await _userManager.GetUserAsync (User);
             if (user == null) {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -130,7 +136,8 @@ namespace PhotoExhibiter.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword (ChangePasswordViewModel model) {
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model) 
+        {
             if (!ModelState.IsValid) {
                 return View (model);
             }
@@ -154,7 +161,8 @@ namespace PhotoExhibiter.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> SetPassword () {
+        public async Task<IActionResult> SetPassword() 
+        {
             var user = await _userManager.GetUserAsync (User);
             if (user == null) {
                 throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -172,7 +180,8 @@ namespace PhotoExhibiter.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SetPassword (SetPasswordViewModel model) {
+        public async Task<IActionResult> SetPassword(SetPasswordViewModel model) 
+        {
             if (!ModelState.IsValid) {
                 return View (model);
             }
@@ -195,13 +204,13 @@ namespace PhotoExhibiter.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> ExternalLogins () {
-            var user = await _userManager.GetUserAsync (User);
+        public async Task<IActionResult> ExternalLogins() {
+            var user = await _userManager.GetUserAsync(User);
             if (user == null) {
-                throw new ApplicationException ($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync (user) };
+            var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync(user) };
             model.OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync ())
                 .Where (auth => model.CurrentLogins.All (ul => auth.Name != ul.LoginProvider))
                 .ToList ();

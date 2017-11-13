@@ -12,8 +12,8 @@ using PhotoExhibiter.Data;
 using PhotoExhibiter.Models;
 using PhotoExhibiter.ViewModels;
 
-namespace PhotoExhibiter.Controllers {
-
+namespace PhotoExhibiter.Controllers 
+{
     public class ExhibitsController : Controller
     {
         private readonly ApplicationDbContext _context;

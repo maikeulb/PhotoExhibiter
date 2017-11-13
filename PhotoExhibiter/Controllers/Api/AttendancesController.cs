@@ -1,14 +1,14 @@
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using PhotoExhibiter.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Models;
-using PhotoExhibiter.Dtos;
 using System;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using PhotoExhibiter.Data;
+using PhotoExhibiter.Dtos;
+using PhotoExhibiter.Models;
 
-namespace PhotoExhibiter.Controllers
+namespace PhotoExhibiter.Controllers.Api
 {
     [Route("api/[Controller]")]
     [Authorize]
@@ -30,35 +30,35 @@ namespace PhotoExhibiter.Controllers
         [HttpPost]
         public IActionResult Attend([FromBody]AttendanceDto dto)
         {
-          try
-          {
-            var userId = _userManager.GetUserId(User);
+            try
+            {
+                var userId = _userManager.GetUserId(User);
 
-            if (_context.Attendances.Any(a => a.AttendeeId == userId && a.ExhibitId == dto.ExhibitId))
+                if (_context.Attendances.Any(a => a.AttendeeId == userId && a.ExhibitId == dto.ExhibitId))
                 {
-                  return BadRequest("The attendance already exists.");
+                    return BadRequest("The attendance already exists.");
                 }
 
-             _logger.LogInformation("Getting UserId {ID}", userId);
-             _logger.LogInformation("Getting GidId {ID}", dto.ExhibitId);
+                _logger.LogInformation("Getting UserId {ID}", userId);
+                _logger.LogInformation("Getting GidId {ID}", dto.ExhibitId);
 
-            var attendance = new Attendance
+                var attendance = new Attendance
+                {
+                    AttendeeId = userId,
+                    ExhibitId = dto.ExhibitId
+                };
+
+                _context.Attendances.Add(attendance);
+                _context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
             {
-                AttendeeId = userId,
-                ExhibitId = dto.ExhibitId
-            };
-
-            _context.Attendances.Add(attendance);
-            _context.SaveChanges();
-
-           return Ok();
-          }
-          catch (Exception ex)
-          {
             _logger.LogError($"Failed to add attendee: {ex}");
-          }
+            }
 
-          return BadRequest("Failed to add attendee");
+            return BadRequest("Failed to add attendee");
         }
     }
 }
