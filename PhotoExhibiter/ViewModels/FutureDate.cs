@@ -6,10 +6,10 @@ namespace PhotoExhibiter.ViewModels
 {
     public class FutureDate : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid (object value)
         {
             DateTime dateTime;
-            var isValid = DateTime.TryParseExact(Convert.ToString(value),
+            var isValid = DateTime.TryParseExact (Convert.ToString (value),
                 "d MMM yyyy",
                 CultureInfo.CurrentCulture,
                 DateTimeStyles.None,

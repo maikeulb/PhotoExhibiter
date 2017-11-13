@@ -35,19 +35,19 @@ namespace PhotoExhibiter.ViewModels
             get
             {
                 Expression<Func<ExhibitsController, IActionResult>> update =
-                    (c => c.Update(this));
+                    (c => c.Update (this));
 
                 Expression<Func<ExhibitsController, IActionResult>> create =
-                    (c => c.Create(this));
+                    (c => c.Create (this));
 
                 var action = (Id != 0) ? update : create;
                 return (action.Body as MethodCallExpression).Method.Name;
             }
         }
 
-        public DateTime GetDateTime()
+        public DateTime GetDateTime ()
         {
-            return DateTime.Parse(string.Format("{0} {1}", Date, Time));
+            return DateTime.Parse (string.Format ("{0} {1}", Date, Time));
         }
     }
 }
