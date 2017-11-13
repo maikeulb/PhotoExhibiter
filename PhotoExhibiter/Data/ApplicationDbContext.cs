@@ -4,14 +4,16 @@ using PhotoExhibiter.Models;
 
 namespace PhotoExhibiter.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
-
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
         public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options) : base (options) { }
 
         public DbSet<Exhibit> Exhibits { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Attendance> Attendances{ get; set; }
         public DbSet<Following> Followings { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,7 +45,22 @@ namespace PhotoExhibiter.Data
             modelBuilder.Entity<Following>()
                 .HasKey(f => new { f.FollowerId , f.FolloweeId});
 
-                base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<UserNotification>(m =>
+            {
+                m.HasKey(e => new {e.UserId, e.NotificationId});
+
+                m.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                m.HasOne(e => e.Notification)
+                    .WithMany()
+                    .HasForeignKey(e => e.NotificationId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

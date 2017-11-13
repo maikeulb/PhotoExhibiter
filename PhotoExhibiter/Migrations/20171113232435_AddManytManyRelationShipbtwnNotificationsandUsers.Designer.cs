@@ -12,9 +12,10 @@ using System;
 namespace PhotoExhibiter.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171113232435_AddManytManyRelationShipbtwnNotificationsandUsers")]
+    partial class AddManytManyRelationShipbtwnNotificationsandUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
