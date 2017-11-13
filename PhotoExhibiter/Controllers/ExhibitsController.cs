@@ -29,11 +29,23 @@ namespace PhotoExhibiter.Controllers {
             _signInManager = signInManager;
         }
 
+
+        [Authorize]
+        public ActionResult Mine()
+        {
+            var userId = _userManager.GetUserId(User);
+            var exhibits = _context.Exhibits
+                .Where(g => g.PhotographerId == userId && g.DateTime > DateTime.Now)
+                .Include(g => g.Genre)
+                .ToList();
+
+            return View(exhibits);
+        }
+
         [Authorize]
         public ActionResult Attending()
         {
             var userId = _userManager.GetUserId(User);
-            /* PhotographerId = User.FindFirstValue(ClaimTypes.NameIdentifier) */
             var exhibits = _context.Attendances
                 .Where(a => a.AttendeeId == userId)
                 .Select(a => a.Exhibit)
@@ -85,7 +97,7 @@ namespace PhotoExhibiter.Controllers {
             _context.Exhibits.Add (exhibit);
             _context.SaveChanges ();
 
-            return RedirectToAction ("Index", "Home");
+            return RedirectToAction ("Mine", "Exhibit");
         }
 
     }

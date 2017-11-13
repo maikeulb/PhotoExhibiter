@@ -1,0 +1,30 @@
+@model IEnumerable<PhotoExhibiter.Models.Exhibit>
+@{
+    ViewBag.Title = "Mine";
+}
+
+<h2>My Upcoming Exhibits</h2>
+<ul class="gigs voffset4">
+    @foreach (var exhibit in Model)
+    {
+        <li>
+            <div class="date">
+                <div class="month">
+                    @exhibit.DateTime.ToString("MMM")
+                </div>
+                <div class="day">
+                    @exhibit.DateTime.ToString("d ")
+                </div>
+            </div>
+            <div class="details">
+                <span class="photographer">
+                    @exhibit.Location
+                </span>
+                <span class="genre">
+                    @exhibit.Genre.Name
+                </span>
+            </div>
+        </li>
+    }
+</ul>
+
