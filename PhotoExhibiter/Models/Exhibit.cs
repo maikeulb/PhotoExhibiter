@@ -8,6 +8,8 @@ public class Exhibit
 {
     public int Id { get; set; }
 
+    public bool IsCanceled { get; set; }
+
     public ApplicationUser Photographer { get; set; }
 
     [Required]
