@@ -19,9 +19,9 @@ namespace PhotoExhibiter.Infrastructure.Repositories
         public Exhibit GetExhibit(int exhibitId)
         {
             return _context.Exhibits
-                    .Include(g => g.Photographer)
-                    .Include(g => g.Genre)
-                    .SingleOrDefault(g => g.Id == exhibitId);
+                    .Include(e => e.Photographer)
+                    .Include(e => e.Genre)
+                    .SingleOrDefault(e => e.Id == exhibitId);
         }
 
         public IEnumerable<Exhibit> GetUpcomingExhibitsByPhotographer(string photographerId)
@@ -38,8 +38,9 @@ namespace PhotoExhibiter.Infrastructure.Repositories
         public Exhibit GetExhibitWithAttendees(int exhibitId)
         {
             return _context.Exhibits
-                .Include(g => g.Attendances.Select(a => a.Attendee))
-                .SingleOrDefault(g => g.Id == exhibitId);
+                .Include(e => e.Attendances)
+                .ThenInclude(a => a.Attendee)
+                .SingleOrDefault(e => e.Id == exhibitId);
         }
 
         public IEnumerable<Exhibit> GetExhibitsUserAttending(string userId)
