@@ -11,5 +11,6 @@ namespace PhotoExhibiter.Domain.Interfaces
         IEnumerable<Exhibit> GetExhibitsUserAttending(string userId);
         void Add(Exhibit exhibit);
         IEnumerable<Exhibit> GetUpcomingExhibits(string searchTerm = null);
+        bool SaveAll();
     }
 }

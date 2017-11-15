@@ -9,21 +9,22 @@ namespace PhotoExhibiter.Presentation.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IApplicationUserRepository _repository;
 
-        public FolloweesController (UserManager<ApplicationUser> userManager,
+        public FolloweesController (
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IUnitOfWork unitOfWork)
+            IApplicationUserRepository repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
+            _repository= repository;
         }
 
         public IActionResult Index ()
         {
             var userId = _userManager.GetUserId (User);
-            var photographers = _unitOfWork.Users.GetPhotographersFollowedBy (userId);
+            var photographers = _repository.GetPhotographersFollowedBy (userId);
 
             return View (photographers);
         }

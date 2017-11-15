@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Entities;
-using PhotoExhibiter.Presentation.Controllers;
 using PhotoExhibiter.Presentation.ViewModels.AccountViewModels;
 using PhotoExhibiter.Services;
 using Web.Services;
@@ -26,7 +25,6 @@ namespace PhotoExhibiter.Presentation.Controllers
         public AccountController (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {

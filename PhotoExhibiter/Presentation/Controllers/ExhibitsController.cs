@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhotoExhibiter.Domain.Entities;
@@ -12,22 +11,26 @@ namespace PhotoExhibiter.Presentation.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IExhibitRepository _exhibitrepository;
+        private readonly IGenreRepository _genrerepository;
 
-        public ExhibitsController (UserManager<ApplicationUser> userManager,
+        public ExhibitsController (
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IUnitOfWork unitOfWork)
+            IExhibitRepository exhibitrepository,
+            IGenreRepository genrerepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
+            _exhibitrepository = exhibitrepository;
+            _genrerepository = genrerepository;
         }
 
         [Authorize]
         public IActionResult Mine ()
         {
             var userId = _userManager.GetUserId (User);
-            var exhibits = _unitOfWork.Exhibits.GetUpcomingExhibitsByPhotographer (userId);
+            var exhibits = _exhibitrepository.GetUpcomingExhibitsByPhotographer (userId);
 
             return View (exhibits);
         }
@@ -39,7 +42,7 @@ namespace PhotoExhibiter.Presentation.Controllers
 
             var model = new ExhibitsViewModel ()
             {
-                UpcomingExhibits = _unitOfWork.Exhibits.GetExhibitsUserAttending(userId),
+                UpcomingExhibits = _exhibitrepository.GetExhibitsUserAttending(userId),
                 ShowActions = _signInManager.IsSignedIn (User),
                 Heading = "Exhibits I'm Attending"
             };
@@ -52,7 +55,7 @@ namespace PhotoExhibiter.Presentation.Controllers
         {
             var model = new ExhibitFormViewModel
             {
-                Genres = _unitOfWork.Genres.GetGenres (),
+                Genres = _genrerepository.GetGenres (),
                 Heading = "Add an Exhibit"
             };
 
@@ -62,7 +65,7 @@ namespace PhotoExhibiter.Presentation.Controllers
         [Authorize]
         public IActionResult Edit (int id)
         {
-            var exhibit = _unitOfWork.Exhibits.GetExhibit (id);
+            var exhibit = _exhibitrepository.GetExhibit (id);
 
             if (exhibit == null)
                 return NotFound ();
@@ -74,7 +77,7 @@ namespace PhotoExhibiter.Presentation.Controllers
             {
                 Heading = "Edit an Exhibit",
                 Id = exhibit.Id,
-                Genres = _unitOfWork.Genres.GetGenres (),
+                Genres = _genrerepository.GetGenres (),
                 Date = exhibit.DateTime.ToString ("d MMM yyyy"),
                 Time = exhibit.DateTime.ToString ("HH:mm"),
                 Genre = exhibit.GenreId,
@@ -91,7 +94,7 @@ namespace PhotoExhibiter.Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Genres = _unitOfWork.Genres.GetGenres ();
+                model.Genres = _genrerepository.GetGenres ();
                 return View ("ExhibitForm", model);
             }
 
@@ -103,8 +106,8 @@ namespace PhotoExhibiter.Presentation.Controllers
                 Location = model.Location
             };
 
-            _unitOfWork.Exhibits.Add (exhibit);
-            _unitOfWork.Complete ();
+            _exhibitrepository.Add (exhibit);
+            _exhibitrepository.SaveAll ();
 
             return RedirectToAction ("Mine", "Exhibits");
         }
@@ -116,11 +119,11 @@ namespace PhotoExhibiter.Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Genres = _unitOfWork.Genres.GetGenres ();
+                model.Genres = _genrerepository.GetGenres ();
                 return View ("ExhibitForm", model);
             }
 
-            var exhibit = _unitOfWork.Exhibits.GetExhibitWithAttendees (model.Id);
+            var exhibit = _exhibitrepository.GetExhibitWithAttendees (model.Id);
 
             if (exhibit == null)
                 return NotFound ();
@@ -129,8 +132,7 @@ namespace PhotoExhibiter.Presentation.Controllers
                 return new UnauthorizedResult ();
 
             exhibit.Modify (model.GetDateTime (), model.Location, model.Genre);
-
-            _unitOfWork.Complete ();
+            _exhibitrepository.SaveAll ();
 
             return RedirectToAction ("Mine", "Exhibits");
         }

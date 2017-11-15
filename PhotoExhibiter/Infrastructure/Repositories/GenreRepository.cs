@@ -18,5 +18,10 @@ namespace PhotoExhibiter.Infrastructure.Repositories
         {
             return _context.Genres.ToList ();
         }
+
+        public bool SaveAll()
+        {
+          return _context.SaveChanges() > 0;
+        }
     }
 }

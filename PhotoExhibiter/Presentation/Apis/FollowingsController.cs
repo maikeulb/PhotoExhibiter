@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Entities;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Presentation.ApiModels;
 
 namespace PhotoExhibiter.Presentation.Apis
@@ -14,20 +13,18 @@ namespace PhotoExhibiter.Presentation.Apis
     [Authorize]
     public class FollowingsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<AttendancesController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<AttendancesController> _logger;
+        private readonly IFollowingRepository _repository;
 
-        public FollowingsController (ApplicationDbContext context,
-            ILogger<AttendancesController> logger,
+        public FollowingsController (
             UserManager<ApplicationUser> userManager,
-            IUnitOfWork unitOfWork)
+            ILogger<AttendancesController> logger,
+            IFollowingRepository repository)
         {
-            _context = context;
             _logger = logger;
             _userManager = userManager;
-            _unitOfWork = unitOfWork;
+            _repository = repository;
         }
 
         [HttpPost]
@@ -37,7 +34,7 @@ namespace PhotoExhibiter.Presentation.Apis
             {
                 var userId = _userManager.GetUserId (User);
 
-                var following = _unitOfWork.Followings.GetFollowing (userId, model.FolloweeId);
+                var following = _repository.GetFollowing (userId, model.FolloweeId);
                 if (following != null)
                     return BadRequest ("Following already exists.");
 
@@ -50,8 +47,8 @@ namespace PhotoExhibiter.Presentation.Apis
                     FolloweeId = model.FolloweeId
                 };
 
-                _unitOfWork.Followings.Add (following);
-                _unitOfWork.Complete ();
+                _repository.Add (following);
+                _repository.SaveAll ();
 
                 return Ok ();
             }

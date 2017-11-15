@@ -9,22 +9,24 @@ namespace PhotoExhibiter.Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IExhibitRepository _repository;
 
-        public HomeController (UserManager<ApplicationUser> userManager,
+        public HomeController (
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IUnitOfWork unitOfWork)
+            IExhibitRepository repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _unitOfWork = unitOfWork;
+            _repository= repository;
         }
 
         public IActionResult Index (string query = null)
         {
-            var upcomingExhibits = _unitOfWork.Exhibits.GetUpcomingExhibits (query);
+            var upcomingExhibits = _repository.GetUpcomingExhibits (query);
+
             var userId = _userManager.GetUserId (User);
 
             var viewModel = new ExhibitsViewModel

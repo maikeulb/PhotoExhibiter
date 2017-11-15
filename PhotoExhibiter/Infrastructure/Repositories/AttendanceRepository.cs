@@ -37,5 +37,10 @@ namespace PhotoExhibiter.Infrastructure.Repositories
         {
             _context.Attendances.Remove (attendance);
         }
+
+        public bool SaveAll()
+        {
+          return _context.SaveChanges() > 0;
+        }
     }
 }

@@ -28,5 +28,10 @@ namespace PhotoExhibiter.Infrastructure.Repositories
         {
             _context.Followings.Remove (following);
         }
+
+        public bool SaveAll()
+        {
+          return _context.SaveChanges() > 0;
+        }
     }
 }

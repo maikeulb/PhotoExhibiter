@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Entities;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Presentation.ApiModels;
 
 namespace PhotoExhibiter.Presentation.Apis
@@ -14,20 +13,18 @@ namespace PhotoExhibiter.Presentation.Apis
     [Authorize]
     public class AttendancesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<AttendancesController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<AttendancesController> _logger;
+        private readonly IAttendanceRepository _repository;
 
-        public AttendancesController (ApplicationDbContext context,
-            ILogger<AttendancesController> logger,
+        public AttendancesController (
             UserManager<ApplicationUser> userManager,
-            IUnitOfWork unitOfWork)
+            ILogger<AttendancesController> logger,
+            IAttendanceRepository repository)
         {
-            _context = context;
             _logger = logger;
             _userManager = userManager;
-            _unitOfWork = unitOfWork;
+            _repository = repository;
         }
 
         [HttpPost]
@@ -37,7 +34,7 @@ namespace PhotoExhibiter.Presentation.Apis
             {
                 var userId = _userManager.GetUserId (User);
 
-                var attendance = _unitOfWork.Attendances.GetAttendance (model.ExhibitId, userId);
+                var attendance = _repository.GetAttendance (model.ExhibitId, userId);
                 if (attendance != null)
                     return BadRequest ("The attendance already exists.");
 
@@ -50,8 +47,8 @@ namespace PhotoExhibiter.Presentation.Apis
                     ExhibitId = model.ExhibitId
                 };
 
-                _unitOfWork.Attendances.Add (attendance);
-                _unitOfWork.Complete ();
+                _repository.Add (attendance);
+                _repository.SaveAll ();
 
                 return Ok ();
             }

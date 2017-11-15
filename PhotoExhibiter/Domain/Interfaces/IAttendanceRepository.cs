@@ -9,5 +9,6 @@ namespace PhotoExhibiter.Domain.Interfaces
         Attendance GetAttendance(int exhibitId, string userId);
         void Add(Attendance attendance);
         void Remove(Attendance attendance);
+        bool SaveAll();
     }
 }

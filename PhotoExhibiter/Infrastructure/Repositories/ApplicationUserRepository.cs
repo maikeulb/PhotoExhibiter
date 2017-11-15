@@ -21,5 +21,10 @@ namespace PhotoExhibiter.Infrastructure.Repositories
                 .Select(f => f.Followee)
                 .ToList();
         }
+
+        public bool SaveAll()
+        {
+          return _context.SaveChanges() > 0;
+        }
     }
 }

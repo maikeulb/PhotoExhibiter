@@ -20,5 +20,10 @@ namespace PhotoExhibiter.Infrastructure.Repositories
                 .Where(un => un.UserId == userId && !un.IsRead)
                 .ToList();
         }
+
+        public bool SaveAll()
+        {
+          return _context.SaveChanges() > 0;
+        }
     }
 }

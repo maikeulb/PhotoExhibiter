@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Entities;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.Infrastructure;
 
 namespace PhotoExhibiter.Presentation.Apis
 {
@@ -13,20 +12,18 @@ namespace PhotoExhibiter.Presentation.Apis
     [Authorize]
     public class ExhibitsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<AttendancesController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<AttendancesController> _logger;
+        private readonly IExhibitRepository _repository;
 
-        public ExhibitsController (ApplicationDbContext context,
-            ILogger<AttendancesController> logger,
+        public ExhibitsController (
             UserManager<ApplicationUser> userManager,
-            IUnitOfWork unitOfWork)
+            ILogger<AttendancesController> logger,
+            IExhibitRepository repository)
         {
-            _context = context;
-            _logger = logger;
             _userManager = userManager;
-            _unitOfWork = unitOfWork;
+            _logger = logger;
+            _repository = repository;
         }
 
         [HttpDelete]
@@ -35,7 +32,7 @@ namespace PhotoExhibiter.Presentation.Apis
             try
             {
                 var userId = _userManager.GetUserId (User);
-                var exhibit = _unitOfWork.Exhibits.GetExhibitWithAttendees (id);
+                var exhibit = _repository.GetExhibitWithAttendees (id);
 
                 if (exhibit == null || exhibit.IsCanceled)
                     return NotFound ();
@@ -47,7 +44,7 @@ namespace PhotoExhibiter.Presentation.Apis
 
                 exhibit.Cancel ();
 
-                _unitOfWork.Complete ();
+                _repository.SaveAll ();
 
                 return Ok ();
             }

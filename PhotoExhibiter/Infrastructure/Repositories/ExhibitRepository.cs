@@ -9,9 +9,9 @@ namespace PhotoExhibiter.Infrastructure.Repositories
 {
     public class ExhibitRepository : IExhibitRepository
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ExhibitRepository(IApplicationDbContext context)
+        public ExhibitRepository(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -74,6 +74,11 @@ namespace PhotoExhibiter.Infrastructure.Repositories
             }
 
             return upcomingExhibits.ToList();
+        }
+
+        public bool SaveAll()
+        {
+          return _context.SaveChanges() > 0;
         }
     }
 }
