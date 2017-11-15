@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PhotoExhibiter.Data;
-using PhotoExhibiter.Models;
-using PhotoExhibitTracker.Services;
+using PhotoExhibiter.Infrastructure;
+using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Services;
 
 namespace PhotoExhibiter
 {

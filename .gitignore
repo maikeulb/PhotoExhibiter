@@ -266,6 +266,11 @@ __pycache__/
 
 # Cake - Uncomment if you are using it
 # tools/
+
+# Ignore build files
 /obj
 /bin
 /Migrations.bak
+
+# Ignore temp backup files
+*.bak

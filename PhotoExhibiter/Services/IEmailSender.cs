@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PhotoExhibitTracker.Services
+namespace PhotoExhibiter.Services
 {
     public interface IEmailSender
     {
