@@ -2,8 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using PhotoExhibiter.Domain.Enums;
 using PhotoExhibiter.Infrastructure;
+using System;
 
 namespace PhotoExhibiter.Migrations
 {
@@ -124,7 +128,7 @@ namespace PhotoExhibiter.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.ApplicationUser", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -178,7 +182,7 @@ namespace PhotoExhibiter.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Attendance", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Attendance", b =>
                 {
                     b.Property<int>("ExhibitId");
 
@@ -186,12 +190,12 @@ namespace PhotoExhibiter.Migrations
 
                     b.HasKey("ExhibitId", "AttendeeId");
 
-                    b.HasAlternateKey("AttendeeId", "ExhibitId");
+                    b.HasIndex("AttendeeId");
 
                     b.ToTable("Attendances");
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Exhibit", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Exhibit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -218,7 +222,7 @@ namespace PhotoExhibiter.Migrations
                     b.ToTable("Exhibits");
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Following", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Following", b =>
                 {
                     b.Property<string>("FollowerId");
 
@@ -226,12 +230,12 @@ namespace PhotoExhibiter.Migrations
 
                     b.HasKey("FollowerId", "FolloweeId");
 
-                    b.HasAlternateKey("FolloweeId", "FollowerId");
+                    b.HasIndex("FolloweeId");
 
                     b.ToTable("Followings");
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Genre", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -245,18 +249,19 @@ namespace PhotoExhibiter.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Notification", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Notification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateTime");
 
-                    b.Property<int>("ExhibitId");
+                    b.Property<int?>("ExhibitId")
+                        .IsRequired();
 
                     b.Property<DateTime?>("OriginalDateTime");
 
-                    b.Property<string>("OriginalVenue");
+                    b.Property<string>("OriginalLocation");
 
                     b.Property<int>("Type");
 
@@ -267,7 +272,7 @@ namespace PhotoExhibiter.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.UserNotification", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.UserNotification", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -277,7 +282,7 @@ namespace PhotoExhibiter.Migrations
 
                     b.HasKey("UserId", "NotificationId");
 
-                    b.HasAlternateKey("NotificationId", "UserId");
+                    b.HasIndex("NotificationId");
 
                     b.ToTable("UserNotifications");
                 });
@@ -292,7 +297,7 @@ namespace PhotoExhibiter.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -300,7 +305,7 @@ namespace PhotoExhibiter.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -313,7 +318,7 @@ namespace PhotoExhibiter.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -321,68 +326,68 @@ namespace PhotoExhibiter.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Attendance", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Attendance", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Attendee")
-                        .WithMany("Attendances")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser", "Attendee")
+                        .WithMany()
                         .HasForeignKey("AttendeeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("PhotoExhibiter.Models.Exhibit", "Exhibit")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.Exhibit", "Exhibit")
                         .WithMany("Attendances")
                         .HasForeignKey("ExhibitId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Exhibit", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Exhibit", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.Genre", "Genre")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.Genre", "Genre")
                         .WithMany()
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Photographer")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser", "Photographer")
                         .WithMany()
                         .HasForeignKey("PhotographerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Following", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Following", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Followee")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser", "Followee")
                         .WithMany("Followers")
                         .HasForeignKey("FolloweeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "Follower")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser", "Follower")
                         .WithMany("Followees")
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.Notification", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.Notification", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.Exhibit", "Exhibit")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.Exhibit", "Exhibit")
                         .WithMany()
                         .HasForeignKey("ExhibitId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PhotoExhibiter.Models.UserNotification", b =>
+            modelBuilder.Entity("PhotoExhibiter.Domain.Entities.UserNotification", b =>
                 {
-                    b.HasOne("PhotoExhibiter.Models.Notification", "Notification")
+                    b.HasOne("PhotoExhibiter.Domain.Entities.Notification", "Notification")
                         .WithMany()
                         .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("PhotoExhibiter.Models.ApplicationUser", "User")
-                        .WithMany()
+                    b.HasOne("PhotoExhibiter.Domain.Entities.ApplicationUser", "User")
+                        .WithMany("UserNotifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });

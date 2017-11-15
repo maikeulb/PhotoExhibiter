@@ -8,7 +8,8 @@ namespace PhotoExhibiter.Infrastructure.EntityConfigurations
     {
         public void Configure (EntityTypeBuilder<Notification> builder)
         {
-            builder.Property (n => n.Exhibit)
+            builder.HasOne(n => n.Exhibit)
+                   .WithMany ()
                    .IsRequired ();
         }
     }

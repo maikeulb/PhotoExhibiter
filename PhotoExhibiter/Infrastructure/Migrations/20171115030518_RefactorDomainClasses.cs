@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PhotoExhibiter.Migrations
 {
-    public partial class InitialMigrationAfterMajorRefactoring : Migration
+    public partial class RefactorDomainClasses : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -178,7 +178,6 @@ namespace PhotoExhibiter.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Followings", x => new { x.FollowerId, x.FolloweeId });
-                    table.UniqueConstraint("AK_Followings_FolloweeId_FollowerId", x => new { x.FolloweeId, x.FollowerId });
                     table.ForeignKey(
                         name: "FK_Followings_AspNetUsers_FolloweeId",
                         column: x => x.FolloweeId,
@@ -201,6 +200,7 @@ namespace PhotoExhibiter.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     DateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     GenreId = table.Column<int>(type: "int", nullable: false),
+                    IsCanceled = table.Column<bool>(type: "bit", nullable: false),
                     Location = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
                     PhotographerId = table.Column<string>(type: "varchar(127)", nullable: false)
                 },
@@ -231,7 +231,6 @@ namespace PhotoExhibiter.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attendances", x => new { x.ExhibitId, x.AttendeeId });
-                    table.UniqueConstraint("AK_Attendances_AttendeeId_ExhibitId", x => new { x.AttendeeId, x.ExhibitId });
                     table.ForeignKey(
                         name: "FK_Attendances_AspNetUsers_AttendeeId",
                         column: x => x.AttendeeId,
@@ -242,6 +241,54 @@ namespace PhotoExhibiter.Migrations
                         name: "FK_Attendances_Exhibits_ExhibitId",
                         column: x => x.ExhibitId,
                         principalTable: "Exhibits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ExhibitId = table.Column<int>(type: "int", nullable: false),
+                    OriginalDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    OriginalLocation = table.Column<string>(type: "longtext", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Exhibits_ExhibitId",
+                        column: x => x.ExhibitId,
+                        principalTable: "Exhibits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserNotifications",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "varchar(127)", nullable: false),
+                    NotificationId = table.Column<int>(type: "int", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserNotifications", x => new { x.UserId, x.NotificationId });
+                    table.ForeignKey(
+                        name: "FK_UserNotifications_Notifications_NotificationId",
+                        column: x => x.NotificationId,
+                        principalTable: "Notifications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserNotifications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -284,6 +331,11 @@ namespace PhotoExhibiter.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Attendances_AttendeeId",
+                table: "Attendances",
+                column: "AttendeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Exhibits_GenreId",
                 table: "Exhibits",
                 column: "GenreId");
@@ -292,6 +344,21 @@ namespace PhotoExhibiter.Migrations
                 name: "IX_Exhibits_PhotographerId",
                 table: "Exhibits",
                 column: "PhotographerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Followings_FolloweeId",
+                table: "Followings",
+                column: "FolloweeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_ExhibitId",
+                table: "Notifications",
+                column: "ExhibitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserNotifications_NotificationId",
+                table: "UserNotifications",
+                column: "NotificationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -318,7 +385,13 @@ namespace PhotoExhibiter.Migrations
                 name: "Followings");
 
             migrationBuilder.DropTable(
+                name: "UserNotifications");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Exhibits");
