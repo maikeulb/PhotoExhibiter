@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Entities;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Presentation.ViewModels;
@@ -13,15 +14,18 @@ namespace PhotoExhibiter.Presentation.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IExhibitRepository _exhibitrepository;
         private readonly IGenreRepository _genrerepository;
+        private readonly ILogger _logger;
 
         public ExhibitsController (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            ILogger<AccountController> logger,
             IExhibitRepository exhibitrepository,
             IGenreRepository genrerepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
             _exhibitrepository = exhibitrepository;
             _genrerepository = genrerepository;
         }
@@ -66,6 +70,7 @@ namespace PhotoExhibiter.Presentation.Controllers
         public IActionResult Edit (int id)
         {
             var exhibit = _exhibitrepository.GetExhibit (id);
+            _logger.LogInformation ("exhibit", exhibit);
 
             if (exhibit == null)
                 return NotFound ();
@@ -75,14 +80,16 @@ namespace PhotoExhibiter.Presentation.Controllers
 
             var model = new ExhibitFormViewModel
             {
-                Heading = "Edit an Exhibit",
                 Id = exhibit.Id,
-                Genres = _genrerepository.GetGenres (),
+                Location = exhibit.Location,
                 Date = exhibit.DateTime.ToString ("d MMM yyyy"),
                 Time = exhibit.DateTime.ToString ("HH:mm"),
                 Genre = exhibit.GenreId,
-                Location = exhibit.Location
+                Genres = _genrerepository.GetGenres (),
+                Heading = "Edit an Exhibit"
             };
+
+            _logger.LogInformation ("Genres", model.Genres);
 
             return View ("ExhibitForm", model);
         }
