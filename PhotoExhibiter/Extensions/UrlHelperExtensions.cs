@@ -1,4 +1,4 @@
-using PhotoExhibiter.Presentation.Controllers;
+using PhotoExhibiter.WebUI.Controllers;
 
 namespace Microsoft.AspNetCore.Mvc
 {
