@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,7 @@ namespace PhotoExhibiter
             services.AddScoped<IUserNotificationRepository, UserNotificationRepository>();
 
             services.AddMvc ();
+            services.AddMediatR ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

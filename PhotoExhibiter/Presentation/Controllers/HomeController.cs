@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Handlers;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Presentation.ViewModels;
 
@@ -11,32 +14,30 @@ namespace PhotoExhibiter.Presentation.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IExhibitRepository _repository;
+        private readonly IMediator _mediatr;
 
         public HomeController (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IExhibitRepository repository)
+            IMediator mediatr)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _repository= repository;
+            _mediatr = mediatr;
         }
 
-        public IActionResult Index (string query = null)
+        public async Task<IActionResult> Index (string query = null)
         {
-            var upcomingExhibits = _repository.GetUpcomingExhibits (query);
-
-            var userId = _userManager.GetUserId (User);
-
-            var viewModel = new ExhibitsViewModel
+            var exhibitsquery = new ExhibitsQuery
             {
-                UpcomingExhibits = upcomingExhibits,
-                ShowActions = _signInManager.IsSignedIn (User),
-                Heading = "Upcoming Exhibits"
+                QueryId = query,
+                UserId = _userManager.GetUserId (User),
+                ShowActions = _signInManager.IsSignedIn (User)
             };
 
-            return View ("Exhibits", viewModel);
+            ExhibitsViewModel viewmodel = await _mediatr.Send(exhibitsquery);
+
+            return View ("Exhibits", viewmodel);
         }
 
         public IActionResult About ()
