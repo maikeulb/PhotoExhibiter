@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Infrastructure.EntityConfigurations;
 
 namespace PhotoExhibiter.Infrastructure

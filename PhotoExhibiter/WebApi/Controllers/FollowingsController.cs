@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.WebApi.ApiModels;
 

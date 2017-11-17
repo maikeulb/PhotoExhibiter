@@ -1,4 +1,4 @@
-﻿using PhotoExhibiter.Domain.Entities;
+﻿using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.Domain.Interfaces
 {

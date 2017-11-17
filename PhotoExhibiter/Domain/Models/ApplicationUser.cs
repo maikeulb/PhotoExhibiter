@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace PhotoExhibiter.Domain.Entities
+namespace PhotoExhibiter.Domain.Models
 {
     public class ApplicationUser : IdentityUser
     {

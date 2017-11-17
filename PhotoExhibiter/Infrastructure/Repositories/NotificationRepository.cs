@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
 
 namespace PhotoExhibiter.Infrastructure.Repositories

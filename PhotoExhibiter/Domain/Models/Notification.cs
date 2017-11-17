@@ -1,7 +1,7 @@
 ﻿using System;
 using PhotoExhibiter.Domain.Enums;
 
-namespace PhotoExhibiter.Domain.Entities
+namespace PhotoExhibiter.Domain.Models
 {
     public class Notification
     {

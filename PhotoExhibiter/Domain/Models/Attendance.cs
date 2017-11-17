@@ -1,4 +1,4 @@
-﻿namespace PhotoExhibiter.Domain.Entities
+﻿namespace PhotoExhibiter.Domain.Models
 {
     public class Attendance
     {

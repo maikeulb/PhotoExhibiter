@@ -1,5 +1,5 @@
 using System.Linq;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
 
 namespace PhotoExhibiter.Infrastructure.Repositories

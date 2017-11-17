@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
 
 namespace PhotoExhibiter.WebUI.Controllers

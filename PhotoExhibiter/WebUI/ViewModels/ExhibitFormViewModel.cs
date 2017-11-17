@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.WebUI.Controllers;
 using PhotoExhibiter.WebUI.ViewModels.Filters;
 

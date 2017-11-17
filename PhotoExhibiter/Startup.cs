@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Infrastructure.Repositories;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Services;
 

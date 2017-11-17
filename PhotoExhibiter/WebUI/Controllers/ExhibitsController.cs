@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Commands;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Domain.Queries;
 
@@ -37,12 +37,9 @@ namespace PhotoExhibiter.WebUI.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Mine ()
+        public async Task<IActionResult> Mine (Mine.Query query)
         {
-            var query = new GetMyExhibitsQuery
-            {
-                UserId = _userManager.GetUserId (User),
-            };
+            query.UserId = _userManager.GetUserId (User);
 
             var model = await _mediator.Send(query);
 
@@ -50,29 +47,25 @@ namespace PhotoExhibiter.WebUI.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Attending ()
+        public async Task<IActionResult> Attending (Attending.Query query)
         {
-            var query = new GetMyAttendingExhibitsQuery
-            {
-                UserId = _userManager.GetUserId (User),
-                ShowActions = _signInManager.IsSignedIn (User),
-            };
-
+            query.UserId = _userManager.GetUserId (User);
+            query.ShowActions =_signInManager.IsSignedIn (User);
             var model = await _mediator.Send(query);
 
-            return View ("Exhibits", model);
+            return View (model);
         }
 
         [Authorize]
-        public async Task<IActionResult> Create (CreateExhibitQuery query)
+        public async Task<IActionResult> Create (Create.Query query)
         {
             var model = await _mediator.Send(query);
 
-            return View ("Create", model);
+            return View (model);
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit (EditExhibitQuery query)
+        public async Task<IActionResult> Edit (Edit.Query query)
         {
             // Validation
             var exhibit = _exhibitrepository.GetExhibit (query.Id);
@@ -83,17 +76,15 @@ namespace PhotoExhibiter.WebUI.Controllers
                 return new UnauthorizedResult ();
             // Validation
 
-            query.UserId = _userManager.GetUserId(User);
-
             var model = await _mediator.Send(query);
 
-            return View ("Edit", model);
+            return View (model);
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create (CreateExhibitCommand command)
+        public async Task<IActionResult> Create (Create.Command command)
         {
 
             // Validation
@@ -114,7 +105,7 @@ namespace PhotoExhibiter.WebUI.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit (EditExhibitCommand command)
+        public async Task<IActionResult> Edit (Edit.Command command)
         {
             //validation
             if (!ModelState.IsValid)

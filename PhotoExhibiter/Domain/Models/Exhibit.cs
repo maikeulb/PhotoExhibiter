@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace PhotoExhibiter.Domain.Entities
+namespace PhotoExhibiter.Domain.Models
 {
     public class Exhibit
     {

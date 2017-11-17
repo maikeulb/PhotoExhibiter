@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PhotoExhibiter.Domain.Entities;
-using PhotoExhibiter.WebUI.ViewModels;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Queries;
+using PhotoExhibiter.WebUI.ViewModels;
 
 namespace PhotoExhibiter.WebUI.Controllers
 {
@@ -25,37 +25,32 @@ namespace PhotoExhibiter.WebUI.Controllers
             _mediator = mediator;
         }
 
-        public async Task<IActionResult> Index (string query = null)
+        public async Task<IActionResult> Index (Index.Query query)
         {
-            var message = new GetExhibitsQuery
-            {
-                QueryId = query,
-                UserId = _userManager.GetUserId (User),
-                ShowActions = _signInManager.IsSignedIn (User)
-            };
+            query.ShowActions = _signInManager.IsSignedIn (User);
 
-            var model = await _mediator.Send(message);
+        var model = await _mediator.Send (query);
 
-            return View ("Exhibits", model);
-        }
-
-        public IActionResult About ()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View ();
-        }
-
-        public IActionResult Contact ()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View ();
-        }
-
-        public IActionResult Error ()
-        {
-            return View (new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        return View (model);
     }
+
+    public IActionResult About ()
+    {
+        ViewData["Message"] = "Your application description page.";
+
+        return View ();
+    }
+
+    public IActionResult Contact ()
+    {
+        ViewData["Message"] = "Your contact page.";
+
+        return View ();
+    }
+
+    public IActionResult Error ()
+    {
+        return View (new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+}
 }

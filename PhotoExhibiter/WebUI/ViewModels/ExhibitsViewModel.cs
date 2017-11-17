@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.WebUI.ViewModels
 {
