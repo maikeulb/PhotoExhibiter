@@ -31,20 +31,20 @@ namespace PhotoExhibiter.WebUI.ViewModels
 
         public string Heading { get; set; }
 
-        public string Action
-        {
-            get
-            {
-                Expression<Func<ExhibitsController, IActionResult>> update =
-                    (c => c.Update (this));
+        /* public string Action */
+        /* { */
+        /*     get */
+        /*     { */
+        /*         Expression<Func<ExhibitsController, IActionResult>> update = */
+        /*             (c => c.Update (this)); */
 
-                Expression<Func<ExhibitsController, IActionResult>> create =
-                    (c => c.Create (this));
+                /* Expression<Func<ExhibitsController, IActionResult>> create = */
+                /*     (c => c.Create (this)); */
 
-                var action = (Id != 0) ? update : create;
-                return (action.Body as MethodCallExpression).Method.Name;
-            }
-        }
+                /* var action = (Id != 0) ? update : create; */
+                /* return (action.Body as MethodCallExpression).Method.Name; */
+            /* } */
+        /* } */
 
         public DateTime GetDateTime ()
         {
