@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.WebApi.ApiModels;
+using PhotoExhibiter.WebApi.Commands;
 
 namespace PhotoExhibiter.WebApi.Apis
 {
@@ -16,39 +19,33 @@ namespace PhotoExhibiter.WebApi.Apis
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<AttendancesController> _logger;
         private readonly IAttendanceRepository _repository;
+        private readonly IMediator _mediator;
 
         public AttendancesController (
             UserManager<ApplicationUser> userManager,
             ILogger<AttendancesController> logger,
-            IAttendanceRepository repository)
+            IAttendanceRepository repository,
+            IMediator mediator)
         {
             _logger = logger;
             _userManager = userManager;
             _repository = repository;
+            _mediator = mediator;
         }
 
         [HttpPost]
-        public IActionResult Attend ([FromBody] AttendanceApiModel model)
+        public async Task<IActionResult> Attend ([FromBody] Attend.Command command)
         {
             try
             {
-                var userId = _userManager.GetUserId (User);
-
-                var attendance = _repository.GetAttendance (model.ExhibitId, userId);
+                // validation
+                command.UserId = _userManager.GetUserId (User);
+                var attendance = _repository.GetAttendance (command.ExhibitId, command.UserId);
                 if (attendance != null)
                     return BadRequest ("The attendance already exists.");
+                // validation
 
-                _logger.LogInformation ("Getting UserId {ID}", userId);
-                _logger.LogInformation ("Getting ExhibitId {ID}", model.ExhibitId);
-
-                attendance = new Attendance
-                {
-                    AttendeeId = userId,
-                    ExhibitId = model.ExhibitId
-                };
-
-                _repository.Add (attendance);
-                _repository.SaveAll ();
+                await _mediator.Send(command);
 
                 return Ok ();
             }
