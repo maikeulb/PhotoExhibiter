@@ -87,19 +87,16 @@ namespace PhotoExhibiter.WebUI.Controllers
         public async Task<IActionResult> Create (Create.Command command)
         {
 
-            // Validation
-            if (!ModelState.IsValid)
+            command.Genres = _genrerepository.GetGenres ();
+            if (ModelState.IsValid)
             {
-                command.Genres = _genrerepository.GetGenres ();
-                return View ("Create", command);
+                command.UserId = _userManager.GetUserId (User);
+
+                await _mediator.Send (command);
+
+                return RedirectToAction ("Mine", "Exhibits");
             }
-            // Validation
-
-            command.UserId = _userManager.GetUserId (User);
-
-            await _mediator.Send (command);
-
-            return RedirectToAction ("Mine", "Exhibits");
+            return View ("Create", command);
         }
 
         [Authorize]

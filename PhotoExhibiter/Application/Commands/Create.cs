@@ -2,6 +2,7 @@ namespace PhotoExhibiter.Application.Commands
 {
     using System.Collections.Generic;
     using System;
+    using FluentValidation;
     using AutoMapper;
     using MediatR;
     using PhotoExhibiter.Domain.Interfaces;
@@ -47,6 +48,17 @@ namespace PhotoExhibiter.Application.Commands
                 };
 
                 return model;
+            }
+        }
+
+        public class Validator : AbstractValidator<Command>
+        {
+            public Validator()
+            {
+                RuleFor(m => m.Location).NotNull();
+                RuleFor(m => m.Date).NotNull().NotEmpty(); //additional
+                RuleFor(m => m.Time).NotNull().NotEmpty(); //
+                RuleFor(m => m.GenreId).NotNull(); //
             }
         }
 
