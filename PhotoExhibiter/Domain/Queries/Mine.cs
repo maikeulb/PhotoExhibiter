@@ -1,5 +1,6 @@
 namespace PhotoExhibiter.Domain.Queries
 {
+    using AutoMapper;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -31,9 +32,9 @@ namespace PhotoExhibiter.Domain.Queries
 
             public IEnumerable<Exhibit> Handle (Query message)
             {
-                var model = _repository.GetUpcomingExhibitsByPhotographer (message.UserId);
+                var exhibits = _repository.GetUpcomingExhibitsByPhotographer (message.UserId);
 
-                return model;
+                return exhibits ;
             }
         }
     }

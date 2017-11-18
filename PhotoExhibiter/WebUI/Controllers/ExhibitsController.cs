@@ -68,7 +68,7 @@ namespace PhotoExhibiter.WebUI.Controllers
         public async Task<IActionResult> Edit (Edit.Query query)
         {
             // Validation
-            var exhibit = _exhibitrepository.GetExhibit (query.ExhibitId);
+            var exhibit = _exhibitrepository.GetExhibit (query.Id);
             if (exhibit == null)
                 return NotFound ();
 

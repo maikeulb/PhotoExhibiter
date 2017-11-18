@@ -39,7 +39,7 @@ namespace PhotoExhibiter.WebApi.Apis
             {
                 // validation
                 var userId = _userManager.GetUserId (User);
-                var exhibit = _repository.GetExhibitWithAttendees (command.ExhibitId);
+                var exhibit = _repository.GetExhibitWithAttendees (command.Id);
                 if (exhibit == null || exhibit.IsCanceled)
                     return NotFound ();
 

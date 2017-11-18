@@ -25,10 +25,12 @@
                     @exhibit.Genre.Name
                 </span>
                 <div class="actions">
-                    <a href="@Url.Action("Edit", "Exhibits", new { id = exhibit.Id })">
+                    <a href="@Url.Action("Edit", "Exhibits", new { Id =
+                      exhibit.Id })">
                         Edit
                     </a>
-                    <a href="#" class="js-cancel-exhibit" data-exhibit-id="@exhibit.Id">
+                    <a href="#" class="js-cancel-exhibit"
+                      data-exhibit-id="@exhibit.Id">
                         Cancel
                     </a>
                 </div>

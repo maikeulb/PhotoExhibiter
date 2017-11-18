@@ -29,28 +29,28 @@ namespace PhotoExhibiter.WebUI.Controllers
         {
             query.ShowActions = _signInManager.IsSignedIn (User);
 
-        var model = await _mediator.Send (query);
+            var model = await _mediator.Send (query);
 
-        return View (model);
+            return View (model);
+        }
+
+        public IActionResult About ()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View ();
+        }
+
+        public IActionResult Contact ()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View ();
+        }
+
+        public IActionResult Error ()
+        {
+            return View (new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
-
-    public IActionResult About ()
-    {
-        ViewData["Message"] = "Your application description page.";
-
-        return View ();
-    }
-
-    public IActionResult Contact ()
-    {
-        ViewData["Message"] = "Your contact page.";
-
-        return View ();
-    }
-
-    public IActionResult Error ()
-    {
-        return View (new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
-}
 }

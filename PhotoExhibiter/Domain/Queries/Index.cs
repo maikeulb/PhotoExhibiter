@@ -1,5 +1,6 @@
 namespace PhotoExhibiter.Domain.Queries
-    {
+{
+    using AutoMapper;
     using System.Diagnostics;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
@@ -16,7 +17,7 @@ namespace PhotoExhibiter.Domain.Queries
     {
         public class Query : IRequest<Model>
         {
-            public string Id { get; set;}
+            public string UserId { get; set;}
             public bool ShowActions { get; set;}
         }
 
@@ -31,21 +32,23 @@ namespace PhotoExhibiter.Domain.Queries
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler(IExhibitRepository repository)
+            public Handler(
+                    IExhibitRepository repository)
             {
                 _repository = repository;
             }
 
             public Model Handle(Query message)
             {
-                var model = new Model
+
+                var exhibits = new Model
                 {
-                    UpcomingExhibits =  _repository.GetUpcomingExhibits (message.Id),
+                    UpcomingExhibits = _repository.GetUpcomingExhibits (), 
                     ShowActions = message.ShowActions,
                     Heading = "Upcoming Exhibits"
                 };
 
-                return model;
+                return exhibits;
             }
          }
     }

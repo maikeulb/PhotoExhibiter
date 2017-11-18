@@ -1,5 +1,6 @@
 namespace PhotoExhibiter.Domain.Commands
 {
+    using AutoMapper;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
@@ -20,7 +21,7 @@ namespace PhotoExhibiter.Domain.Commands
     {
         public class Query : IRequest<Command>
         {
-            public int ExhibitId { get; set; }
+            public int Id { get; set; }
         }
 
         public class Command : IRequest
@@ -29,7 +30,7 @@ namespace PhotoExhibiter.Domain.Commands
             public string Location { get; set; }
             public string Date { get; set; }
             public string Time { get; set; }
-            public int Genre { get; set; } 
+            public int GenreId { get; set; } 
             public IEnumerable<Genre> Genres { get; set; } 
             public string Heading { get; set;} 
             public DateTime DateTime { get; set;}
@@ -50,17 +51,17 @@ namespace PhotoExhibiter.Domain.Commands
 
             public Command Handle(Query message)
             {
-                var exhibit = _exhibitrepository.GetExhibit(message.ExhibitId);
+                var exhibit = _exhibitrepository.GetExhibit(message.Id);
 
                 var model = new Command
                 {
-                    Heading = "Edit a Exhibit",
                     Id = exhibit.Id,
-                    Genres = _genrerepository.GetGenres(),
+                    Location = exhibit.Location,
                     Date = exhibit.DateTime.ToString("d MMM yyyy"),
                     Time = exhibit.DateTime.ToString("HH:mm"),
-                    Genre = exhibit.GenreId,
-                    Location = exhibit.Location
+                    GenreId = exhibit.GenreId,
+                    Genres = _genrerepository.GetGenres(),
+                    Heading = "Edit a Exhibit",
                 };
 
                 return model;
@@ -70,24 +71,23 @@ namespace PhotoExhibiter.Domain.Commands
         public class CommandHandler : IRequestHandler<Command>
         {
             private readonly IExhibitRepository _repository;
+            private readonly IMapper _mapper;
 
-            public CommandHandler(IExhibitRepository repository)
+            public CommandHandler(
+                    IExhibitRepository repository,
+                    IMapper mapper)
             {
                 _repository = repository;
+                _mapper = mapper;
             }
 
             public void Handle(Command message)
             {
                 var exhibit = _repository.GetExhibitWithAttendees (message.Id);
 
-                var model = new Command
-                {
-                    DateTime = DateTime.Parse (string.Format ("{0} {1}", message.Date, message.Time)),
-                    Location = message.Location,
-                    Genre = message.Genre,
-                };
+                var model = _mapper.Map<Command, Exhibit>(message);
 
-                exhibit.Modify (model.DateTime, model.Location, model.Genre);
+                exhibit.Modify (model.DateTime, model.Location, model.GenreId);
                 _repository.SaveAll ();
             }
         }

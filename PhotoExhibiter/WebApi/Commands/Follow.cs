@@ -1,5 +1,6 @@
 namespace PhotoExhibiter.WebApi.Commands
 {
+    using AutoMapper;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
@@ -28,22 +29,19 @@ namespace PhotoExhibiter.WebApi.Commands
         public class Handler : IRequestHandler<Command>
         {
             private readonly IFollowingRepository _repository;
+            private readonly IMapper _mapper;
 
-            public Handler(IFollowingRepository repository)
+            public Handler(IFollowingRepository repository,
+                    IMapper mapper)
             {
                 _repository = repository;
+                _mapper = mapper;
             }
 
             public void Handle(Command message)
             {
+                var following = _mapper.Map<Command, Following>(message);
 
-                var following = _repository.GetFollowing(message.UserId, message.FolloweeId);
-
-                following = new Following
-                {
-                    FollowerId = message.UserId,
-                    FolloweeId = message.FolloweeId
-                };
                 _repository.Add (following);
                 _repository.SaveAll ();
             }

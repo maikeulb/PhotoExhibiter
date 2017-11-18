@@ -1,5 +1,6 @@
 namespace PhotoExhibiter.WebUI.Queries
 {
+    using AutoMapper;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
@@ -35,9 +36,9 @@ namespace PhotoExhibiter.WebUI.Queries
 
             public IEnumerable<ApplicationUser> Handle(Query message)
             {
-                var model =  _repository.GetPhotographersFollowedBy (message.UserId);
+                var photographers =  _repository.GetPhotographersFollowedBy (message.UserId);
 
-                return model;
+                return photographers;
             }
         }
     }

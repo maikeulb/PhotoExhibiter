@@ -22,7 +22,7 @@ namespace PhotoExhibiter.WebApi.Commands
         public class Command : IRequest
         {
             public string UserId { get; set; }
-            public int ExhibitId { get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -36,7 +36,8 @@ namespace PhotoExhibiter.WebApi.Commands
 
             public void Handle(Command message)
             {
-                var exhibit = _repository.GetExhibitWithAttendees (message.ExhibitId);
+                var exhibit = _repository.GetExhibitWithAttendees (message.Id);
+
                 exhibit.Cancel ();
                 _repository.SaveAll ();
             }
