@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
 using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.WebUI.Controllers;
-using PhotoExhibiter.WebUI.ViewModels.Filters;
+using PhotoExhibiter.WebUI.ViewModels;
 
 namespace PhotoExhibiter.WebUI.ViewModels
 {

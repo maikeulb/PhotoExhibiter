@@ -1,8 +1,8 @@
+using MediatR;
+using PhotoExhibiter.Domain.Interfaces;
+
 namespace PhotoExhibiter.Application.Commands
 {
-    using MediatR;
-    using PhotoExhibiter.Domain.Interfaces;
-
     public class Cancel
     {
         public class Command : IRequest

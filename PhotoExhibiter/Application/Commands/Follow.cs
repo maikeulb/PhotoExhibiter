@@ -1,10 +1,10 @@
+using AutoMapper;
+using MediatR;
+using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
+
 namespace PhotoExhibiter.Application.Commands
 {
-    using AutoMapper;
-    using MediatR;
-    using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.Domain.Models;
-
     public class Follow
     {
         public class Command : IRequest

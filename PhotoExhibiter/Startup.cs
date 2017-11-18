@@ -12,7 +12,7 @@ using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Infrastructure.Repositories;
-using PhotoExhibiter.Services;
+using PhotoExhibiter.Application;
 using PhotoExhibiter.WebUI;
 
 namespace PhotoExhibiter

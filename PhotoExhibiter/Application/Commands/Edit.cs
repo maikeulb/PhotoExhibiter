@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using AutoMapper;
+using MediatR;
+using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
+
 namespace PhotoExhibiter.Application.Commands
 {
-    using System.Collections.Generic;
-    using System;
-    using AutoMapper;
-    using MediatR;
-    using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.Domain.Models;
-
     public class Edit
     {
         public class Query : IRequest<Command>

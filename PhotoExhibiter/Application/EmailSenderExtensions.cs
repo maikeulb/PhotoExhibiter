@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using PhotoExhibiter.Services;
-using Web.Services;
 
-namespace Web.Services
+namespace PhotoExhibiter.Application
 {
     public static class EmailSenderExtensions
     {

@@ -51,6 +51,7 @@ namespace PhotoExhibiter.WebUI.Controllers
         {
             query.UserId = _userManager.GetUserId (User);
             query.ShowActions = _signInManager.IsSignedIn (User);
+
             var model = await _mediator.Send (query);
 
             return View (model);
@@ -86,17 +87,15 @@ namespace PhotoExhibiter.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create (Create.Command command)
         {
+            command.UserId = _userManager.GetUserId (User);
 
-            command.Genres = _genrerepository.GetGenres ();
-            if (ModelState.IsValid)
-            {
-                command.UserId = _userManager.GetUserId (User);
+            if( !ModelState.IsValid )
+                return View ("Create", command); 
 
-                await _mediator.Send (command);
+            await _mediator.Send (command);
 
-                return RedirectToAction ("Mine", "Exhibits");
-            }
-            return View ("Create", command);
+            return RedirectToAction ("Mine", "Exhibits");
+
         }
 
         [Authorize]

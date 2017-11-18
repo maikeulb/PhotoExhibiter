@@ -3,7 +3,7 @@ using AutoMapper;
 using PhotoExhibiter.Application.Commands;
 using PhotoExhibiter.Domain.Models;
 
-namespace PhotoExhibiter.Infrastructure
+namespace PhotoExhibiter.Application
 {
     public class MappingProfile : Profile
     {

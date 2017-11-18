@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using MediatR;
+using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
+
 namespace PhotoExhibiter.Application.Queries
 {
-    using System.Collections.Generic;
-    using MediatR;
-    using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.Domain.Models;
-
     public class Attending
     {
         public class Query : IRequest<Model>

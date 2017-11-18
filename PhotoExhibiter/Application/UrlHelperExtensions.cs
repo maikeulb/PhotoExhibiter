@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
 using PhotoExhibiter.WebUI.Controllers;
 
-namespace Microsoft.AspNetCore.Mvc
+namespace PhotoExhibiter.Application
 {
     public static class UrlHelperExtensions
     {

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace PhotoExhibiter.WebUI.ViewModels.Filters
+namespace PhotoExhibiter.WebUI
 {
     public class FutureDate : ValidationAttribute
     {

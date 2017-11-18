@@ -1,10 +1,10 @@
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
+
 namespace PhotoExhibiter.Infrastructure
 {
-    using System.Net;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Filters;
-    using Newtonsoft.Json;
-
     public class ValidatorActionFilter : IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext filterContext)

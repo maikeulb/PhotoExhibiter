@@ -1,13 +1,13 @@
+using System.Collections.Generic;
+using System;
+using FluentValidation;
+using AutoMapper;
+using MediatR;
+using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
+
 namespace PhotoExhibiter.Application.Commands
 {
-    using System.Collections.Generic;
-    using System;
-    using FluentValidation;
-    using AutoMapper;
-    using MediatR;
-    using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.Domain.Models;
-
     public class Create
     {
         public class Query : IRequest<Command>

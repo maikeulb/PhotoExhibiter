@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using MediatR;
+using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
+
 namespace PhotoExhibiter.Application.Queries
 {
-    using System.Collections.Generic;
-    using MediatR;
-    using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.Domain.Models;
-
     public class Followees
     {
         public class Query : IRequest<IEnumerable<ApplicationUser>>
