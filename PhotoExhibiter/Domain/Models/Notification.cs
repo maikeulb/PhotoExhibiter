@@ -12,8 +12,7 @@ namespace PhotoExhibiter.Domain.Models
         public string OriginalLocation { get; private set; }
         public Exhibit Exhibit { get; private set; }
 
-        protected Notification ()
-        { }
+        protected Notification () { }
 
         private Notification (NotificationType type, Exhibit exhibit)
         {

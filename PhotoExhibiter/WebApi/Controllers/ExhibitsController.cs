@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Domain.Models;
+using PhotoExhibiter.Application.Commands;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.WebApi.Commands;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.WebApi.Apis
 {
@@ -33,7 +33,7 @@ namespace PhotoExhibiter.WebApi.Apis
         }
 
         [HttpDelete]
-        public async Task <IActionResult> Cancel (Cancel.Command command)
+        public async Task<IActionResult> Cancel (Cancel.Command command)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace PhotoExhibiter.WebApi.Apis
                     return Unauthorized ();
                 // validation
 
-                await _mediator.Send(command);
+                await _mediator.Send (command);
 
                 return Ok ();
             }

@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PhotoExhibiter.Domain.Models;
+using PhotoExhibiter.Application.Queries;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.WebUI.Queries;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.WebUI.Controllers
 {
@@ -23,15 +23,15 @@ namespace PhotoExhibiter.WebUI.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _repository= repository;
+            _repository = repository;
             _mediator = mediator;
         }
 
         public async Task<IActionResult> Followees (Followees.Query query)
-        { 
+        {
             query.UserId = _userManager.GetUserId (User);
 
-            var model = await _mediator.Send(query);
+            var model = await _mediator.Send (query);
 
             return View (model);
         }

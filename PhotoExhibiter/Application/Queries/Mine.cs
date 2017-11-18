@@ -1,18 +1,9 @@
-namespace PhotoExhibiter.Domain.Queries
+namespace PhotoExhibiter.Application.Queries
 {
-    using AutoMapper;
-    using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using MediatR;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using PhotoExhibiter.Domain.Models;
     using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.Infrastructure.Repositories;
-    using PhotoExhibiter.WebUI.Controllers;
-    using PhotoExhibiter.WebUI.ViewModels;
+    using PhotoExhibiter.Domain.Models;
 
     public class Mine
     {
@@ -34,7 +25,7 @@ namespace PhotoExhibiter.Domain.Queries
             {
                 var exhibits = _repository.GetUpcomingExhibitsByPhotographer (message.UserId);
 
-                return exhibits ;
+                return exhibits;
             }
         }
     }

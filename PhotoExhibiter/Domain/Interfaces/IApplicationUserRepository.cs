@@ -5,7 +5,7 @@ namespace PhotoExhibiter.Domain.Interfaces
 {
     public interface IApplicationUserRepository
     {
-        IEnumerable<ApplicationUser> GetPhotographersFollowedBy(string userId);
-        bool SaveAll();
+        IEnumerable<ApplicationUser> GetPhotographersFollowedBy (string userId);
+        bool SaveAll ();
     }
 }

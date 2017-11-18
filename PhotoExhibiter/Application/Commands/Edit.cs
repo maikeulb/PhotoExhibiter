@@ -1,21 +1,11 @@
-namespace PhotoExhibiter.Domain.Commands
+namespace PhotoExhibiter.Application.Commands
 {
-    using AutoMapper;
-    using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
+    using System;
+    using AutoMapper;
     using MediatR;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
-    using PhotoExhibiter.Domain.Commands;
-    using PhotoExhibiter.Domain.Models;
     using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.Domain.Queries;
-    using PhotoExhibiter.WebUI.Controllers;
-    using PhotoExhibiter.WebUI.ViewModels;
+    using PhotoExhibiter.Domain.Models;
 
     public class Edit
     {
@@ -30,10 +20,10 @@ namespace PhotoExhibiter.Domain.Commands
             public string Location { get; set; }
             public string Date { get; set; }
             public string Time { get; set; }
-            public int GenreId { get; set; } 
-            public IEnumerable<Genre> Genres { get; set; } 
-            public string Heading { get; set;} 
-            public DateTime DateTime { get; set;}
+            public int GenreId { get; set; }
+            public IEnumerable<Genre> Genres { get; set; }
+            public string Heading { get; set; }
+            public DateTime DateTime { get; set; }
         }
 
         public class QueryHandler : IRequestHandler<Query, Command>
@@ -49,18 +39,18 @@ namespace PhotoExhibiter.Domain.Commands
                 _genrerepository = genrerepository;
             }
 
-            public Command Handle(Query message)
+            public Command Handle (Query message)
             {
-                var exhibit = _exhibitrepository.GetExhibit(message.Id);
+                var exhibit = _exhibitrepository.GetExhibit (message.Id);
 
                 var model = new Command
                 {
                     Id = exhibit.Id,
                     Location = exhibit.Location,
-                    Date = exhibit.DateTime.ToString("d MMM yyyy"),
-                    Time = exhibit.DateTime.ToString("HH:mm"),
+                    Date = exhibit.DateTime.ToString ("d MMM yyyy"),
+                    Time = exhibit.DateTime.ToString ("HH:mm"),
                     GenreId = exhibit.GenreId,
-                    Genres = _genrerepository.GetGenres(),
+                    Genres = _genrerepository.GetGenres (),
                     Heading = "Edit a Exhibit",
                 };
 
@@ -73,19 +63,19 @@ namespace PhotoExhibiter.Domain.Commands
             private readonly IExhibitRepository _repository;
             private readonly IMapper _mapper;
 
-            public CommandHandler(
-                    IExhibitRepository repository,
-                    IMapper mapper)
+            public CommandHandler (
+                IExhibitRepository repository,
+                IMapper mapper)
             {
                 _repository = repository;
                 _mapper = mapper;
             }
 
-            public void Handle(Command message)
+            public void Handle (Command message)
             {
                 var exhibit = _repository.GetExhibitWithAttendees (message.Id);
 
-                var model = _mapper.Map<Command, Exhibit>(message);
+                var model = _mapper.Map<Command, Exhibit> (message);
 
                 exhibit.Modify (model.DateTime, model.Location, model.GenreId);
                 _repository.SaveAll ();

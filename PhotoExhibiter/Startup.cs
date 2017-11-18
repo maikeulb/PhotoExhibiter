@@ -6,15 +6,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Infrastructure.Repositories;
-using PhotoExhibiter.Domain.Models;
-using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Services;
 
 namespace PhotoExhibiter
 {
-    public class Startup {
+    public class Startup
+    {
 
         private readonly IConfiguration _config;
         private readonly IHostingEnvironment _env;
@@ -37,13 +38,13 @@ namespace PhotoExhibiter
 
             services.AddTransient<IEmailSender, EmailSender> ();
 
-            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-            services.AddScoped<IExhibitRepository, ExhibitRepository>();
-            services.AddScoped<IFollowingRepository, FollowingRepository>();
-            services.AddScoped<IGenreRepository, GenreRepository>();
-            services.AddScoped<INotificationRepository, NotificationRepository>();
-            services.AddScoped<IUserNotificationRepository, UserNotificationRepository>();
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository> ();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository> ();
+            services.AddScoped<IExhibitRepository, ExhibitRepository> ();
+            services.AddScoped<IFollowingRepository, FollowingRepository> ();
+            services.AddScoped<IGenreRepository, GenreRepository> ();
+            services.AddScoped<INotificationRepository, NotificationRepository> ();
+            services.AddScoped<IUserNotificationRepository, UserNotificationRepository> ();
 
             services.AddMvc ();
             services.AddMediatR ();
@@ -67,7 +68,8 @@ namespace PhotoExhibiter
 
             app.UseAuthentication ();
 
-            app.UseMvc (routes => {
+            app.UseMvc (routes =>
+            {
                 routes.MapRoute (
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

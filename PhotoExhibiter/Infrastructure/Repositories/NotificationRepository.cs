@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.Infrastructure.Repositories
 {
@@ -24,9 +24,9 @@ namespace PhotoExhibiter.Infrastructure.Repositories
                 .ToList ();
         }
 
-        public bool SaveAll()
+        public bool SaveAll ()
         {
-          return _context.SaveChanges() > 0;
+            return _context.SaveChanges () > 0;
         }
     }
 }

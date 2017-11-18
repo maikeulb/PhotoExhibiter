@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Domain.Models;
-using PhotoExhibiter.WebUI.ViewModels.ManageViewModels;
 using PhotoExhibiter.Services;
+using PhotoExhibiter.WebUI.ViewModels.ManageViewModels;
 using Web.Services;
 
 namespace PhotoExhibiter.WebUI.Controllers

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PhotoExhibiter.Application.Queries;
 using PhotoExhibiter.Domain.Models;
-using PhotoExhibiter.Domain.Queries;
 using PhotoExhibiter.WebUI.ViewModels;
 
 namespace PhotoExhibiter.WebUI.Controllers

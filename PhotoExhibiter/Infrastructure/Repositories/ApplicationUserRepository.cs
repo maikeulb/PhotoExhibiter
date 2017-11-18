@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.Infrastructure.Repositories
 {
@@ -9,22 +9,22 @@ namespace PhotoExhibiter.Infrastructure.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public ApplicationUserRepository(ApplicationDbContext context)
+        public ApplicationUserRepository (ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IEnumerable<ApplicationUser> GetPhotographersFollowedBy(string userId)
+        public IEnumerable<ApplicationUser> GetPhotographersFollowedBy (string userId)
         {
             return _context.Followings
-                .Where(f => f.FollowerId == userId)
-                .Select(f => f.Followee)
-                .ToList();
+                .Where (f => f.FollowerId == userId)
+                .Select (f => f.Followee)
+                .ToList ();
         }
 
-        public bool SaveAll()
+        public bool SaveAll ()
         {
-          return _context.SaveChanges() > 0;
+            return _context.SaveChanges () > 0;
         }
     }
 }

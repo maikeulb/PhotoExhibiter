@@ -1,13 +1,13 @@
 using System;
-using MediatR;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Domain.Models;
+using PhotoExhibiter.Application.Commands;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.WebApi.Commands;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.WebApi.Apis
 {
@@ -33,7 +33,7 @@ namespace PhotoExhibiter.WebApi.Apis
         }
 
         [HttpPost]
-        public async Task <IActionResult> Follow ([FromBody] Follow.Command command)
+        public async Task<IActionResult> Follow ([FromBody] Follow.Command command)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace PhotoExhibiter.WebApi.Apis
                     return BadRequest ("Following already exists.");
                 // validation
 
-                await _mediator.Send(command);
+                await _mediator.Send (command);
 
                 return Ok ();
             }

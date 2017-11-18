@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Domain.Models;
+using PhotoExhibiter.Application.Commands;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.WebApi.ApiModels;
-using PhotoExhibiter.WebApi.Commands;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.WebApi.Apis
 {
@@ -45,7 +44,7 @@ namespace PhotoExhibiter.WebApi.Apis
                     return BadRequest ("The attendance already exists.");
                 // validation
 
-                await _mediator.Send(command);
+                await _mediator.Send (command);
 
                 return Ok ();
             }

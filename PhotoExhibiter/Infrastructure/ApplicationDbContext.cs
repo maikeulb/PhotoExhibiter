@@ -16,17 +16,17 @@ namespace PhotoExhibiter.Infrastructure
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserNotification> UserNotifications { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating (ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new ApplicationUserConfiguration());
-            builder.ApplyConfiguration(new AttendanceConfiguration());
-            builder.ApplyConfiguration(new ExhibitConfiguration());
-            builder.ApplyConfiguration(new GenreConfiguration());
-            builder.ApplyConfiguration(new FollowingConfiguration());
-            builder.ApplyConfiguration(new NotificationConfiguration());
-            builder.ApplyConfiguration(new UserNotificationConfiguration());
+            builder.ApplyConfiguration (new ApplicationUserConfiguration ());
+            builder.ApplyConfiguration (new AttendanceConfiguration ());
+            builder.ApplyConfiguration (new ExhibitConfiguration ());
+            builder.ApplyConfiguration (new GenreConfiguration ());
+            builder.ApplyConfiguration (new FollowingConfiguration ());
+            builder.ApplyConfiguration (new NotificationConfiguration ());
+            builder.ApplyConfiguration (new UserNotificationConfiguration ());
 
-            base.OnModelCreating(builder);
-         }
+            base.OnModelCreating (builder);
+        }
     }
 }

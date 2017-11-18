@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Domain.Commands;
-using PhotoExhibiter.Domain.Models;
+using PhotoExhibiter.Application.Commands;
+using PhotoExhibiter.Application.Queries;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.Domain.Queries;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.WebUI.Controllers
 {
@@ -41,7 +41,7 @@ namespace PhotoExhibiter.WebUI.Controllers
         {
             query.UserId = _userManager.GetUserId (User);
 
-            var model = await _mediator.Send(query);
+            var model = await _mediator.Send (query);
 
             return View (model);
         }
@@ -50,8 +50,8 @@ namespace PhotoExhibiter.WebUI.Controllers
         public async Task<IActionResult> Attending (Attending.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
-            query.ShowActions =_signInManager.IsSignedIn (User);
-            var model = await _mediator.Send(query);
+            query.ShowActions = _signInManager.IsSignedIn (User);
+            var model = await _mediator.Send (query);
 
             return View (model);
         }
@@ -59,7 +59,7 @@ namespace PhotoExhibiter.WebUI.Controllers
         [Authorize]
         public async Task<IActionResult> Create (Create.Query query)
         {
-            var model = await _mediator.Send(query);
+            var model = await _mediator.Send (query);
 
             return View (model);
         }
@@ -76,7 +76,7 @@ namespace PhotoExhibiter.WebUI.Controllers
                 return new UnauthorizedResult ();
             // Validation
 
-            var model = await _mediator.Send(query);
+            var model = await _mediator.Send (query);
 
             return View (model);
         }
@@ -95,9 +95,9 @@ namespace PhotoExhibiter.WebUI.Controllers
             }
             // Validation
 
-            command.UserId =_userManager.GetUserId(User);
+            command.UserId = _userManager.GetUserId (User);
 
-            await _mediator.Send(command);
+            await _mediator.Send (command);
 
             return RedirectToAction ("Mine", "Exhibits");
         }
@@ -123,7 +123,7 @@ namespace PhotoExhibiter.WebUI.Controllers
                 return new UnauthorizedResult ();
             //validation
 
-            await _mediator.Send(command);
+            await _mediator.Send (command);
 
             return RedirectToAction ("Mine", "Exhibits");
         }

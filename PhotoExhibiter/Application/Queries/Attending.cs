@@ -1,29 +1,21 @@
-namespace PhotoExhibiter.Domain.Queries
+namespace PhotoExhibiter.Application.Queries
 {
-    using AutoMapper;
-    using System.Diagnostics;
-    using MediatR;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using PhotoExhibiter.Domain.Models;
-    using PhotoExhibiter.Domain.Interfaces;
-    using PhotoExhibiter.WebUI.ViewModels;
-    using PhotoExhibiter.WebUI.Controllers;
-    using PhotoExhibiter.Infrastructure.Repositories;
     using System.Collections.Generic;
+    using MediatR;
+    using PhotoExhibiter.Domain.Interfaces;
+    using PhotoExhibiter.Domain.Models;
 
     public class Attending
     {
         public class Query : IRequest<Model>
         {
-            public string UserId  { get; set;}
-            public bool ShowActions  { get; set;}
+            public string UserId { get; set; }
+            public bool ShowActions { get; set; }
         }
 
         public class Model
         {
-            public IEnumerable<Exhibit> UpcomingExhibits{ get; set; }
+            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
             public bool ShowActions { get; set; }
             public string Heading { get; set; }
         }
@@ -32,13 +24,13 @@ namespace PhotoExhibiter.Domain.Queries
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler(
-                    IExhibitRepository repository)
+            public Handler (
+                IExhibitRepository repository)
             {
                 _repository = repository;
             }
 
-            public Model Handle(Query message)
+            public Model Handle (Query message)
             {
 
                 var exhibits = new Model

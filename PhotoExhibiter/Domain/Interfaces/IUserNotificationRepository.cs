@@ -5,7 +5,7 @@ namespace PhotoExhibiter.Domain.Interfaces
 {
     public interface IUserNotificationRepository
     {
-        IEnumerable<UserNotification> GetUserNotificationsFor(string userId);
-        bool SaveAll();
+        IEnumerable<UserNotification> GetUserNotificationsFor (string userId);
+        bool SaveAll ();
     }
 }

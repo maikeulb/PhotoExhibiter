@@ -8,9 +8,9 @@ namespace PhotoExhibiter.Infrastructure.EntityConfigurations
     {
         public void Configure (EntityTypeBuilder<Notification> builder)
         {
-            builder.HasOne(n => n.Exhibit)
-                   .WithMany ()
-                   .IsRequired ();
+            builder.HasOne (n => n.Exhibit)
+                .WithMany ()
+                .IsRequired ();
         }
     }
 }

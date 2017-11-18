@@ -10,17 +10,15 @@ namespace PhotoExhibiter.Domain.Models
         public Notification Notification { get; private set; }
         public bool IsRead { get; private set; }
 
-        protected UserNotification()
-        {
-        }
+        protected UserNotification () { }
 
-        public UserNotification(ApplicationUser user, Notification notification)
+        public UserNotification (ApplicationUser user, Notification notification)
         {
             if (user == null)
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException ("user");
 
             if (notification == null)
-                throw new ArgumentNullException("notification");
+                throw new ArgumentNullException ("notification");
 
             User = user;
             UserId = user.Id;
@@ -28,7 +26,7 @@ namespace PhotoExhibiter.Domain.Models
             NotificationId = notification.Id;
         }
 
-        public void Read()
+        public void Read ()
         {
             IsRead = true;
         }

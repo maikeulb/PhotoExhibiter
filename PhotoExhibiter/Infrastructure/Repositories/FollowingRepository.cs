@@ -1,6 +1,6 @@
 using System.Linq;
-using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Domain.Interfaces;
+using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.Infrastructure.Repositories
 {
@@ -29,9 +29,9 @@ namespace PhotoExhibiter.Infrastructure.Repositories
             _context.Followings.Remove (following);
         }
 
-        public bool SaveAll()
+        public bool SaveAll ()
         {
-          return _context.SaveChanges() > 0;
+            return _context.SaveChanges () > 0;
         }
     }
 }
