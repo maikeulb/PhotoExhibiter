@@ -20,7 +20,7 @@ namespace PhotoExhibiter.Domain.Commands
     {
         public class Query : IRequest<Command>
         {
-            public int? Id { get; set; }
+            public int? ExhibitId { get; set; }
         }
 
         public class Command : IRequest

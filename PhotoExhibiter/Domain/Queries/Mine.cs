@@ -20,19 +20,6 @@ namespace PhotoExhibiter.Domain.Queries
             public string UserId { get; set; }
         }
 
-        /* public class Model */
-        /* { */
-            /* public int Id { get; set; } */
-            /* public ApplicationUser Photographer { get; set; } */
-            /* public string PhotographerId { get; set; } */
-            /* public DateTime DateTime { get; set; } */
-            /* public string Location { get; set; } */
-            /* public int GenreId { get; set; } */
-            /* public Genre Genre { get; set; } */
-            /* public ICollection<Attendance> Attendances { get; private set; } //Is this ever used? */
-            /* public IEnumerable<Exhibit> UpcomingExhibits { get; set; } */
-        /* } */
-
         public class Handler : IRequestHandler<Query, IEnumerable<Exhibit>>
         {
             private readonly IExhibitRepository _repository;
