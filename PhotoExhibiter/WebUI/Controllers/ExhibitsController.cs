@@ -18,20 +18,17 @@ namespace PhotoExhibiter.WebUI.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
         private readonly IMediator _mediator;
-        private readonly IExhibitService _exhibitService;
 
         public ExhibitsController (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<AccountController> logger,
-            IMediator mediator,
-            IExhibitService exhibitService)
+            IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _mediator = mediator;
-            _exhibitService = exhibitService;
         }
 
         [Authorize]
@@ -97,9 +94,11 @@ namespace PhotoExhibiter.WebUI.Controllers
         {
             command.UserId = _userManager.GetUserId (User);
 
-            await _mediator.Send (command);
+            var result = await _mediator.Send (command);
 
-            return RedirectToAction ("Mine", "Exhibits");
+            return result.IsSuccess
+                ? (IActionResult)RedirectToAction ("Mine", "Exhibits")
+                : (IActionResult)BadRequest(result.Error);
         }
     }
 }

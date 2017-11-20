@@ -11,19 +11,13 @@ namespace PhotoExhibiter.WebUI.Controllers
     public class FolloweesController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IApplicationUserRepository _repository;
         private readonly IMediator _mediator;
 
         public FolloweesController (
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IApplicationUserRepository repository,
             IMediator mediator)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
-            _repository = repository;
             _mediator = mediator;
         }
 

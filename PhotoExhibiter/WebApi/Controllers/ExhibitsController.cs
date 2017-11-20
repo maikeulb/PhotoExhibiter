@@ -1,3 +1,4 @@
+using CSharpFunctionalExtensions;
 using System;
 using System.Threading.Tasks;
 using MediatR;
@@ -36,7 +37,9 @@ namespace PhotoExhibiter.WebApi.Apis
 
             var result = await _mediator.Send (command);
 
-            return result ? (IActionResult)Ok () : (IActionResult)BadRequest(result.FailureReason);
+            return result.IsSuccess
+                ? (IActionResult)Ok () 
+                : (IActionResult)BadRequest(result.Error);
         }
     }
 }

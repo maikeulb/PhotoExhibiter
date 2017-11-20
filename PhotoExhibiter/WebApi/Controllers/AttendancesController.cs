@@ -1,3 +1,4 @@
+using CSharpFunctionalExtensions;
 using System;
 using System.Threading.Tasks;
 using MediatR;
@@ -17,18 +18,15 @@ namespace PhotoExhibiter.WebApi.Apis
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<AttendancesController> _logger;
-        private readonly IAttendanceRepository _repository;
         private readonly IMediator _mediator;
 
         public AttendancesController (
             UserManager<ApplicationUser> userManager,
             ILogger<AttendancesController> logger,
-            IAttendanceRepository repository,
             IMediator mediator)
         {
-            _logger = logger;
             _userManager = userManager;
-            _repository = repository;
+            _logger = logger;
             _mediator = mediator;
         }
 
@@ -39,7 +37,9 @@ namespace PhotoExhibiter.WebApi.Apis
 
             var result = await _mediator.Send (command);
 
-            return result ? (IActionResult)Ok () : (IActionResult)BadRequest(result.FailureReason);
+            return result.IsSuccess
+                ? (IActionResult)Ok () 
+                : (IActionResult)BadRequest(result.Error);
         }
     }
 }

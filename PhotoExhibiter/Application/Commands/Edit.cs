@@ -18,7 +18,7 @@ namespace PhotoExhibiter.Application.Commands
             public string UserId { get; set; }
         }
 
-        public class Command : IRequest<CommandResult>
+        public class Command : IRequest<Result>
         {
             public string UserId { get; set; }
             public int Id { get; set; }
@@ -69,32 +69,6 @@ namespace PhotoExhibiter.Application.Commands
             }
         }
 
-        public class CommandResult
-        {
-            private CommandResult () { }
-
-            private CommandResult (string failureReason)
-            {
-                FailureReason = failureReason;
-            }
-
-            public string FailureReason { get; }
-
-            public bool IsSuccess => string.IsNullOrEmpty (FailureReason);
-
-            public static CommandResult Success { get; } = new CommandResult ();
-
-            public static CommandResult Fail (string reason)
-            {
-                return new CommandResult (reason);
-            }
-
-            public static implicit operator bool (CommandResult result)
-            {
-                return result.IsSuccess;
-            }
-        }
-
         public class Validator : AbstractValidator<Command>
         {
             public Validator ()
@@ -106,7 +80,7 @@ namespace PhotoExhibiter.Application.Commands
             }
         }
 
-        public class CommandHandler : IRequestHandler<Command, CommandResult>
+        public class CommandHandler : IRequestHandler<Command, Result>
         {
             private readonly IExhibitRepository _repository;
             private readonly IMapper _mapper;
@@ -119,19 +93,20 @@ namespace PhotoExhibiter.Application.Commands
                 _mapper = mapper;
             }
 
-            public CommandResult Handle (Command message)
+            public Result Handle (Command message)
             {
                 var exhibit = _repository.GetExhibit (message.Id);
                 if (exhibit == null)
-                    return CommandResult.Fail ("Exhibit does not exist");
+                    return Result.Fail<Command>("Exhibit does not exit");
                 if (exhibit.PhotographerId != message.UserId)
-                    return CommandResult.Fail ("Unauthorized");
+                    return Result.Fail<Command>("Unauthorized");
 
                 var model = _mapper.Map<Command, Exhibit> (message);
+
                 exhibit.Modify (model.DateTime, model.Location, model.GenreId);
                 _repository.SaveAll ();
 
-                return CommandResult.Success;
+                return Result.Ok();
             }
         }
     }

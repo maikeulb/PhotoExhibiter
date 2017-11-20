@@ -1,3 +1,4 @@
+using CSharpFunctionalExtensions;
 using System;
 using System.Threading.Tasks;
 using MediatR;
@@ -17,30 +18,28 @@ namespace PhotoExhibiter.WebApi.Apis
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<AttendancesController> _logger;
-        private readonly IFollowingRepository _repository;
         private readonly IMediator _mediator;
 
         public FollowingsController (
             UserManager<ApplicationUser> userManager,
             ILogger<AttendancesController> logger,
-            IFollowingRepository repository,
             IMediator mediator)
         {
-            _logger = logger;
             _userManager = userManager;
-            _repository = repository;
+            _logger = logger;
             _mediator = mediator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Follow ([FromBody] Follow.Command command)
         {
-
             command.UserId = _userManager.GetUserId (User);
 
             var result = await _mediator.Send (command);
 
-            return result ? (IActionResult)Ok () : (IActionResult)BadRequest(result.FailureReason);
+            return result.IsSuccess
+                ? (IActionResult)Ok () 
+                : (IActionResult)BadRequest(result.Error);
         }
     }
 }
