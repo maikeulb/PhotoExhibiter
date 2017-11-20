@@ -24,15 +24,13 @@ namespace PhotoExhibiter.Application.Queries
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler (
-                IExhibitRepository repository)
+            public Handler (IExhibitRepository repository)
             {
                 _repository = repository;
             }
 
             public Model Handle (Query message)
             {
-
                 var exhibits = new Model
                 {
                     UpcomingExhibits = _repository.GetUpcomingExhibits (),

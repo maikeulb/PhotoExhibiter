@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PhotoExhibiter.Application;
 using PhotoExhibiter.Application.Commands;
 using PhotoExhibiter.Application.Queries;
-using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Domain.Models;
 
 namespace PhotoExhibiter.WebUI.Controllers
@@ -15,25 +15,22 @@ namespace PhotoExhibiter.WebUI.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IExhibitRepository _exhibitrepository;
-        private readonly IGenreRepository _genrerepository;
         private readonly ILogger _logger;
         private readonly IMediator _mediator;
+        private readonly IExhibitService _exhibitService;
 
         public ExhibitsController (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<AccountController> logger,
-            IExhibitRepository exhibitrepository,
-            IGenreRepository genrerepository,
-            IMediator mediator)
+            IMediator mediator,
+            IExhibitService exhibitService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _exhibitrepository = exhibitrepository;
-            _genrerepository = genrerepository;
             _mediator = mediator;
+            _exhibitService = exhibitService;
         }
 
         [Authorize]
@@ -68,17 +65,17 @@ namespace PhotoExhibiter.WebUI.Controllers
         [Authorize]
         public async Task<IActionResult> Edit (Edit.Query query)
         {
-            // Validation
-            var exhibit = _exhibitrepository.GetExhibit (query.Id);
+            query.UserId = _userManager.GetUserId (User);
+
+            var exhibit = _exhibitService.GetExhibit (query.Id);
             if (exhibit == null)
                 return NotFound ();
 
-            if (exhibit.PhotographerId != _userManager.GetUserId (User))
-                return new UnauthorizedResult ();
-            // Validation
+            var isPhotographer = _exhibitService.IsPhotographerExhibitOwner (exhibit, query.UserId);
+            if (isPhotographer == false)
+                return Unauthorized ();
 
             var model = await _mediator.Send (query);
-
             return View (model);
         }
 
@@ -89,13 +86,12 @@ namespace PhotoExhibiter.WebUI.Controllers
         {
             command.UserId = _userManager.GetUserId (User);
 
-            if( !ModelState.IsValid )
-                return View ("Create", command); 
+            if (!ModelState.IsValid)
+                return View ("Create", command);
 
             await _mediator.Send (command);
 
             return RedirectToAction ("Mine", "Exhibits");
-
         }
 
         [Authorize]
@@ -103,21 +99,15 @@ namespace PhotoExhibiter.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit (Edit.Command command)
         {
-            //validation
-            if (!ModelState.IsValid)
-            {
-                command.Genres = _genrerepository.GetGenres ();
-                return View ("Edit", command);
-            }
+            command.UserId = _userManager.GetUserId (User);
 
-            var exhibit = _exhibitrepository.GetExhibitWithAttendees (command.Id);
-
+            var exhibit = _exhibitService.GetExhibit (command.Id);
             if (exhibit == null)
                 return NotFound ();
 
-            if (exhibit.PhotographerId != _userManager.GetUserId (User))
-                return new UnauthorizedResult ();
-            //validation
+            var isPhotographer = _exhibitService.IsPhotographerExhibitOwner (exhibit, command.UserId);
+            if (isPhotographer == false)
+                return Unauthorized ();
 
             await _mediator.Send (command);
 

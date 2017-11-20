@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoMapper;
 using FluentValidation;
 using MediatR;
-using PhotoExhibiter.Application;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Domain.Models;
 
@@ -14,6 +13,7 @@ namespace PhotoExhibiter.Application.Commands
         public class Query : IRequest<Command>
         {
             public int Id { get; set; }
+            public string UserId { get; set; }
         }
 
         public class Command : IRequest
@@ -67,7 +67,7 @@ namespace PhotoExhibiter.Application.Commands
             {
                 RuleFor (m => m.Location).NotNull ();
                 RuleFor (m => m.Date).NotNull ().SetValidator (new FutureDateValidator ());
-                RuleFor (m => m.Time).NotNull ().SetValidator (new ValidTimeValidator ()); 
+                RuleFor (m => m.Time).NotNull ().SetValidator (new ValidTimeValidator ());
                 RuleFor (m => m.GenreId).NotNull ();
             }
         }

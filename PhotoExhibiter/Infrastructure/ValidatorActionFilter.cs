@@ -1,4 +1,3 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -7,19 +6,19 @@ namespace PhotoExhibiter.Infrastructure
 {
     public class ValidatorActionFilter : IActionFilter
     {
-        public void OnActionExecuting(ActionExecutingContext filterContext)
+        public void OnActionExecuting (ActionExecutingContext filterContext)
         {
             if (!filterContext.ModelState.IsValid)
             {
                 if (filterContext.HttpContext.Request.Method == "GET")
                 {
-                    var result = new BadRequestResult();
+                    var result = new BadRequestResult ();
                     filterContext.Result = result;
                 }
                 else
                 {
-                    var result = new ContentResult();
-                    string content = JsonConvert.SerializeObject(filterContext.ModelState,
+                    var result = new ContentResult ();
+                    string content = JsonConvert.SerializeObject (filterContext.ModelState,
                         new JsonSerializerSettings
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -33,9 +32,6 @@ namespace PhotoExhibiter.Infrastructure
             }
         }
 
-        public void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-
-        }
+        public void OnActionExecuted (ActionExecutedContext filterContext) { }
     }
 }

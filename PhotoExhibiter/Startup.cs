@@ -8,18 +8,17 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhotoExhibiter.Application;
 using PhotoExhibiter.Domain.Interfaces;
 using PhotoExhibiter.Domain.Models;
 using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Infrastructure.Repositories;
-using PhotoExhibiter.Application;
 using PhotoExhibiter.WebUI;
 
 namespace PhotoExhibiter
 {
     public class Startup
     {
-
         private readonly IConfiguration _config;
         private readonly IHostingEnvironment _env;
 
@@ -39,9 +38,10 @@ namespace PhotoExhibiter
                 options.UseMySql (_config.GetConnectionString ("ApplicationConnectionString")));
 
             services.AddTransient<IEmailSender, EmailSender> ();
+            services.AddTransient<IExhibitService, ExhibitService> ();
 
-            services.Configure<RazorViewEngineOptions>(options =>
-                options.ViewLocationExpanders.Add(new WebUIViewLocationExpander()));
+            services.Configure<RazorViewEngineOptions> (options =>
+                options.ViewLocationExpanders.Add (new WebUIViewLocationExpander ()));
 
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository> ();
             services.AddScoped<IAttendanceRepository, AttendanceRepository> ();
@@ -53,19 +53,16 @@ namespace PhotoExhibiter
 
             services.AddMvc (options =>
                 {
-                    options.Filters.Add(typeof(ValidatorActionFilter));
+                    options.Filters.Add (typeof (ValidatorActionFilter));
                 })
-                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
-
-            /* services.AddMvc() */
-                /* .AddFluentValidation(); */
+                .AddFluentValidation (cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup> (); });
 
             services.AddMediatR ();
+            // services.AddTransient(typeof(IPipelineBehavior<Edit.Command,>), typeof(Edit.ValidationPipeline<Edit.Command,>));
             services.AddAutoMapper ();
-            Mapper.AssertConfigurationIsValid();
+            Mapper.AssertConfigurationIsValid ();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment ())
@@ -81,6 +78,8 @@ namespace PhotoExhibiter
             app.UseStaticFiles ();
 
             app.UseAuthentication ();
+
+            // app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseMvc (routes =>
             {
