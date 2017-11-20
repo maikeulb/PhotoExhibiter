@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using CSharpFunctionalExtensions;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -67,16 +68,11 @@ namespace PhotoExhibiter.WebUI.Controllers
         {
             query.UserId = _userManager.GetUserId (User);
 
-            var exhibit = _exhibitService.GetExhibit (query.Id);
-            if (exhibit == null)
-                return NotFound ();
+            var modelOrError = await _mediator.Send (query);
 
-            var isPhotographer = _exhibitService.IsPhotographerExhibitOwner (exhibit, query.UserId);
-            if (isPhotographer == false)
-                return Unauthorized ();
-
-            var model = await _mediator.Send (query);
-            return View (model);
+            return modelOrError.IsSuccess
+                ? (IActionResult)View(modelOrError.Value)
+                : (IActionResult)BadRequest(modelOrError.Error);
         }
 
         [Authorize]

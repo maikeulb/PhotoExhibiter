@@ -1,3 +1,4 @@
+using CSharpFunctionalExtensions;
 using System;
 using System.Collections.Generic;
 using AutoMapper;
@@ -11,7 +12,7 @@ namespace PhotoExhibiter.Application.Commands
 {
     public class Edit
     {
-        public class Query : IRequest<Command>
+        public class Query : IRequest<Result<Command>>
         {
             public int Id { get; set; }
             public string UserId { get; set; }
@@ -30,7 +31,7 @@ namespace PhotoExhibiter.Application.Commands
             public DateTime DateTime { get; set; }
         }
 
-        public class QueryHandler : IRequestHandler<Query, Command>
+        public class QueryHandler : IRequestHandler<Query, Result<Command>>
         {
             private readonly IExhibitRepository _exhibitrepository;
             private readonly IGenreRepository _genrerepository;
@@ -43,9 +44,15 @@ namespace PhotoExhibiter.Application.Commands
                 _genrerepository = genrerepository;
             }
 
-            public Command Handle (Query message)
+            public Result<Command> Handle (Query message)
             {
                 var exhibit = _exhibitrepository.GetExhibit (message.Id);
+
+                if (exhibit == null)
+                    return Result.Fail<Command>("Exhibit does not exit");
+
+                if (exhibit.PhotographerId != message.UserId)
+                    return Result.Fail<Command>("Unauthorized");
 
                 var model = new Command
                 {
@@ -58,7 +65,7 @@ namespace PhotoExhibiter.Application.Commands
                     Heading = "Edit a Exhibit",
                 };
 
-                return model;
+                return Result.Ok(model);
             }
         }
 
