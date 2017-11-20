@@ -35,25 +35,12 @@ namespace PhotoExhibiter.WebApi.Apis
         [HttpPost]
         public async Task<IActionResult> Follow ([FromBody] Follow.Command command)
         {
-            try
-            {
-                // validation
-                command.UserId = _userManager.GetUserId (User);
-                var following = _repository.GetFollowing (command.UserId, command.FolloweeId);
-                if (following != null)
-                    return BadRequest ("Following already exists.");
-                // validation
 
-                await _mediator.Send (command);
+            command.UserId = _userManager.GetUserId (User);
 
-                return Ok ();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError ($"Failed to add following: {ex}");
-            }
+            var result = await _mediator.Send (command);
 
-            return BadRequest ("Failed to add following");
+            return result ? (IActionResult)Ok () : (IActionResult)BadRequest(result.FailureReason);
         }
     }
 }

@@ -35,25 +35,11 @@ namespace PhotoExhibiter.WebApi.Apis
         [HttpPost]
         public async Task<IActionResult> Attend ([FromBody] Attend.Command command)
         {
-            try
-            {
-                // validation
-                command.UserId = _userManager.GetUserId (User);
-                var attendance = _repository.GetAttendance (command.ExhibitId, command.UserId);
-                if (attendance != null)
-                    return BadRequest ("The attendance already exists.");
-                // validation
+            command.UserId = _userManager.GetUserId (User);
 
-                await _mediator.Send (command);
+            var result = await _mediator.Send (command);
 
-                return Ok ();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError ($"Failed to add attendee: {ex}");
-            }
-
-            return BadRequest ("Failed to add attendee");
+            return result ? (IActionResult)Ok () : (IActionResult)BadRequest(result.FailureReason);
         }
     }
 }

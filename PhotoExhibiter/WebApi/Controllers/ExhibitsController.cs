@@ -17,46 +17,26 @@ namespace PhotoExhibiter.WebApi.Apis
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<AttendancesController> _logger;
-        private readonly IExhibitRepository _repository;
         private readonly IMediator _mediator;
 
         public ExhibitsController (
             UserManager<ApplicationUser> userManager,
             ILogger<AttendancesController> logger,
-            IExhibitRepository repository,
             IMediator mediator)
         {
             _userManager = userManager;
             _logger = logger;
-            _repository = repository;
             _mediator = mediator;
         }
 
         [HttpDelete]
         public async Task<IActionResult> Cancel (Cancel.Command command)
         {
-            try
-            {
-                // validation
-                var userId = _userManager.GetUserId (User);
-                var exhibit = _repository.GetExhibitWithAttendees (command.Id);
-                if (exhibit == null || exhibit.IsCanceled)
-                    return NotFound ();
+            command.UserId = _userManager.GetUserId (User);
 
-                if (exhibit.PhotographerId != userId)
-                    return Unauthorized ();
-                // validation
+            var result = await _mediator.Send (command);
 
-                await _mediator.Send (command);
-
-                return Ok ();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError ($"Failed to add attendee: {ex}");
-            }
-
-            return BadRequest ("Failed to Cancel Exhibit");
+            return result ? (IActionResult)Ok () : (IActionResult)BadRequest(result.FailureReason);
         }
     }
 }

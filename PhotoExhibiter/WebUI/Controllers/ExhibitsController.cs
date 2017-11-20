@@ -84,10 +84,10 @@ namespace PhotoExhibiter.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create (Create.Command command)
         {
-            command.UserId = _userManager.GetUserId (User);
-
             if (!ModelState.IsValid)
                 return View ("Create", command);
+
+            command.UserId = _userManager.GetUserId (User);
 
             await _mediator.Send (command);
 
@@ -100,14 +100,6 @@ namespace PhotoExhibiter.WebUI.Controllers
         public async Task<IActionResult> Edit (Edit.Command command)
         {
             command.UserId = _userManager.GetUserId (User);
-
-            var exhibit = _exhibitService.GetExhibit (command.Id);
-            if (exhibit == null)
-                return NotFound ();
-
-            var isPhotographer = _exhibitService.IsPhotographerExhibitOwner (exhibit, command.UserId);
-            if (isPhotographer == false)
-                return Unauthorized ();
 
             await _mediator.Send (command);
 

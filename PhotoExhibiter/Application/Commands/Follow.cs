@@ -7,13 +7,39 @@ namespace PhotoExhibiter.Application.Commands
 {
     public class Follow
     {
-        public class Command : IRequest
+        public class Command : IRequest<CommandResult>
         {
             public string UserId { get; set; }
             public string FolloweeId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class CommandResult
+        {
+            private CommandResult () { }
+
+            private CommandResult (string failureReason)
+            {
+                FailureReason = failureReason;
+            }
+
+            public string FailureReason { get; }
+
+            public bool IsSuccess => string.IsNullOrEmpty (FailureReason);
+
+            public static CommandResult Success { get; } = new CommandResult ();
+
+            public static CommandResult Fail (string reason)
+            {
+                return new CommandResult (reason);
+            }
+
+            public static implicit operator bool (CommandResult result)
+            {
+                return result.IsSuccess;
+            }
+        }
+
+        public class Handler : IRequestHandler<Command, CommandResult>
         {
             private readonly IFollowingRepository _repository;
             private readonly IMapper _mapper;
@@ -25,12 +51,16 @@ namespace PhotoExhibiter.Application.Commands
                 _mapper = mapper;
             }
 
-            public void Handle (Command message)
+            public CommandResult Handle (Command message)
             {
-                var following = _mapper.Map<Command, Following> (message);
+                var following = _repository.GetFollowing (message.UserId, message.FolloweeId);
+                if (following != null)
+                    return CommandResult.Fail ("Following already exists.");
 
-                _repository.Add (following);
+                var newFollowing = _mapper.Map<Command, Following> (message);
+                _repository.Add (newFollowing);
                 _repository.SaveAll ();
+                return CommandResult.Success;
             }
         }
     }
