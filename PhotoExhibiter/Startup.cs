@@ -9,11 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PhotoExhibiter.Application;
+using PhotoExhibiter.Commands;
+using PhotoExhibiter.Queries;
 using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.Domain.Models;
-using PhotoExhibiter.Infrastructure;
-using PhotoExhibiter.Infrastructure.Repositories;
-using PhotoExhibiter.WebUI;
+using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Infra.Data;
+using PhotoExhibiter.Infra.Data.Context;
+using PhotoExhibiter.Infra.Data.Repositories;
+using PhotoExhibiter.Infra.Identity;
+using PhotoExhibiter.Web;
+using PhotoExhibiter.Infra.Identity.Interfaces;
 
 namespace PhotoExhibiter
 {
@@ -38,7 +43,6 @@ namespace PhotoExhibiter
                 options.UseMySql (_config.GetConnectionString ("ApplicationConnectionString")));
 
             services.AddTransient<IEmailSender, EmailSender> ();
-            services.AddTransient<IExhibitService, ExhibitService> ();
 
             services.Configure<RazorViewEngineOptions> (options =>
                 options.ViewLocationExpanders.Add (new WebUIViewLocationExpander ()));

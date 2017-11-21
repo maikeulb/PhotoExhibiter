@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PhotoExhibiter.Domain.Models;
+using PhotoExhibiter.Domain.Entities;
 
 namespace PhotoExhibiter.Domain.Interfaces
 {

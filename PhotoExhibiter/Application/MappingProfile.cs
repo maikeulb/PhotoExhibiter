@@ -1,7 +1,7 @@
 using System;
 using AutoMapper;
-using PhotoExhibiter.Application.Commands;
-using PhotoExhibiter.Domain.Models;
+using PhotoExhibiter.Commands;
+using PhotoExhibiter.Domain.Entities;
 
 namespace PhotoExhibiter.Application
 {
