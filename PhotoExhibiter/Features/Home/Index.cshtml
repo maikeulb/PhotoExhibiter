@@ -1,0 +1,98 @@
+@using PhotoExhibiter.Features.Home
+@model Index.Model
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>@Model.Heading</h1>
+<ul class="exhibits voffset4">
+    @foreach (var exhibit in Model.UpcomingExhibits)
+    {
+        <li>
+            <div class="date">
+                <div class="month">
+                    @exhibit.DateTime.ToString("MMM")
+                </div>
+                <div class="day">
+                    @exhibit.DateTime.ToString("d ")
+                </div>
+            </div>
+            <div class="details">
+                <span class="photographer">
+                  @exhibit.Photographer.Name
+
+                    @if (exhibit.IsCanceled)
+                    {
+                        <span class="label label-warning">Canceled</span>
+                    }
+
+                  @if (Model.ShowActions)
+                  {
+                      <button class="btn btn-link btn-sm js-toggle-follow"
+                        data-user-id="@exhibit.PhotographerId">Follow</button>
+                  }
+                </span>
+                <span class="genre">
+                    @exhibit.Genre.Name
+                </span>
+                @if (Model.ShowActions && !exhibit.IsCanceled)
+                {
+                <button data-exhibit-id="@exhibit.Id" class="btn btn-default btn-sm pull-right js-toggle-attendance">Going?</button>
+                }
+            </div>
+        </li>
+    }
+</ul>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $(".js-toggle-attendance").click(function(e) {
+                var button = $(e.target);
+                var contentTypeAttribute = 'application/json; charset=utf-8';
+                var urlAttribute = "/api/attendances";
+                var dataAttribute = JSON.stringify({
+                     ExhibitId: button.attr("data-exhibit-id")
+                });
+
+                $.ajax({
+                    url: urlAttribute,
+                    method: "POST",
+                    contentType: contentTypeAttribute,
+                    data: dataAttribute
+                })
+                    .done(function() {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Going");
+                    })
+                    .fail(function() {
+                        alert("Something failed!");
+                    });
+            });
+            $(".js-toggle-follow").click(function(e) {
+                var button = $(e.target);
+                var contentTypeAttribute = 'application/json; charset=utf-8';
+                var urlAttribute = "/api/followings";
+                var dataAttribute = JSON.stringify({
+                     FolloweeId: button.attr("data-user-id")
+                });
+
+                $.ajax({
+                    url: urlAttribute,
+                    method: "POST",
+                    contentType: contentTypeAttribute,
+                    data: dataAttribute
+                })
+                    .done(function() {
+                        button.text("Following");
+                    })
+                    .fail(function() {
+                        alert("Something failed!");
+                    });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,14 @@
+@using PhotoExhibiter.Models.Entities
+@model IEnumerable<ApplicationUser>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Who I Follow</h1>
+<ul>
+    @foreach (var photographer in Model)
+    {
+        <li>@photographer.Name</li>
+    }
+</ul>
+

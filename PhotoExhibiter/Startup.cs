@@ -8,17 +8,11 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PhotoExhibiter.Application;
-using PhotoExhibiter.Commands;
-using PhotoExhibiter.Queries;
-using PhotoExhibiter.Domain.Interfaces;
-using PhotoExhibiter.Domain.Entities;
-using PhotoExhibiter.Infra.Data;
+using PhotoExhibiter.Infra.App;
 using PhotoExhibiter.Infra.Data.Context;
 using PhotoExhibiter.Infra.Data.Repositories;
-using PhotoExhibiter.Infra.Identity;
-using PhotoExhibiter.Web;
-using PhotoExhibiter.Infra.Identity.Interfaces;
+using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Models.Interfaces;
 
 namespace PhotoExhibiter
 {
@@ -44,8 +38,8 @@ namespace PhotoExhibiter
 
             services.AddTransient<IEmailSender, EmailSender> ();
 
-            services.Configure<RazorViewEngineOptions> (options =>
-                options.ViewLocationExpanders.Add (new WebUIViewLocationExpander ()));
+            // services.Configure<RazorViewEngineOptions> (options =>
+                // options.ViewLocationExpanders.Add (new WebUIViewLocationExpander ()));
 
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository> ();
             services.AddScoped<IAttendanceRepository, AttendanceRepository> ();
@@ -59,6 +53,7 @@ namespace PhotoExhibiter
                 {
                     options.Filters.Add (typeof (ValidatorActionFilter));
                 })
+                .AddFeatureFolders ()
                 .AddFluentValidation (cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup> (); });
 
             services.AddMediatR ();

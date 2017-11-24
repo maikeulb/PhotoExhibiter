@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PhotoExhibiter.Domain.Entities;
+using PhotoExhibiter.Models.Entities;
 
 namespace PhotoExhibiter.Infra.Data.Interfaces
 {
