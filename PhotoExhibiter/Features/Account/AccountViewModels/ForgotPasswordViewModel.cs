@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PhotoExhibiter.Infra.Identity.AccountViewModels
+namespace PhotoExhibiter.Features.Account.AccountViewModels
 {
     public class ForgotPasswordViewModel
     {

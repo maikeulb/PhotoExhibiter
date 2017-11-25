@@ -32,6 +32,14 @@ namespace PhotoExhibiter.Infra.Data.Context
                 .Metadata.FindNavigation(nameof(Exhibit.Attendances));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
+            var followernavigation = builder.Entity<ApplicationUser>()
+                .Metadata.FindNavigation(nameof(ApplicationUser.Followers));
+            followernavigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            var followeenavigation= builder.Entity<ApplicationUser>()
+                .Metadata.FindNavigation(nameof(ApplicationUser.Followees));
+            followeenavigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+
             base.OnModelCreating (builder);
         }
     }

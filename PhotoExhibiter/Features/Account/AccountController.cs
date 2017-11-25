@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Features.Home;
+using PhotoExhibiter.Features.Account.AccountViewModels;
 using PhotoExhibiter.Infra.App;
-using PhotoExhibiter.Infra.Identity.AccountViewModels;
 using PhotoExhibiter.Models.Entities;
 
 namespace PhotoExhibiter.Features.Account
