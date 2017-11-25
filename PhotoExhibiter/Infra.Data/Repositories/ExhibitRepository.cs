@@ -20,6 +20,7 @@ namespace PhotoExhibiter.Infra.Data.Repositories
         public Exhibit GetExhibit (int exhibitId)
         {
             return _context.Exhibits
+                .Include (e => e.Attendances)
                 .Include (e => e.Photographer)
                 .Include (e => e.Genre)
                 .SingleOrDefault (e => e.Id == exhibitId);

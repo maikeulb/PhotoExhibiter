@@ -29,15 +29,15 @@ namespace PhotoExhibiter.Infra.Data.Repositories
                 .SingleOrDefault (a => a.ExhibitId == exhibitId && a.AttendeeId == userId);
         }
 
-        public void Add (Attendance attendance)
-        {
-            _context.Attendances.Add (attendance);
-        }
+        /* public void Add (Attendance attendance) */
+        /* { */
+        /*     _context.Attendances.Add (attendance); */
+        /* } */
 
-        public void Remove (Attendance attendance)
-        {
-            _context.Attendances.Remove (attendance);
-        }
+        /* public void Remove (Attendance attendance) */
+        /* { */
+        /*     _context.Attendances.Remove (attendance); */
+        /* } */
 
         public bool SaveAll ()
         {

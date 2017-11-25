@@ -7,7 +7,7 @@ namespace PhotoExhibiter.Models.Entities
 {
     public class Exhibit
     {
-        private readonly List<Attendances> _attendances = new List<Attendances>();
+        private readonly List<Attendance> _attendances = new List<Attendance>();
 
         public int Id { get; private set; }
         public int GenreId { get; private set; }
@@ -19,7 +19,6 @@ namespace PhotoExhibiter.Models.Entities
         public Genre Genre { get; private set; }
 
         public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly();
-        public ICollection<Attendance> Attendances;
 
         private Exhibit () {}
 
@@ -45,6 +44,16 @@ namespace PhotoExhibiter.Models.Entities
             Location = command.Location;
             DateTime = command.DateTime;
             GenreId = command.GenreId;
+        }
+
+        public void AddAttendance (Attendance attendance)
+        {
+            _attendances.Add (attendance);
+        }
+
+        public void RemoveAttendance (Attendance attendance)
+        {
+            _attendances.Remove (attendance);
         }
     }
 }
