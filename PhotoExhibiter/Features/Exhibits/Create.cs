@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using AutoMapper;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
@@ -20,15 +19,15 @@ namespace PhotoExhibiter.Features.Exhibits
 
         public class Command : IRequest
         {
-            public string UserId { get; set; }
             public int Id { get; set; }
+            public int GenreId { get; set; }
+            public string UserId { get; set; }
             public string Location { get; set; }
             public string Date { get; set; }
             public string Time { get; set; }
-            public int GenreId { get; set; }
-            public IEnumerable<Genre> Genres { get; set; }
             public string Heading { get; set; }
             public DateTime DateTime { get; set; }
+            public IEnumerable<Genre> Genres { get; set; }
         }
 
         public class QueryHandler : IRequestHandler<Query, Command>
@@ -68,19 +67,17 @@ namespace PhotoExhibiter.Features.Exhibits
         public class CommandHandler : IRequestHandler<Command>
         {
             private readonly IExhibitRepository _repository;
-            private readonly IMapper _mapper;
 
-            public CommandHandler (
-                IExhibitRepository repository,
-                IMapper mapper)
+            public CommandHandler (IExhibitRepository repository)
             {
                 _repository = repository;
-                _mapper = mapper;
             }
 
             public void Handle (Command message)
             {
-                var exhibit = _mapper.Map<Command, Exhibit> (message);
+                message.DateTime = DateTime.Parse(string.Format("{0} {1}", message.Date, message.Time));
+
+                var exhibit = Exhibit.Create(message);
 
                 _repository.Add (exhibit);
                 _repository.SaveAll ();

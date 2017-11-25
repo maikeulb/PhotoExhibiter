@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using AutoMapper;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
@@ -83,14 +82,10 @@ namespace PhotoExhibiter.Features.Exhibits
         public class CommandHandler : IRequestHandler<Command, Result>
         {
             private readonly IExhibitRepository _repository;
-            private readonly IMapper _mapper;
 
-            public CommandHandler (
-                IExhibitRepository repository,
-                IMapper mapper)
+            public CommandHandler (IExhibitRepository repository)
             {
                 _repository = repository;
-                _mapper = mapper;
             }
 
             public Result Handle (Command message)
@@ -101,9 +96,7 @@ namespace PhotoExhibiter.Features.Exhibits
                 if (exhibit.PhotographerId != message.UserId)
                     return Result.Fail<Command> ("Unauthorized");
 
-                var model = _mapper.Map<Command, Exhibit> (message);
-
-                exhibit.UpdateDetails (model.DateTime, model.Location, model.GenreId);
+                exhibit.UpdateDetails (message);
                 _repository.SaveAll ();
 
                 return Result.Ok ();

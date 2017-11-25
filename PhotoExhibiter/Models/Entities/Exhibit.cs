@@ -1,34 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using PhotoExhibiter.Features.Exhibits;
 
 namespace PhotoExhibiter.Models.Entities
 {
     public class Exhibit
     {
-        public int Id { get; set; }
-        public ApplicationUser Photographer { get; set; }
-        public string PhotographerId { get; set; }
-        public DateTime DateTime { get; set; }
-        public string Location { get; set; }
-        public int GenreId { get; set; }
-        public Genre Genre { get; set; }
-        public bool IsCanceled { get; set; }
+        private readonly List<Attendances> _attendances = new List<Attendances>();
 
-        public ICollection<Attendance> Attendances { get; private set; }
+        public int Id { get; private set; }
+        public int GenreId { get; private set; }
+        public string PhotographerId { get; private set; }
+        public string Location { get; private set; }
+        public DateTime DateTime { get; private set; }
+        public bool IsCanceled { get; private set; }
+        public ApplicationUser Photographer { get; private set; }
+        public Genre Genre { get; private set; }
+
+        public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly();
+        public ICollection<Attendance> Attendances;
+
+        private Exhibit () {}
+
+        private Exhibit (Create.Command command)
+        {
+            GenreId = command.GenreId;
+            PhotographerId = command.UserId;
+            Location = command.Location;
+            DateTime = command.DateTime;
+        }
+
+        public static Exhibit Create(Create.Command command) => new Exhibit(command);
 
         public void Cancel ()
         {
-            IsCanceled = true;
+            IsCanceled = true; //alternatively, create the notification object and call the method.
 
             Notification.ExhibitCanceled (this);
         }
 
-        public void UpdateDetails (DateTime dateTime, string location, int genreId)
+        public void UpdateDetails (Edit.Command command)
         {
-            Location = location;
-            DateTime = dateTime;
-            GenreId = genreId;
+            Location = command.Location;
+            DateTime = command.DateTime;
+            GenreId = command.GenreId;
         }
     }
 }

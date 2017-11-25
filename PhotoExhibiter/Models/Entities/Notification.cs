@@ -5,19 +5,16 @@ namespace PhotoExhibiter.Models.Entities
     public class Notification
     {
         public int Id { get; private set; }
-        public DateTime DateTime { get; private set; }
-        public NotificationType Type { get; private set; }
-        public DateTime? OriginalDateTime { get; private set; }
         public string OriginalLocation { get; private set; }
+        public DateTime DateTime { get; private set; }
+        public DateTime? OriginalDateTime { get; private set; }
+        public NotificationType Type { get; private set; }
         public Exhibit Exhibit { get; private set; }
 
         protected Notification () { }
 
         private Notification (NotificationType type, Exhibit exhibit)
         {
-            if (exhibit == null)
-                throw new ArgumentNullException ("exhibit");
-
             Type = type;
             Exhibit = exhibit;
             DateTime = DateTime.Now;

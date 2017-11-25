@@ -1,4 +1,3 @@
-using AutoMapper;
 using CSharpFunctionalExtensions;
 using MediatR;
 using PhotoExhibiter.Models.Entities;
@@ -17,13 +16,10 @@ namespace PhotoExhibiter.Features.Apis.Followings
         public class Handler : IRequestHandler<Command, Result>
         {
             private readonly IFollowingRepository _repository;
-            private readonly IMapper _mapper;
 
-            public Handler (IFollowingRepository repository,
-                IMapper mapper)
+            public Handler (IFollowingRepository repository)
             {
                 _repository = repository;
-                _mapper = mapper;
             }
 
             public Result Handle (Command message)
@@ -32,7 +28,7 @@ namespace PhotoExhibiter.Features.Apis.Followings
                 if (following != null)
                     return Result.Fail<Command> ("Following already exists.");
 
-                var newFollowing = _mapper.Map<Command, Following> (message);
+                var newFollowing = Following.Create(message);
 
                 _repository.Add (newFollowing);
                 _repository.SaveAll ();

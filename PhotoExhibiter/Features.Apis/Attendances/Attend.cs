@@ -1,4 +1,3 @@
-using AutoMapper;
 using CSharpFunctionalExtensions;
 using MediatR;
 using PhotoExhibiter.Models.Entities;
@@ -17,13 +16,10 @@ namespace PhotoExhibiter.Features.Apis.Attendances
         public class Handler : IRequestHandler<Command, Result>
         {
             private readonly IAttendanceRepository _repository;
-            private readonly IMapper _mapper;
 
-            public Handler (IAttendanceRepository repository,
-                IMapper mapper)
+            public Handler (IAttendanceRepository repository)
             {
                 _repository = repository;
-                _mapper = mapper;
             }
 
             public Result Handle (Command message)
@@ -32,8 +28,7 @@ namespace PhotoExhibiter.Features.Apis.Attendances
                 if (attendance != null)
                     return Result.Fail<Command> ("Attendance already exists.");
 
-                var newAttendance = _mapper.Map<Command, Attendance> (message);
-
+                var newAttendance = Attendance.Create(message);
                 _repository.Add (newAttendance);
                 _repository.SaveAll ();
 

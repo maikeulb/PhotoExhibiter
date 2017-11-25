@@ -28,6 +28,10 @@ namespace PhotoExhibiter.Infra.Data.Context
             builder.ApplyConfiguration (new NotificationConfiguration ());
             builder.ApplyConfiguration (new UserNotificationConfiguration ());
 
+            /* var navigation = builder.Entity<Exhibit>() */
+            /*     .Metadata.FindNavigation(nameof(Exhibit.Attendances)); */
+            /* navigation.SetPropertyAccessMode(PropertyAccessMode.Field); */
+
             base.OnModelCreating (builder);
         }
     }
