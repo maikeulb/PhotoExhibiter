@@ -9,10 +9,7 @@ namespace PhotoExhibiter.Infra.Data.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public FollowingRepository (ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public FollowingRepository(ApplicationDbContext context) => _context = context;
 
         public Following GetFollowing (string followerId, string followeeId)
         {
@@ -30,9 +27,6 @@ namespace PhotoExhibiter.Infra.Data.Repositories
             _context.Followings.Remove (following);
         }
 
-        public bool SaveAll ()
-        {
-            return _context.SaveChanges () > 0;
-        }
+        public bool SaveAll() => _context.SaveChanges() > 0;
     }
 }

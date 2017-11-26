@@ -10,19 +10,13 @@ namespace PhotoExhibiter.Infra.Data.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public GenreRepository (ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public GenreRepository(ApplicationDbContext context) => _context = context;
 
         public IEnumerable<Genre> GetGenres ()
         {
             return _context.Genres.ToList ();
         }
 
-        public bool SaveAll ()
-        {
-            return _context.SaveChanges () > 0;
-        }
+        public bool SaveAll() => _context.SaveChanges() > 0;
     }
 }

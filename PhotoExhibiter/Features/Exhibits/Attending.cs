@@ -25,16 +25,14 @@ namespace PhotoExhibiter.Features.Exhibits
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler (IExhibitRepository repository)
-            {
-                _repository = repository;
-            }
+            public Handler(IExhibitRepository repository) => _repository = repository;
 
             public Model Handle (Query message)
             {
+                var upcomingExhibits = _repository.GetExhibitsUserAttending (message.UserId);
                 var exhibits = new Model
                 {
-                    UpcomingExhibits = _repository.GetExhibitsUserAttending (message.UserId),
+                    UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
                     Heading = "Exhibits I'm Attending"
                 };

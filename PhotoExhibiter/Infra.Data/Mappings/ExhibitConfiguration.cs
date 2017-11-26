@@ -21,10 +21,6 @@ namespace PhotoExhibiter.Infra.Data.Mappings
             builder.HasMany (e => e.Attendances)
                 .WithOne (a => a.Exhibit)
                 .OnDelete (DeleteBehavior.Restrict);
-
-            /* var navigation = builder.Metadata. */
-                /* FindNavigation(nameof(Exhibit.Attendances)); */
-                /* naviation.SetPropertyAcccessMode(PropertyAccessMode.Field); */
         }
 
     }

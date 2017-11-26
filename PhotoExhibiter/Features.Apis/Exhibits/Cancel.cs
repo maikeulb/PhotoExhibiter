@@ -16,10 +16,7 @@ namespace PhotoExhibiter.Features.Apis.Exhibits
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler (IExhibitRepository repository)
-            {
-                _repository = repository;
-            }
+            public Handler(IExhibitRepository repository) => _repository = repository;
 
             public Result Handle (Command message)
             {
@@ -31,7 +28,7 @@ namespace PhotoExhibiter.Features.Apis.Exhibits
                 if (exhibit.PhotographerId != message.UserId)
                     return Result.Fail<Command> ("Unauthorized");
 
-                exhibit.Cancel ();
+                exhibit.Cancel (); //event
                 _repository.SaveAll ();
 
                 return Result.Ok ();

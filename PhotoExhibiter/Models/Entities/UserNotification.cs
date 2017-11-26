@@ -10,20 +10,19 @@
 
         private UserNotification () {}
 
-        private UserNotification (string userId, int notificationId)
+        private UserNotification (ApplicationUser user, Notification notification)
         {
-            UserId = userId;
-            NotificationId = notificationId;
+            UserId = user.Id;
+            NotificationId = notification.Id;
+            Notification = notification;
+            User = user;
         }
 
-        public static UserNotification Create (string userId, int notificationId)
+        public static UserNotification Create (ApplicationUser user, Notification notification)
         {
-            return new UserNotification (userId, notificationId);
+            return new UserNotification (user, notification);
         }
 
-        public void Read ()
-        {
-            IsRead = true;
-        }
+        public void Read() => IsRead = true;
     }
 }

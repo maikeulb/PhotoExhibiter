@@ -14,5 +14,7 @@ namespace PhotoExhibiter.Models.Entities
         public IEnumerable<Following> Followers => _followers.AsReadOnly();
         public IEnumerable<Following> Followees => _followees.AsReadOnly();
         public IEnumerable<UserNotification> UserNotifications => _userNotifications.AsReadOnly();
+
+        public void Notify(Notification notification) => _userNotifications.Add(UserNotification.Create(this, notification));
     }
 }

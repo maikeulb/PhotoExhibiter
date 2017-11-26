@@ -11,6 +11,7 @@ using PhotoExhibiter.Features.Account;
 
 namespace PhotoExhibiter.Features.Exhibits
 {
+    [Authorize]
     public class ExhibitsController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -30,7 +31,6 @@ namespace PhotoExhibiter.Features.Exhibits
             _mediator = mediator;
         }
 
-        [Authorize]
         public async Task<IActionResult> Mine (Mine.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
@@ -40,7 +40,6 @@ namespace PhotoExhibiter.Features.Exhibits
             return View (model);
         }
 
-        [Authorize]
         public async Task<IActionResult> Attending (Attending.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
@@ -51,7 +50,6 @@ namespace PhotoExhibiter.Features.Exhibits
             return View (model);
         }
 
-        [Authorize]
         public async Task<IActionResult> Create (Create.Query query)
         {
             var model = await _mediator.Send (query);
@@ -59,7 +57,6 @@ namespace PhotoExhibiter.Features.Exhibits
             return View (model);
         }
 
-        [Authorize]
         public async Task<IActionResult> Edit (Edit.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
@@ -71,7 +68,6 @@ namespace PhotoExhibiter.Features.Exhibits
                 : (IActionResult)BadRequest(modelOrError.Error);
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create (Create.Command command)
@@ -86,7 +82,6 @@ namespace PhotoExhibiter.Features.Exhibits
             return RedirectToAction ("Mine", "Exhibits");
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit (Edit.Command command)

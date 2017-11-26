@@ -17,10 +17,7 @@ namespace PhotoExhibiter.Features.Apis.Followings
         {
             private readonly IFollowingRepository _repository;
 
-            public Handler (IFollowingRepository repository)
-            {
-                _repository = repository;
-            }
+            public Handler(IFollowingRepository repository) => _repository = repository;
 
             public Result Handle (Command message)
             {

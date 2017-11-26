@@ -58,8 +58,8 @@ namespace PhotoExhibiter
 
             services.AddMediatR ();
             // services.AddTransient(typeof(IPipelineBehavior<Edit.Command,>), typeof(Edit.ValidationPipeline<Edit.Command,>));
-            /* services.AddAutoMapper (); */
-            /* Mapper.AssertConfigurationIsValid (); */
+            services.AddAutoMapper ();
+            Mapper.AssertConfigurationIsValid ();
         }
 
         public void Configure (IApplicationBuilder app, IHostingEnvironment env)

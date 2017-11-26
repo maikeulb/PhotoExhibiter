@@ -17,9 +17,6 @@ namespace PhotoExhibiter.Models.Entities
             AttendeeId = command.UserId ;
         }
 
-        public static Attendance Create (Attend.Command command)
-        {
-            return new Attendance(command);
-        }
+        public static Attendance Create(Attend.Command command) => new Attendance(command);
     }
 }

@@ -16,10 +16,7 @@ namespace PhotoExhibiter.Features.Followees
         {
             private readonly IApplicationUserRepository _repository;
 
-            public Handler (IApplicationUserRepository repository)
-            {
-                _repository = repository;
-            }
+            public Handler(IApplicationUserRepository repository) => _repository = repository;
 
             public IEnumerable<ApplicationUser> Handle (Query message)
             {

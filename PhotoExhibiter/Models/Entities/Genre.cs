@@ -1,6 +1,6 @@
 ﻿namespace PhotoExhibiter.Models.Entities
 {
-    public class Genre
+    public class Genre //Value Object?
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
@@ -13,9 +13,6 @@
             Name = name;
         }
 
-        public static Genre Create (int genreId, string name)
-        {
-            return new Genre (genreId, name);
-        }
+        public static Genre Create(int genreId, string name) => new Genre(genreId, name);
     }
 }

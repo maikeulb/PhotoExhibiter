@@ -12,10 +12,7 @@ namespace PhotoExhibiter.Infra.Data.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public ExhibitRepository (ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public ExhibitRepository(ApplicationDbContext context) => _context = context;
 
         public Exhibit GetExhibit (int exhibitId)
         {
@@ -79,9 +76,6 @@ namespace PhotoExhibiter.Infra.Data.Repositories
             return upcomingExhibits.ToList ();
         }
 
-        public bool SaveAll ()
-        {
-            return _context.SaveChanges () > 0;
-        }
+        public bool SaveAll() => _context.SaveChanges() > 0;
     }
 }

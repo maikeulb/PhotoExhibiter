@@ -72,10 +72,17 @@ namespace PhotoExhibiter.Features.Exhibits
         {
             public Validator ()
             {
-                RuleFor (m => m.Location).NotNull ();
-                RuleFor (m => m.Date).NotNull ().SetValidator (new FutureDateValidator ());
-                RuleFor (m => m.Time).NotNull ().SetValidator (new ValidTimeValidator ());
-                RuleFor (m => m.GenreId).NotNull ();
+                RuleFor (m => m.Location)
+                    .NotNull ().WithMessage("Name is required.")
+                    .Length(1,100).WithMessage("Length must be between 1 and 100 characters");
+                RuleFor (m => m.Date)
+                    .NotNull ()
+                    .SetValidator (new FutureDateValidator ());
+                RuleFor (m => m.Time)
+                    .NotNull ()
+                    .SetValidator (new ValidTimeValidator ());
+                RuleFor (m => m.GenreId)
+                    .NotNull ();
             }
         }
 

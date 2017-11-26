@@ -17,10 +17,7 @@ namespace PhotoExhibiter.Features.Exhibits
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler (IExhibitRepository repository)
-            {
-                _repository = repository;
-            }
+            public Handler(IExhibitRepository repository) => _repository = repository;
 
             public IEnumerable<Exhibit> Handle (Query message)
             {

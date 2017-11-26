@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using PhotoExhibiter.Features.Exhibits;
 
 namespace PhotoExhibiter.Models.Entities
 {
     public class Exhibit
     {
-        private readonly List<Attendance> _attendances = new List<Attendance>();
+        private readonly List<Attendance> _attendances = new List<Attendance> ();
 
         public int Id { get; private set; }
         public int GenreId { get; private set; }
@@ -18,9 +19,9 @@ namespace PhotoExhibiter.Models.Entities
         public ApplicationUser Photographer { get; private set; }
         public Genre Genre { get; private set; }
 
-        public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly();
+        public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly ();
 
-        private Exhibit () {}
+        private Exhibit () { }
 
         private Exhibit (Create.Command command)
         {
@@ -30,30 +31,34 @@ namespace PhotoExhibiter.Models.Entities
             DateTime = command.DateTime;
         }
 
-        public static Exhibit Create(Create.Command command) => new Exhibit(command);
+        public static Exhibit Create (Create.Command command) => new Exhibit (command);
 
         public void Cancel ()
         {
-            IsCanceled = true; //alternatively, create the notification object and call the method.
+            IsCanceled = true;
 
-            Notification.ExhibitCanceled (this);
+            var notification = Notification.ExhibitCanceled (this); // event maybe
+
+            foreach (var attendee in Attendances.Select (a => a.Attendee))
+            {
+                attendee.Notify (notification);
+            }
         }
 
         public void UpdateDetails (Edit.Command command)
         {
+            var notification = Notification.ExhibitUpdated (this, DateTime, Location);
+
             Location = command.Location;
             DateTime = command.DateTime;
             GenreId = command.GenreId;
-        }
 
-        public void AddAttendance (Attendance attendance)
-        {
-            _attendances.Add (attendance);
-        }
+            foreach (var attendee in Attendances.Select (a => a.Attendee))
+                attendee.Notify (notification);
+    }
 
-        public void RemoveAttendance (Attendance attendance)
-        {
-            _attendances.Remove (attendance);
-        }
+        public void AddAttendance(Attendance attendance) => _attendances.Add(attendance);
+
+        public void RemoveAttendance(Attendance attendance) => _attendances.Remove(attendance);
     }
 }

@@ -17,9 +17,6 @@ namespace PhotoExhibiter.Models.Entities
             FolloweeId = command.FolloweeId;
         }
 
-        public static Following Create (Follow.Command command)
-        {
-            return new Following (command);
-        }
+        public static Following Create(Follow.Command command) => new Following(command);
     }
 }

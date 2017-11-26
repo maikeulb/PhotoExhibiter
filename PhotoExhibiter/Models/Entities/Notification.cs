@@ -2,7 +2,7 @@
 
 namespace PhotoExhibiter.Models.Entities
 {
-    public class Notification
+    public class Notification // Value Object
     {
         public int Id { get; private set; }
         public string OriginalLocation { get; private set; }
@@ -20,6 +20,15 @@ namespace PhotoExhibiter.Models.Entities
             DateTime = DateTime.Now;
         }
 
+        private Notification (NotificationType type, Exhibit exhibit, DateTime originalDateTime, string originalLocation)
+        {
+            Type = type;
+            Exhibit = exhibit;
+            OriginalDateTime = originalDateTime;
+            OriginalLocation= originalLocation;
+            DateTime = DateTime.Now;
+        }
+
         public static Notification ExhibitCreated (Exhibit exhibit)
         {
             return new Notification (NotificationType.ExhibitCreated, exhibit);
@@ -27,11 +36,7 @@ namespace PhotoExhibiter.Models.Entities
 
         public static Notification ExhibitUpdated (Exhibit newExhibit, DateTime originalDateTime, string originalLocation)
         {
-            var notification = new Notification (NotificationType.ExhibitUpdated, newExhibit);
-            notification.OriginalDateTime = originalDateTime;
-            notification.OriginalLocation = originalLocation;
-
-            return notification;
+            return new Notification (NotificationType.ExhibitUpdated, newExhibit, originalDateTime, originalLocation);
         }
 
         public static Notification ExhibitCanceled (Exhibit exhibit)

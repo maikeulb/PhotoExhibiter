@@ -11,10 +11,7 @@ namespace PhotoExhibiter.Infra.Data.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public AttendanceRepository (ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public AttendanceRepository(ApplicationDbContext context) => _context = context;
 
         public IEnumerable<Attendance> GetFutureAttendances (string userId)
         {
@@ -39,9 +36,6 @@ namespace PhotoExhibiter.Infra.Data.Repositories
         /*     _context.Attendances.Remove (attendance); */
         /* } */
 
-        public bool SaveAll ()
-        {
-            return _context.SaveChanges () > 0;
-        }
+        public bool SaveAll() => _context.SaveChanges() > 0;
     }
 }

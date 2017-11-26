@@ -28,17 +28,17 @@ namespace PhotoExhibiter.Infra.Data.Context
             builder.ApplyConfiguration (new NotificationConfiguration ());
             builder.ApplyConfiguration (new UserNotificationConfiguration ());
 
-            var navigation = builder.Entity<Exhibit>()
-                .Metadata.FindNavigation(nameof(Exhibit.Attendances));
-            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Entity<Exhibit>()
+                .Metadata.FindNavigation(nameof(Exhibit.Attendances))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            var followernavigation = builder.Entity<ApplicationUser>()
-                .Metadata.FindNavigation(nameof(ApplicationUser.Followers));
-            followernavigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Entity<ApplicationUser>()
+                .Metadata.FindNavigation(nameof(ApplicationUser.Followers))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            var followeenavigation= builder.Entity<ApplicationUser>()
-                .Metadata.FindNavigation(nameof(ApplicationUser.Followees));
-            followeenavigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Entity<ApplicationUser>()
+                .Metadata.FindNavigation(nameof(ApplicationUser.Followees))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
 
             base.OnModelCreating (builder);
         }

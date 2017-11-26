@@ -10,10 +10,7 @@ namespace PhotoExhibiter.Infra.Data.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public UserNotificationRepository (ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public UserNotificationRepository(ApplicationDbContext context) => _context = context;
 
         public IEnumerable<UserNotification> GetUserNotificationsFor (string userId)
         {
@@ -22,9 +19,6 @@ namespace PhotoExhibiter.Infra.Data.Repositories
                 .ToList ();
         }
 
-        public bool SaveAll ()
-        {
-            return _context.SaveChanges () > 0;
-        }
+        public bool SaveAll() => _context.SaveChanges() > 0;
     }
 }

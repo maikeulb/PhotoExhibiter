@@ -10,7 +10,6 @@ namespace PhotoExhibiter.Infra.App
 
         protected override bool IsValid (PropertyValidatorContext context)
         {
-
             var time = context.PropertyValue;
             DateTime dateTime;
 
