@@ -1,9 +1,8 @@
 @using PhotoExhibiter.Features.Exhibits
-@model Attending.Model
+@model Details.Model
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    }
 
 <h2>
     @Model.Exhibit.Photographer.Name
@@ -22,7 +21,7 @@
     }
 </h2>
 <p>
-    Performing at @Model.Exhibit.location on
+    Performing at @Model.Exhibit.Location on
     @Model.Exhibit.DateTime.ToString("d MMM") at @Model.Exhibit.DateTime.ToString("HH:mm")
 </p>
 
@@ -38,7 +37,3 @@
         });
     </script>
 }
-
-
-
-

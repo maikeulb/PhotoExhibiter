@@ -55,10 +55,10 @@ namespace PhotoExhibiter.Models.Entities
 
             foreach (var attendee in Attendances.Select (a => a.Attendee))
                 attendee.Notify (notification);
-    }
+        }
 
-        public void AddAttendance(Attendance attendance) => _attendances.Add(attendance);
+        public void AddAttendance (Attendance attendance) => _attendances.Add (attendance);
 
-        public void RemoveAttendance(Attendance attendance) => _attendances.Remove(attendance);
+        public void RemoveAttendance (Attendance attendance) => _attendances.Remove (attendance);
     }
 }

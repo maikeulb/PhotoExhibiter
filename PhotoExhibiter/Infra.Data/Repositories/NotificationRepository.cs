@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using PhotoExhibiter.Infra.Data.Context;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
-using PhotoExhibiter.Infra.Data.Context;
 
 namespace PhotoExhibiter.Infra.Data.Repositories
 {
@@ -11,7 +11,7 @@ namespace PhotoExhibiter.Infra.Data.Repositories
     {
         private readonly ApplicationDbContext _context;
 
-        public NotificationRepository(ApplicationDbContext context) => _context = context;
+        public NotificationRepository (ApplicationDbContext context) => _context = context;
 
         public IEnumerable<Notification> GetNewNotificationsFor (string userId)
         {
@@ -22,6 +22,6 @@ namespace PhotoExhibiter.Infra.Data.Repositories
                 .ToList ();
         }
 
-        public bool SaveAll() => _context.SaveChanges() > 0;
+        public bool SaveAll () => _context.SaveChanges () > 0;
     }
 }

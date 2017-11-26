@@ -41,5 +41,15 @@ namespace PhotoExhibiter.Features.Apis.Followings
                 (IActionResult) Ok () :
                 (IActionResult) BadRequest (result.Error);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> UnFollow (UnFollow.Command command)
+        {
+            command.UserId = _userManager.GetUserId (User);
+
+            var response = await _mediator.Send (command);
+
+            return Ok (response);
+        }
     }
 }

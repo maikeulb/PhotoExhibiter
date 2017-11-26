@@ -17,7 +17,7 @@ namespace PhotoExhibiter.Features.Apis.Notifications
         {
             private readonly IUserNotificationRepository _repository;
 
-            public Handler(IUserNotificationRepository repository) => _repository = repository;
+            public Handler (IUserNotificationRepository repository) => _repository = repository;
 
             public Result Handle (Command message)
             {
@@ -25,7 +25,7 @@ namespace PhotoExhibiter.Features.Apis.Notifications
                 if (notifications != null)
                     return Result.Fail<Command> ("Notification does not exists.");
 
-                notifications.ToList().ForEach (n => n.Read ()); //event
+                notifications.ToList ().ForEach (n => n.Read ()); //event
                 _repository.SaveAll ();
 
                 return Result.Ok ();

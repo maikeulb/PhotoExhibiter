@@ -1,11 +1,11 @@
-using AutoMapper;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using MediatR;
 using PhotoExhibiter.Features;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
-using System;
-using System.Linq;
 
 namespace PhotoExhibiter.Features.Api.Notifications
 {
@@ -51,12 +51,12 @@ namespace PhotoExhibiter.Features.Api.Notifications
         {
             private readonly INotificationRepository _repository;
 
-            public Handler(INotificationRepository repository) => _repository = repository;
+            public Handler (INotificationRepository repository) => _repository = repository;
 
             public IEnumerable<Dto> Handle (Query message)
             {
-                var notifications = _repository.GetNewNotificationsFor(message.UserId);
-                var dTo = notifications.Select(Mapper.Map<Notification, Dto>);
+                var notifications = _repository.GetNewNotificationsFor (message.UserId);
+                var dTo = notifications.Select (Mapper.Map<Notification, Dto>);
 
                 return dTo;
             }

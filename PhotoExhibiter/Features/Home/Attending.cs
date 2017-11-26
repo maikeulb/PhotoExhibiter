@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using MediatR;
-using PhotoExhibiter.Features;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
 
-namespace PhotoExhibiter.Features.Exhibits
+namespace PhotoExhibiter.Features.Home
 {
     public class Attending
     {
@@ -35,7 +34,8 @@ namespace PhotoExhibiter.Features.Exhibits
 
             public Model Handle (Query message)
             {
-                var upcomingExhibits = _repository.GetExhibitsUserAttending (message.UserId);
+                var upcomingExhibits = _repository.GetExhibitsUserAttending(message.UserId);
+
                 var exhibits = new Model
                 {
                     UpcomingExhibits = upcomingExhibits,

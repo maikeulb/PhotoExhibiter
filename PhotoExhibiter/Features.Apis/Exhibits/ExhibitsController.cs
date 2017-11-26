@@ -31,15 +31,17 @@ namespace PhotoExhibiter.Features.Apis.Exhibits
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Cancel (Cancel.Command command)
+        public async Task<IActionResult> Cancel ([FromBody] Cancel.Command command)
         {
             command.UserId = _userManager.GetUserId (User);
 
             var result = await _mediator.Send (command);
 
-            return result.IsSuccess ?
-                (IActionResult) Ok () :
-                (IActionResult) BadRequest (result.Error);
+            return Ok ();
+
+            /* return result.IsSuccess ? */
+            /* (IActionResult) Ok () : */
+            /* (IActionResult) BadRequest (result.Error); */
         }
     }
 }

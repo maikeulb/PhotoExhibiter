@@ -25,7 +25,7 @@ namespace PhotoExhibiter.Models.Entities
             Type = type;
             Exhibit = exhibit;
             OriginalDateTime = originalDateTime;
-            OriginalLocation= originalLocation;
+            OriginalLocation = originalLocation;
             DateTime = DateTime.Now;
         }
 

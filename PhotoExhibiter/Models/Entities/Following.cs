@@ -9,7 +9,7 @@ namespace PhotoExhibiter.Models.Entities
         public ApplicationUser Follower { get; private set; }
         public ApplicationUser Followee { get; private set; }
 
-        private Following () {}
+        private Following () { }
 
         private Following (Follow.Command command)
         {
@@ -17,6 +17,6 @@ namespace PhotoExhibiter.Models.Entities
             FolloweeId = command.FolloweeId;
         }
 
-        public static Following Create(Follow.Command command) => new Following(command);
+        public static Following Create (Follow.Command command) => new Following (command);
     }
 }

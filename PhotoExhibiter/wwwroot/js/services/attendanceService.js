@@ -3,27 +3,32 @@ var AttendanceService = function () {
         var contentTypeAttribute = 'application/json; charset=utf-8';
         var urlAttribute = "/api/attendances";
         var dataAttribute = JSON.stringify({
-          exhibitId: exhibitId 
+            exhibitId: exhibitId
         });
 
         $.ajax({
-            url: urlAttribute,
-            method: "POST",
-            contentType: contentTypeAttribute,
-            data: dataAttribute
-         })
+                url: urlAttribute,
+                method: "POST",
+                contentType: contentTypeAttribute,
+                data: dataAttribute
+            })
             .done(done)
             .fail(fail);
     };
 
     var deleteAttendance = function (exhibitId, done, fail) {
         var contentTypeAttribute = 'application/json; charset=utf-8';
-        var urlAttribute = "/api/attendances" + exhibitId;
+        var urlAttribute = "/api/attendances";
+        var dataAttribute = JSON.stringify({
+            exhibitId: exhibitId
+        });
+
         $.ajax({
-            url: urlAttribute,
-            method: "DELETE",
-            contentType: contentTypeAttribute,
-        })
+                url: urlAttribute,
+                method: "DELETE",
+                contentType: contentTypeAttribute,
+                data: dataAttribute
+            })
             .done(done)
             .fail(fail);
     };

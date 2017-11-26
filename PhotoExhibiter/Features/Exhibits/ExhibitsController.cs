@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Features;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Features.Account;
+using PhotoExhibiter.Features.Home;
 
 namespace PhotoExhibiter.Features.Exhibits
 {
@@ -31,28 +32,15 @@ namespace PhotoExhibiter.Features.Exhibits
             _mediator = mediator;
         }
 
-        /* public IActionResult Details(int id) */
-        /* { */
-        /*     var = _unitOfWork.Gigs.GetGig(id); */
+        [AllowAnonymous]
+        public async Task<IActionResult> Details (Details.Query query)
+        {
+            query.UserId = _userManager.GetUserId (User);
 
-        /*     if (gig == null) */
-        /*         return HttpNotFound(); */
+            var model = await _mediator.Send (query);
 
-        /*     var viewModel = new GigDetailsViewModel { Gig = gig }; */
-
-        /*     if (User.Identity.IsAuthenticated) */
-        /*     { */
-        /*         var userId = User.Identity.GetUserId(); */
-
-        /*         viewModel.IsAttending = */ 
-        /*             _unitOfWork.Attendances.GetAttendance(gig.Id, userId) != null; */
-
-        /*         viewModel.IsFollowing = */ 
-        /*             _unitOfWork.Followings.GetFollowing(userId, gig.ArtistId) != null; */
-        /*     } */
-
-        /*     return View("Details", viewModel); */
-        /* } */
+            return View (model);
+        }
 
         public async Task<IActionResult> Mine (Mine.Query query)
         {
@@ -72,6 +60,13 @@ namespace PhotoExhibiter.Features.Exhibits
 
             return View (model);
         }
+
+        [HttpPost]
+        public IActionResult Search(Index.Model model)
+        {
+            return RedirectToAction("Index", "Home", new { query = model.SearchTerm });
+        }
+
 
         public async Task<IActionResult> Create (Create.Query query)
         {

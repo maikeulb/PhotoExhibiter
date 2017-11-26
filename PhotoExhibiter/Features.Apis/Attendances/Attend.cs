@@ -1,6 +1,6 @@
+using System.Linq;
 using CSharpFunctionalExtensions;
 using MediatR;
-using System.Linq;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
 
@@ -17,33 +17,33 @@ namespace PhotoExhibiter.Features.Apis.Attendances
         public class Handler : IRequestHandler<Command, Result>
         {
             private readonly IExhibitRepository _repository;
-            private readonly IAttendanceRepository _attendancerepository;
+            private readonly IAttendanceRepository _attendanceRepository;
 
-            public Handler (IExhibitRepository repository, IAttendanceRepository attendancerepository)
+            public Handler (IExhibitRepository repository, IAttendanceRepository attendanceRepository)
             {
                 _repository = repository;
-                _attendancerepository = attendancerepository;
+                _attendanceRepository = attendanceRepository;
             }
 
             public Result Handle (Command message)
             {
                 /* var attendance = _repository.GetAttendance (message.ExhibitId, message.UserId); */
                 /* if (attendance != null) */
-                    /* return Result.Fail<Command> ("Attendance already exists."); */
+                /* return Result.Fail<Command> ("Attendance already exists."); */
                 /* var newAttendance = Attendance.Create(message); */
                 /* _repository.AddAttendance (newAttendance); */
 
                 var exhibit = _repository.GetExhibit (message.ExhibitId);
                 /* var attendance = _attendancerepository.GetAttendance (message.ExhibitId, message.UserId); */
                 /* if (attendance != null) */
-                    /* return Result.Fail<Command> ("Attendance already exists."); */
+                /* return Result.Fail<Command> ("Attendance already exists."); */
 
                 /* var contains = exhibit.Attendances.Any(a => a.AttendeeId == message.UserId); */
-                var contains = exhibit.Attendances.Any(a => a.AttendeeId == message.UserId);
+                var contains = exhibit.Attendances.Any (a => a.AttendeeId == message.UserId);
                 if (contains == true)
                     return Result.Fail<Command> ("Attendance already exists.");
 
-                exhibit.AddAttendance(Attendance.Create(message));
+                exhibit.AddAttendance (Attendance.Create (message));
 
                 _repository.SaveAll ();
 

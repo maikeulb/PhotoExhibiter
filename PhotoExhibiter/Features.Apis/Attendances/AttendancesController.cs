@@ -40,5 +40,15 @@ namespace PhotoExhibiter.Features.Apis.Attendances
                 (IActionResult) Ok () :
                 (IActionResult) BadRequest (result.Error);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Cancel (Cancel.Command command)
+        {
+            command.UserId = _userManager.GetUserId (User);
+
+            var response = await _mediator.Send (command);
+
+            return Ok (response);
+        }
     }
 }

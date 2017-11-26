@@ -8,7 +8,7 @@
         public Notification Notification { get; private set; }
         public ApplicationUser User { get; private set; }
 
-        private UserNotification () {}
+        private UserNotification () { }
 
         private UserNotification (ApplicationUser user, Notification notification)
         {
@@ -23,6 +23,6 @@
             return new UserNotification (user, notification);
         }
 
-        public void Read() => IsRead = true;
+        public void Read () => IsRead = true;
     }
 }

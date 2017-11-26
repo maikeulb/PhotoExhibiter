@@ -16,17 +16,17 @@ namespace PhotoExhibiter.Features.Apis.Exhibits
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler(IExhibitRepository repository) => _repository = repository;
+            public Handler (IExhibitRepository repository) => _repository = repository;
 
             public Result Handle (Command message)
             {
                 var exhibit = _repository.GetExhibitWithAttendees (message.Id);
-                if (exhibit == null)
-                    return Result.Fail<Command> ("Exhibit does not exist");
-                if (exhibit.IsCanceled)
-                    return Result.Fail<Command> ("Exhibit is cancelled.");
-                if (exhibit.PhotographerId != message.UserId)
-                    return Result.Fail<Command> ("Unauthorized");
+                /* if (exhibit == null) */
+                /* return Result.Fail<Command> ("Exhibit does not exist"); */
+                /* if (exhibit.IsCanceled) */
+                /* return Result.Fail<Command> ("Exhibit is cancelled."); */
+                /* if (exhibit.PhotographerId != message.UserId) */
+                /* return Result.Fail<Command> ("Unauthorized"); */
 
                 exhibit.Cancel (); //event
                 _repository.SaveAll ();

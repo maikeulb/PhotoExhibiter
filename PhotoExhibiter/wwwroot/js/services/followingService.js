@@ -1,7 +1,7 @@
 var FollowingService = function () {
     var createFollowing = function (followeeId, done, fail) {
         var contentTypeAttribute = 'application/json; charset=utf-8';
-        var urlAttribute = "/api/followings";
+        var urlAttribute = "/api/Followings";
         var dataAttribute = JSON.stringify({
           followeeId: followeeId 
         });
@@ -17,9 +17,12 @@ var FollowingService = function () {
     };
 
     var deleteFollowing = function (followeeId, done, fail) {
+        var contentTypeAttribute = 'application/json; charset=utf-8';
+        var urlAttribute = "/api/Followings" + followeeId;
+
         $.ajax({
-            url: "/api/followings/" + followeeId,
-            method: "DELETE"
+            url: urlAttribute,
+            type: "DELETE",
         })
             .done(done)
             .fail(fail);

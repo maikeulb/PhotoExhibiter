@@ -7,6 +7,6 @@ namespace PhotoExhibiter.Infra.App
 {
     public class EmailSender : IEmailSender
     {
-        public Task SendEmailAsync(string email, string subject, string message) => Task.CompletedTask;
+        public Task SendEmailAsync (string email, string subject, string message) => Task.CompletedTask;
     }
 }

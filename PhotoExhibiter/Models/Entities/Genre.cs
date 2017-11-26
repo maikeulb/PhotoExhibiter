@@ -5,7 +5,7 @@
         public int Id { get; private set; }
         public string Name { get; private set; }
 
-        private Genre () {}
+        private Genre () { }
 
         private Genre (int genreId, string name)
         {
@@ -13,6 +13,6 @@
             Name = name;
         }
 
-        public static Genre Create(int genreId, string name) => new Genre(genreId, name);
+        public static Genre Create (int genreId, string name) => new Genre (genreId, name);
     }
 }

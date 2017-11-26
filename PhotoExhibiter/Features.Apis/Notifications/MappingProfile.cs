@@ -5,12 +5,12 @@ namespace PhotoExhibiter.Features.Api.Notifications
 {
     public class MappingProfile : Profile
     {
-        public MappingProfile()
+        public MappingProfile ()
         {
-            CreateMap<Notification, Notifications.Dto>();
-            CreateMap<ApplicationUser, Notifications.UserDto>();
-            CreateMap<Exhibit, Notifications.ExhibitDto>();
-            CreateMap<Genre, Notifications.GenreDto>();
+            CreateMap<Notification, Notifications.Dto> ();
+            CreateMap<ApplicationUser, Notifications.UserDto> ();
+            CreateMap<Exhibit, Notifications.ExhibitDto> ();
+            CreateMap<Genre, Notifications.GenreDto> ();
         }
     }
 }
