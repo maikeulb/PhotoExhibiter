@@ -6,31 +6,31 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-left" }))
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-              role="button" aria-haspopup="true"
-              aria-expanded="false">@UserManager.GetUserName(User)<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="@Url.Action("Mine", "Exhibits")">My Upcoming
-                    Exhibits</a></li>
-                <li><a href="@Url.Action("Attending", "Exhibits")">Exhibits I'm Attending</a></li>
-                <li><a href="@Url.Action("Followees", "Followees")">Photographers I'm Following</a></li>
+    <ul class="nav navbar-nav navbar-left">
+        <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+              role="button" aria-haspopup="true" aria-expanded="false">@UserManager.GetUserName(User)
+              <span class="caret"></span></a>
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="@Url.Action("Mine", "Exhibits")">My UpcomingExhibits</a>
+                <a class="dropdown-item" href="@Url.Action("Attending", "Exhibits")">Exhibits I'm Attending</a>
+                <a class="dropdown-item" href="@Url.Action("Followees", "Followees")">Photographers I'm Following</a>
                 <li role="separator" class="divider"></li>
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-            </ul>
+                <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </div>
         </li>
     </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+    <ul class="nav navbar-nav navbar-left">
+        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
     </ul>
 }

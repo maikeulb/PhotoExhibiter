@@ -31,7 +31,7 @@ namespace PhotoExhibiter.Features.Api.Notifications
             public string Location { get; set; }
             public DateTime DateTime { get; set; }
             public bool IsCanceled { get; set; }
-            public UserDto Artist { get; set; }
+            public UserDto Photographer { get; set; }
             public GenreDto Genre { get; set; }
         }
 
