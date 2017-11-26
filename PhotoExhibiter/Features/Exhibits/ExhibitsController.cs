@@ -31,6 +31,29 @@ namespace PhotoExhibiter.Features.Exhibits
             _mediator = mediator;
         }
 
+        /* public IActionResult Details(int id) */
+        /* { */
+        /*     var = _unitOfWork.Gigs.GetGig(id); */
+
+        /*     if (gig == null) */
+        /*         return HttpNotFound(); */
+
+        /*     var viewModel = new GigDetailsViewModel { Gig = gig }; */
+
+        /*     if (User.Identity.IsAuthenticated) */
+        /*     { */
+        /*         var userId = User.Identity.GetUserId(); */
+
+        /*         viewModel.IsAttending = */ 
+        /*             _unitOfWork.Attendances.GetAttendance(gig.Id, userId) != null; */
+
+        /*         viewModel.IsFollowing = */ 
+        /*             _unitOfWork.Followings.GetFollowing(userId, gig.ArtistId) != null; */
+        /*     } */
+
+        /*     return View("Details", viewModel); */
+        /* } */
+
         public async Task<IActionResult> Mine (Mine.Query query)
         {
             query.UserId = _userManager.GetUserId (User);

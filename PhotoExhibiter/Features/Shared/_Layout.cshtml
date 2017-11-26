@@ -77,16 +77,84 @@
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="are.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"
                 asp-fallback-src="~/lib/bootbox.min.js"
                 crossorigin="anonymous">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("Scripts", required: false)
-</body>
+    @RenderSection("scripts", required: false)
+    <script type="text/x-template" id="notifications-template">
+        <ul class="notifications">
+            <%
+                _.each(notifications, function(notification){
+                    if (notification.type == 1) { %>
+                        <li><span class="highlight"><%=
+                        notification.exhibit.photographer.name %></span> has canceled
+                      the exhibit at <%= notification.exhibit.location %> at
+                      <%= moment(notification.exhibit.dateTime).format("D MMM HH:mm") %>.</li>
+                    <% }
 
+                    else if (notification.type == 2) {
+                        var changes = [],
+                            originalValues = [],
+                            newValues = [];
+
+                        if (notification.originallocation !=
+                        notification.exhibit.location) {
+                            changes.push('location');
+                            originalValues.push(notification.originallocation);
+                            newValues.push(notification.exhibit.location);
+                        }
+
+                        if (notification.originalDateTime != notification.exhibit.dateTime) {
+                            changes.push('date/time');
+                            originalValues.push(moment(notification.originalDateTime).format("D MMM HH:mm"));
+                            newValues.push(moment(notification.exhibit.dateTime).format("D MMM HH:mm"));
+                        }
+
+                    %>
+                        <li><span class="highlight"><%=
+                        notification.exhibit.photographer.name %></span> has
+                      changed the <%= changes.join(' and ') %> of the exhibit  from <%= originalValues.join('/') %> to <%= newValues.join('/') %></li>
+                <%
+                }
+            })
+            %>
+        </ul>
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/notifications", function (notifications) {
+                if (notifications.length == 0)
+                    return;
+
+                $(".js-notifications-count")
+                    .text(notifications.length)
+                    .removeClass("hide")
+                    .addClass("animated bounceInDown");
+
+                $(".notifications").popover({
+                    html: true,
+                    title: "Notifications",
+                    content: function () {
+                        var compiled = _.template($("#notifications-template").html());
+                        return compiled({ notifications: notifications });
+                    },
+                    placement: "bottom",
+                    template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+                }).on("shown.bs.popover", function() {
+                    $.post("/api/notifications/markAsRead")
+                        .done(function () {
+                            $(".js-notifications-count")
+                                .text("")
+                                .addClass("hide");
+                        });
+                });
+
+            });
+        });
+    </script>
+</body>
 </html>
