@@ -17,6 +17,7 @@
                     @exhibit.DateTime.ToString("d ")
                 </div>
             </div>
+
             <div class="details">
                 <span class="photographer">
                     @exhibit.Location
@@ -25,8 +26,7 @@
                     @exhibit.Genre.Name
                 </span>
                 <div class="actions">
-                    <a href="@Url.Action("Edit", "Exhibits", new { Id =
-                      exhibit.Id })">
+                    <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
                         Edit
                     </a>
                     <a href="#" class="js-cancel-exhibit"
