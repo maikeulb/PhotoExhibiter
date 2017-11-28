@@ -5,10 +5,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400" rel="stylesheet">
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -21,7 +20,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-light bg-faded">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
 
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,19 +59,12 @@
     </div>
 
     <environment include="Development">
-        <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
-        <script type="text/javascript" src="/lib/tether/dist/js/tether.js"></script>
-        <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <script type="text/javascript" src="/lib/bootbox.min.js"></script>
-        <script type="text/javascript" src="/lib/underscore-min.js"></script>
+        <script type="text/javascript" src="/js/index.js"></script>
+        <script type="text/javascript" src="/js/services/attendanceService.js"></script>
+        <script type="text/javascript" src="/js/services/followingService.js"></script>
         <script type="text/javascript"
-          src="/js/services/attendanceService.js"></script>
-        <script type="text/javascript"
-          src="/js/services/followingService.js"></script>
-        <script type="text/javascript"
-          src="/js/controllers/exhibitsController.js"></script>
-        <script type="text/javascript"
-          src="/js/controllers/exhibitDetailsController.js"></script>
+        src="/js/controllers/exhibitDetailsController.js"></script>
+        <script type="text/javascript" src="/js/controllers/exhibitsController.js"></script>
     </environment>
 
     <environment exclude="Development">
@@ -157,12 +149,18 @@
                     template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 
                 }).on("shown.bs.popover", function() {
-                    $.post("/api/notifications/markAsRead")
-                        .done(function () {
+                var contentTypeAttribute = 'application/json; charset=utf-8';
+                var urlAttribute = "/api/notifications/read";
+
+                $.ajax({
+                     method: "POST",
+                    contentType: contentTypeAttribute,
+                })
+                   .done(function () {
                             $(".js-notifications-count")
                                 .text("")
                                 .addClass("hide");
-                        });
+                            });
                 });
 
             });

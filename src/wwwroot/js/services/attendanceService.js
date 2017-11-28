@@ -1,4 +1,5 @@
 var AttendanceService = function () {
+
     var createAttendance = function (exhibitId, done, fail) {
         var contentTypeAttribute = 'application/json; charset=utf-8';
         var urlAttribute = "/api/attendances";
@@ -14,6 +15,7 @@ var AttendanceService = function () {
             })
             .done(done)
             .fail(fail);
+
     };
 
     var deleteAttendance = function (exhibitId, done, fail) {

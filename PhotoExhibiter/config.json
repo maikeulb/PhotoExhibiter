@@ -1,6 +1,0 @@
-{
-  "ConnectionStrings": {
-    "ApplicationConnectionString":
-      "Server=localhost;Database=photoexhibiter;Uid=root;Pwd=P@ssw0rd!;"
-  }
-}

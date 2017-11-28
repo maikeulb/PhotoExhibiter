@@ -1,4 +1,4 @@
-var exhibitDetailsController = function (followingService) {
+var ExhibitDetailsController = function (followingService) {
     var followButton;
 
     var init = function () {

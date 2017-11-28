@@ -19,12 +19,10 @@ namespace PhotoExhibiter
     public class Startup
     {
         private readonly IConfiguration _config;
-        private readonly IHostingEnvironment _env;
 
         public Startup (IConfiguration config, IHostingEnvironment env)
         {
             _config = config;
-            _env = env;
         }
 
         public void ConfigureServices (IServiceCollection services)
@@ -37,9 +35,6 @@ namespace PhotoExhibiter
                 options.UseMySql (_config.GetConnectionString ("ApplicationConnectionString")));
 
             services.AddTransient<IEmailSender, EmailSender> ();
-
-            // services.Configure<RazorViewEngineOptions> (options =>
-                // options.ViewLocationExpanders.Add (new WebUIViewLocationExpander ()));
 
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository> ();
             services.AddScoped<IAttendanceRepository, AttendanceRepository> ();

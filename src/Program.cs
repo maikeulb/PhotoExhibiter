@@ -16,19 +16,8 @@ namespace PhotoExhibiter
 
         public static IWebHost BuildWebHost (string[] args) =>
             WebHost.CreateDefaultBuilder (args)
-            .ConfigureAppConfiguration (SetupConfiguration)
             .UseStartup<Startup> ()
             .Build ();
 
-        public static void SetupConfiguration (
-            WebHostBuilderContext context,
-            IConfigurationBuilder builder)
-
-        {
-            builder.Sources.Clear ();
-
-            builder.AddJsonFile ("config.json", false, true)
-                .AddEnvironmentVariables ();
-        }
     }
 }
