@@ -2,18 +2,22 @@ const path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  context: __dirname + '/Client',
+  context: __dirname + '/Client/js',
   devtool: 'eval-source-map',
   entry: {
-    index: './js/index.js',
-    attendanceService: './js/services/attendanceService.exec.js',
-    followingService: './js/services/followingService.exec.js',
+    _layout: './_layout.js',
+
+    exhibitDetails: './ExhibitDetail/exhibitDetail.exec.js',
     exhibitDetailsController:
-      './js/controllers/exhibitDetailsController.exec.js',
-    exhibitsController: './js/controllers/exhibitsController.exec.js'
+      './ExhibitDetail/exhibitDetailsController.exec.js',
+    followingService: './ExhibitDetail/followingService.exec.js',
+    exhibits: './Exhibits/exhibits.exec.js',
+    exhibitsController: './Exhibits/exhibitsController.exec.js',
+    attendanceService: './Exhibits/attendanceService.exec.js'
   },
   resolve: {
-    extensions: ['.js', '.css', '.ts']
+    extensions: ['.js', '.css', '.ts'],
+    modules: [path.resolve('./'), path.resolve('./node_modules')]
   },
   module: {
     rules: [
@@ -48,9 +52,16 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default']
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'node-static',
+      filename: 'node-static.js',
+      minChunks(module, count) {
+        var context = module.context;
+        return context && context.indexOf('node_modules') >= 0;
+      }
     })
   ],
-
   output: {
     filename: '[name].js',
     path: __dirname + '/wwwroot/js/'
