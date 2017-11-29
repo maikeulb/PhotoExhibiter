@@ -11,9 +11,9 @@ module.exports = {
     exhibitDetailsController:
       './ExhibitDetail/exhibitDetailsController.exec.js',
     followingService: './ExhibitDetail/followingService.exec.js',
-    exhibits: './Exhibits/exhibits.exec.js',
-    exhibitsController: './Exhibits/exhibitsController.exec.js',
-    attendanceService: './Exhibits/attendanceService.exec.js'
+    exhibits: './Exhibits/exhibits.js',
+    exhibitsController: './Exhibits/exhibitsController.js',
+    attendanceService: './Exhibits/attendanceService.js'
   },
   resolve: {
     extensions: ['.js', '.css', '.ts'],
@@ -27,7 +27,13 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
       },
       {
         test: /\.tsx?$/,
