@@ -5,13 +5,22 @@ module.exports = {
   context: __dirname + '/Client',
   devtool: 'eval-source-map',
   entry: {
-    index: './js/index.js'
+    index: './js/index.js',
+    attendanceService: './js/services/attendanceService.exec.js',
+    followingService: './js/services/followingService.exec.js',
+    exhibitDetailsController:
+      './js/controllers/exhibitDetailsController.exec.js',
+    exhibitsController: './js/controllers/exhibitsController.exec.js'
   },
   resolve: {
     extensions: ['.js', '.css', '.ts']
   },
   module: {
     rules: [
+      {
+        test: /\.exec\.js$/,
+        use: ['script-loader']
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/
