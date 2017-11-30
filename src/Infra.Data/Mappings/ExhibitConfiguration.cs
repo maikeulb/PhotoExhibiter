@@ -22,6 +22,5 @@ namespace PhotoExhibiter.Infra.Data.Mappings
                 .WithOne (a => a.Exhibit)
                 .OnDelete (DeleteBehavior.Restrict);
         }
-
     }
 }

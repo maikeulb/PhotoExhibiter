@@ -1,4 +1,4 @@
-﻿using PhotoExhibiter.Features.Apis.Followings;
+﻿using PhotoExhibiter.Apis.Followings;
 
 namespace PhotoExhibiter.Models.Entities
 {

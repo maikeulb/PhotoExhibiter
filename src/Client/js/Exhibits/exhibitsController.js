@@ -1,34 +1,47 @@
-import { attendanceService } from './attendanceService';
+import attendanceService from './attendanceService';
 
 export default class ExhibitController {
-  constructor(service) {
+  constructor(attendanceService) {
     this.attendanceService = attendanceService;
+    this.button = null;
   }
 
   init(container) {
     return $(container).on(
       'click',
       '.js-toggle-attendance',
-      this.toggleAttendance
+      this.toggleAttendance.bind(this)
     );
   }
 
   toggleAttendance(e) {
-    button = $(e.target);
+    this.button = $(e.target);
+    const exhibitId = this.button.attr('data-exhibit-id');
 
-    exhibitId = button.attr('data-exhibit-id');
-
-    if (button.hasClass('btn-default'))
-      return attendanceService.createAttendance(exhibitId, done, fail);
-    else return attendanceService.deleteAttendance(exhibitId, done, fail);
+    if (this.button.hasClass('btn-secondary'))
+      return this.attendanceService.createAttendance(
+        exhibitId,
+        this.done.bind(this),
+        this.fail.bind(this)
+      );
+    else
+      return this.attendanceService.deleteAttendance(
+        exhibitId,
+        this.done.bind(this),
+        this.fail.bind(this)
+      );
   }
 
-  done() {
-    const text = button.text() == 'Going' ? 'Going?' : 'Going';
+  // done() {
+  // return this.innerdone(this.button).bind(this);
+  // }
 
-    return button
+  done() {
+    const text = this.button.text() == 'Going' ? 'Going?' : 'Going';
+
+    return this.button
       .toggleClass('btn-info')
-      .toggleClass('btn-default')
+      .toggleClass('btn-secondary')
       .text(text);
   }
 

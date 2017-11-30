@@ -1,4 +1,4 @@
-﻿using PhotoExhibiter.Features.Apis.Attendances;
+﻿using PhotoExhibiter.Apis.Attendances;
 
 namespace PhotoExhibiter.Models.Entities
 {

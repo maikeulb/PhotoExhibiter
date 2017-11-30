@@ -54,7 +54,7 @@
                 {
                     <button
                         data-exhibit-id="@exhibit.Id"
-                        class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id)? "btn-info" : "btn-default")
+                        class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id)? "btn-info" : "btn-secondary")
                             btn-sm js-toggle-attendance">
                             @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id)? "Going": "Going?")
                     </button>

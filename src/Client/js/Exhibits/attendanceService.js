@@ -1,11 +1,10 @@
 export default class AttendanceService {
-  contstructor(exhibitId, done, fail) {
-    this.exhibitId = exhibitId;
-    this.done = done;
-    this.fail = fail;
+  constructor() {
+    this.createAttendance = this.createAttendance.bind(this);
+    this.deleteAttendance = this.deleteAttendance.bind(this);
   }
 
-  createattendance(exhibitId, done, fail) {
+  createAttendance(exhibitId, done, fail) {
     const contentTypeAttribute = 'application/json; charset=utf-8';
     const urlAttribute = '/api/attendances';
     const dataAttribute = JSON.stringify({
@@ -18,7 +17,7 @@ export default class AttendanceService {
       contentType: contentTypeAttribute,
       data: dataAttribute
     })
-      .done(done)
+      .done(done) //done is the callback receiver
       .fail(fail);
   }
 
