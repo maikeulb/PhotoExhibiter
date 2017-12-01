@@ -5,14 +5,18 @@ module.exports = {
   context: __dirname + '/Client/js',
   devtool: 'eval-source-map',
   entry: {
-    _layout: './_layout.js',
-
+    entry: './entry.js',
     exhibitDetails: './ExhibitDetails/exhibitDetails.js',
     exhibitDetailsController: './ExhibitDetails/exhibitDetailsController.js',
     followingService: './ExhibitDetails/followingService.js',
+
     exhibits: './Exhibits/exhibits.js',
     exhibitsController: './Exhibits/exhibitsController.js',
-    attendanceService: './Exhibits/attendanceService.js'
+    attendanceService: './Exhibits/attendanceService.js',
+
+    exhibitCancel: './ExhibitCancel/exhibitCancel.js',
+    exhibitCancelController: './ExhibitCancel/exhibitCancelController.js',
+    exhibitService: './ExhibitCancel/exhibitService.js'
   },
   resolve: {
     extensions: ['.js', '.css', '.ts'],

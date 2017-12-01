@@ -41,50 +41,5 @@
 
 @section scripts
 {
-    <script>
-        $(document).ready(function () {
-            $(".js-cancel-exhibit").click(function (e) {
-                var link = $(e.target);
-
-                bootbox.dialog({
-                    message: "Are you sure you want to cancel this Exhibit?",
-                    title: "Confirmation",
-                    buttons: {
-                        no: {
-                            label: "No",
-                            className: "btn-secondary",
-                            callback: function () {
-                                bootbox.hideAll();
-                            }
-                        },
-                        yes: {
-                            label: "Yes",
-                            className: "btn-danger",
-                            callback: function () {
-                                var contentTypeAttribute = 'application/json; charset=utf-8';
-                                var urlAttribute = "/api/exhibits";
-                                var dataAttribute = JSON.stringify({Id:
-                                  link.attr("data-exhibit-id") });
-
-                                $.ajax({
-                                    url: urlAttribute,
-                                    method: "DELETE",
-                                    contentType: contentTypeAttribute,
-                                    data: dataAttribute
-                                })
-                                .done(function () {
-                                    link.parents("li").fadeOut(function () {
-                                        $(this).remove();
-                                    });
-                                })
-                                .fail(function () {
-                                    alert("Something failed!");
-                                });
-                            }
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+   <script type="text/javascript" src="/js/exhibitCancel.js"></script>
 }

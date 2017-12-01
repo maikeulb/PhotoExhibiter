@@ -10,7 +10,8 @@ export default class FollowingService {
     const dataAttribute = JSON.stringify({
       followeeId: followeeId
     });
-    return $.ajax({
+
+    $.ajax({
       url: urlAttribute,
       method: 'POST',
       contentType: contentTypeAttribute,
@@ -18,6 +19,7 @@ export default class FollowingService {
     })
       .done(done)
       .fail(fail);
+
   }
 
   deleteFollowing(followeeId, done, fail) {

@@ -1,4 +1,4 @@
-import followingService from './followingService';
+// import followingService from './followingService';
 
 export default class ExhibitDetailsController {
   constructor(followingService) {
