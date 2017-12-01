@@ -7,10 +7,9 @@ module.exports = {
   entry: {
     _layout: './_layout.js',
 
-    exhibitDetails: './ExhibitDetail/exhibitDetail.exec.js',
-    exhibitDetailsController:
-      './ExhibitDetail/exhibitDetailsController.exec.js',
-    followingService: './ExhibitDetail/followingService.exec.js',
+    exhibitDetails: './ExhibitDetails/exhibitDetails.js',
+    exhibitDetailsController: './ExhibitDetails/exhibitDetailsController.js',
+    followingService: './ExhibitDetails/followingService.js',
     exhibits: './Exhibits/exhibits.js',
     exhibitsController: './Exhibits/exhibitsController.js',
     attendanceService: './Exhibits/attendanceService.js'

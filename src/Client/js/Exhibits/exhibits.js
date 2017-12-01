@@ -1,7 +1,9 @@
 import ExhibitsController from './exhibitsController';
 import AttendanceService from './attendanceService';
-import { $, jQuery } from 'jquery';
+import $ from 'jquery';
 
 const attendanceService = new AttendanceService();
-const controller = new ExhibitsController(attendanceService);
-controller.init('#exhibits');
+
+const exhibitsController = new ExhibitsController(attendanceService);
+// exhibitsController.init('#exhibits');
+$(document).ready(() => exhibitsController.init('#exhibits'));
