@@ -12,7 +12,7 @@ using PhotoExhibiter.Apis.Notifications;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
 
-namespace PhotoExhibiter.Features.Api.Notifications
+namespace PhotoExhibiter.Apis.Notifications
 {
     [Route ("api/[Controller]")]
     [Authorize]

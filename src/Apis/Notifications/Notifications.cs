@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using MediatR;
-using PhotoExhibiter.Features;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
 
-namespace PhotoExhibiter.Features.Api.Notifications
+namespace PhotoExhibiter.Apis.Notifications
 {
     public class Notifications
     {

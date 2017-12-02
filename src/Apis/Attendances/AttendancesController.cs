@@ -42,7 +42,7 @@ namespace PhotoExhibiter.Apis.Attendances
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Cancel ([FromBody]Cancel.Command command)
+        public async Task<IActionResult> Cancel ([FromBody] Cancel.Command command)
         {
             command.UserId = _userManager.GetUserId (User);
 

@@ -16,8 +16,8 @@ window.bootbox = bootbox;
 import moment from 'moment';
 window.moment = moment;
 
-require('popper.js');
-require('bootstrap');
+import 'popper.js';
+import 'bootstrap';
 
-require('bootstrap/dist/css/bootstrap.min.css');
-require('../css/site.css');
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/site.css';

@@ -1,6 +1,5 @@
-import attendanceService from './attendanceService';
-
 export default class ExhibitController {
+
   constructor(attendanceService) {
     this.attendanceService = attendanceService;
     this.button = null;

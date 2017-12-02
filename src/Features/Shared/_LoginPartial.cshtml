@@ -6,14 +6,15 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-left" }))
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id =
+    "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-left">
-
+    <ul class="nav navbar-nav navbar-right">
             <li class="notifications">
                 <a href="#">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
                     <span class="badge js-notifications-count hide"></span>
                 </a>
             </li>
@@ -36,7 +37,7 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-left">
+    <ul class="nav navbar-nav navbar-right">
         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
     </ul>

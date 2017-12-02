@@ -7,6 +7,7 @@
     <title>@ViewData["Title"] - Web</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400" rel="stylesheet">
     <environment include="Development">
+    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css">
     </environment>
     <environment exclude="Development">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -19,18 +20,18 @@
 <body>
 
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
-
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-       </button>
-
-       <a asp-area="" asp-controller="Home" asp-action="Index"
-         class="navbar-brand changeFont">
-           <img src="/images/logoonly.png" height="45" class="d-inline-block
-           align-bottom" alt="">
-           PhotoExhibiter
-       </a>
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a asp-area="" asp-controller="Home" asp-action="Index"
+                class="navbar-brand changeFont">
+                <img src="/images/logoonly.png" height="45" class="d-inline-block
+                align-bottom" alt="">
+                PhotoExhibiter
+            </a>
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
@@ -39,13 +40,8 @@
                 </li>
                 @await Html.PartialAsync("_LoginPartial")
             </ul>
-
-            <form class="form-inline my-2 my-lg-0 navbar-right">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-
         </div>
+
     </nav>
 
     <div class="container body-content">
@@ -65,6 +61,7 @@
         <script type="text/javascript" src="/js/exhibitsController.js"></script>
         <script type="text/javascript" src="/js/exhibitCancelController.js"></script>
         <script type="text/javascript" src="/js/exhibitService.js"></script>
+        <script type="text/javascript" src="/underscore-min.js"></script>
     </environment>
 
     <environment exclude="Development">
@@ -88,83 +85,77 @@
 
     <script type="text/x-template" id="notifications-template">
         <ul class="notifications">
-           <%
-                 _.each(notifications, function(notification){
+            <%
+                _.each(notifications, function(notification){
                     if (notification.type == 1) { %>
                         <li><span class="highlight">
-                        <%= notification.exhibit.photographer.name %></span> has canceled the exhibit at
+                        <%= notification.exhibit.photographer.name %></span>
+                        has canceled the exhibit at
                         <%= notification.exhibit.location %> at
-                        <%= moment(notification.exhibit.dateTime).format("D MMM HH:mm") %>.</li>
+                        <%= notification.exhibit.dateTime %>.</li>
                     <% }
-
                     else if (notification.type == 2) {
-                        var changes = [],
+                            var changes = [],
                             originalValues = [],
                             newValues = [];
-
-                        if (notification.originallocation !=
-                            notification.exhibit.location) {
+                         if (notification.originalLocation != notification.exhibit.location) {
                             changes.push('location');
-                            originalValues.push(notification.originallocation);
+                            originalValues.push(notification.originalLocation);
                             newValues.push(notification.exhibit.location);
                         }
-
                         if (notification.originalDateTime != notification.exhibit.dateTime) {
                             changes.push('date/time');
-                            originalValues.push(moment(notification.originalDateTime).format("D MMM HH:mm"));
-                            newValues.push(moment(notification.exhibit.dateTime).format("D MMM HH:mm"));
+                            originalValues.push(notification.originalDateTime);
+                            newValues.push(notification.exhibit.dateTime);
                         }
-
                     %>
                         <li><span class="highlight">
-                        <%= notification.exhibit.photographer.name %>
-                        </span> has changed the  <%= changes.join(' and ') %> of the exhibit  from
+                        <%= notification.exhibit.photographer.name %></span> has changed the
+                        <%= changes.join(' and ') %> of the exhibit from
                         <%= originalValues.join('/') %> to <%= newValues.join('/') %></li>
-                   <%
-                    }
-              })
-             %>
+                <%
+                }
+            })
+            %>
         </ul>
     </script>
 
     <script>
         $(document).ready(function () {
-            $.getJSON("/api/notifications", function (notifications) {
+            $.getJSON("/api/notifications/", function (notifications) {
                 if (notifications.length == 0)
                     return;
 
                 $(".js-notifications-count")
                     .text(notifications.length)
                     .removeClass("hide")
-                    .addClass("animated bounceInDown");
 
                 $(".notifications").popover({
                     html: true,
                     title: "Notifications",
                     content: function () {
                         var compiled = _.template($("#notifications-template").html());
-                        return compiled({ notifications: notifications });
+                        return compiled ({notifications: notifications});
                     },
-                    placement: "bottom",
-                    template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-
+                    placement: "left",
                 }).on("shown.bs.popover", function() {
-                var contentTypeAttribute = 'application/json; charset=utf-8';
-                var urlAttribute = "/api/notifications/read";
+                    const contentTypeAttribute = 'application/json';
+                    const urlAttribute = '/api/notifications/';
 
-                $.ajax({
-                     method: "POST",
-                    contentType: contentTypeAttribute,
-                })
-                   .done(function () {
+                    $.ajax({
+                        url: urlAttribute,
+                        method: "POST",
+                        contentType: contentTypeAttribute,
+                    })
+                       .done(function () {
                             $(".js-notifications-count")
                                 .text("")
                                 .addClass("hide");
-                            });
+                    });
                 });
-
             });
         });
     </script>
+
 </body>
 </html>

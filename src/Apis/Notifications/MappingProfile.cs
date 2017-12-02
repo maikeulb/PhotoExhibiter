@@ -1,7 +1,7 @@
 using AutoMapper;
 using PhotoExhibiter.Models.Entities;
 
-namespace PhotoExhibiter.Features.Api.Notifications
+namespace PhotoExhibiter.Apis.Notifications
 {
     public class MappingProfile : Profile
     {

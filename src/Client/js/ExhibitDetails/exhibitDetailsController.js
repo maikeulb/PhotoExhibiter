@@ -1,5 +1,3 @@
-// import followingService from './followingService';
-
 export default class ExhibitDetailsController {
   constructor(followingService) {
     this.followingService = followingService;
@@ -29,7 +27,7 @@ export default class ExhibitDetailsController {
 
   done() {
     const text = this.followButton.text() == 'Follow' ? 'Following' : 'Follow';
-    return this.followButton
+    this.followButton
       .toggleClass('btn-info')
       .toggleClass('btn-secondary')
       .text(text);

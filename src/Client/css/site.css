@@ -1,11 +1,5 @@
 ﻿[warn] `--parser` with value `postcss` is deprecated. Prettier now treats it as: `--parser=css`.
-[warn] `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-[warn] `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-[warn] `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-[warn] `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-[warn] `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-[warn] `--parser` with value `postcss` is deprecated. prettier now treats it as: `--parser=css`.
-[warn]: `--parser=css`. .body-content {
+.body-content {
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -195,3 +189,32 @@ h2 {
 .exhibits > li:hover .actions {
   display: block;
 }
+
+.navbar-inverse .notifications {
+  position: relative;
+}
+.navbar-inverse .notifications .badge {
+  position: absolute;
+  top: 8px;
+  right: -1px;
+  background: #a80a0a;
+}
+
+.popover-notifications .popover-content {
+  padding: 0;
+}
+.popover-notifications ul.notifications {
+  list-style: none;
+  padding-left: 0;
+}
+.popover-notifications ul.notifications > li {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+.popover-notifications ul.notifications > li:last-child {
+  border-bottom: none;
+}
+.popover-notifications ul.notifications .highlight {
+  font-weight: bold;
+}
+

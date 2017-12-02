@@ -19,7 +19,6 @@ export default class FollowingService {
     })
       .done(done)
       .fail(fail);
-
   }
 
   deleteFollowing(followeeId, done, fail) {
