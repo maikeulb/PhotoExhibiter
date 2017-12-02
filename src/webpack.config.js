@@ -16,7 +16,12 @@ module.exports = {
 
     exhibitCancel: './ExhibitCancel/exhibitCancel.js',
     exhibitCancelController: './ExhibitCancel/exhibitCancelController.js',
-    exhibitService: './ExhibitCancel/exhibitService.js'
+    exhibitService: './ExhibitCancel/exhibitService.js',
+
+    notifications: './Notifications/notifications.js',
+    notificationsController: './Notifications/notificationsController.js',
+    notificationService: './Notifications/notificationService.js'
+
   },
   resolve: {
     extensions: ['.js', '.css', '.ts'],
