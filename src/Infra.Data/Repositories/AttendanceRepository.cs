@@ -26,6 +26,12 @@ namespace PhotoExhibiter.Infra.Data.Repositories
                 .SingleOrDefault (a => a.ExhibitId == exhibitId && a.AttendeeId == userId);
         }
 
+        public IEnumerable<Attendance> GetAllAttendances ()
+        {
+            return _context.Attendances
+                .ToList ();
+        }
+
         /* public void Add (Attendance attendance) */
         /* { */
         /*     _context.Attendances.Add (attendance); */

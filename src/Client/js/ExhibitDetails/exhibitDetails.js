@@ -4,4 +4,5 @@ import $ from 'jquery';
 
 const followingService = new FollowingService();
 const exhibitDetailsController = new ExhibitDetailsController(followingService);
-$(document).ready(() => exhibitDetailsController.init());
+
+$(document).ready(() => exhibitDetailsController.init('.js-toggle-follow'));

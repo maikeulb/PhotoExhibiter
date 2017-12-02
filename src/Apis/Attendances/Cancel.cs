@@ -28,12 +28,11 @@ namespace PhotoExhibiter.Apis.Attendances
             public int Handle (Command message)
             {
                 var exhibit = _repository.GetExhibit (message.ExhibitId);
-
                 var attendance = exhibit.Attendances.FirstOrDefault (a => a.AttendeeId == message.UserId);
 
                 exhibit.RemoveAttendance (attendance);
-
                 _repository.SaveAll ();
+                _attendanceRepository.SaveAll ();
 
                 return message.ExhibitId;
             }

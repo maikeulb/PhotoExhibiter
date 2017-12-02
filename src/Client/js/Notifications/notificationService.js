@@ -1,10 +1,9 @@
 export default class NotificationService {
   constructor() {
     this.getNotifications = this.getNotifications.bind(this);
-    this.readNotifications = this.readNotifications.bind(this);
   }
 
-  getNotifications(notificationTemplate) {
+  getNotifications(notificationTemplate, done, fail) {
     const urlAttribute = '/api/notifications';
 
     $.getJSON(urlAttribute, notifications => {
@@ -14,27 +13,24 @@ export default class NotificationService {
         .text(notifications.length)
         .removeClass('hide');
 
-      $('.notifications').popover({
-        html: true,
-        title: 'Notifications',
-        content: notificationTemplate => {
-          return notificationTemplate({ notifications: notifications });
-        },
-        placement: 'left'
-      });
+      $('.notifications')
+        .popover({
+          html: true,
+          title: 'Notifications',
+          content: () => notificationTemplate({ notifications: notifications }),
+          placement: 'left'
+        })
+        .on('shown.bs.popover', () => {
+          const contentTypeAttribute = 'application/json';
+          const urlAttribute = '/api/notifications';
+          $.ajax({
+            url: urlAttribute,
+            method: 'POST',
+            contentType: contentTypeAttribute
+          })
+            .done(done)
+            .fail(fail);
+        });
     });
-  }
-
-  readNotifications(done, fail) {
-    const contentTypeAttribute = 'application/json';
-    const urlAttribute = '/api/notifications';
-
-    $.ajax({
-      url: urlAttribute,
-      method: 'POST',
-      contentType: contentTypeAttribute
-    })
-      .done(done)
-      .fail(fail);
   }
 }

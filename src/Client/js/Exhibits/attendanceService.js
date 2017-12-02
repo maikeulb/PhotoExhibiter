@@ -1,5 +1,4 @@
 export default class AttendanceService {
-
   constructor() {
     this.createAttendance = this.createAttendance.bind(this);
     this.deleteAttendance = this.deleteAttendance.bind(this);
@@ -29,7 +28,7 @@ export default class AttendanceService {
       exhibitId: exhibitId
     });
 
-    return $.ajax({
+    $.ajax({
       url: urlAttribute,
       method: 'DELETE',
       contentType: contentTypeAttribute,

@@ -4,7 +4,6 @@ using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Infra.Data.Interfaces;
 using PhotoExhibiter.Infra.Data.Mappings;
 
-
 namespace PhotoExhibiter.Infra.Data.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext

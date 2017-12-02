@@ -4,8 +4,10 @@ export default class ExhibitDetailsController {
     this.followButton = null;
   }
 
-  init() {
-    $('.js-toggle-follow').click(this.toggleFollowing.bind(this));
+  init(container) {
+    $(container)
+      .click(this.toggleFollowing.bind(this)
+      );
   }
 
   toggleFollowing(e) {

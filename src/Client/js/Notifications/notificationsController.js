@@ -1,24 +1,15 @@
-export default class notificationsController {
-  constructor(notificationService) {
+export default class NotificationsController {
+  constructor(notificationService, notificationTemplate) {
     this.notificationService = notificationService;
     this.notificationTemplate = notificationTemplate;
   }
 
   init() {
-    return this.getBadgeNotifications
-      .bind(this)
-      .on(
-        'shown.bs.popover',
-        this.readNotifications(this.done.bind(this), this.fail.bind(this))
-      );
+    this.getBadgeNotifications();
   }
 
-  getBadgeNotifications() {
-    return this.notificationService.getNotifications();
-  }
-
-  readBadgeNotifications(notificationTemplate) {
-    return this.notificationService.readNotifications(
+  getBadgeNotifications(notificationTemplate, done, fail) {
+    this.notificationService.getNotifications(
       this.notificationTemplate,
       this.done.bind(this),
       this.fail.bind(this)
@@ -26,12 +17,12 @@ export default class notificationsController {
   }
 
   done() {
-    return $('.js-notifications-count')
+    $('.js-notifications-count')
       .text('')
       .addClass('hide');
   }
 
   fail() {
-    return alert('Something failed');
+    alert('Something failed');
   }
 }

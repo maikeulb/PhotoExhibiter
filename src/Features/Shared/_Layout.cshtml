@@ -61,6 +61,8 @@
         <script type="text/javascript" src="/js/exhibitsController.js"></script>
         <script type="text/javascript" src="/js/exhibitCancelController.js"></script>
         <script type="text/javascript" src="/js/exhibitService.js"></script>
+        <script type="text/javascript" src="/js/notificationsController.js"></script>
+        <script type="text/javascript" src="/js/notificationService.js"></script>
         <script type="text/javascript" src="/underscore-min.js"></script>
     </environment>
 
@@ -120,42 +122,7 @@
         </ul>
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $.getJSON("/api/notifications/", function (notifications) {
-                if (notifications.length == 0)
-                    return;
-
-                $(".js-notifications-count")
-                    .text(notifications.length)
-                    .removeClass("hide")
-
-                $(".notifications").popover({
-                    html: true,
-                    title: "Notifications",
-                    content: function () {
-                        var compiled = _.template($("#notifications-template").html());
-                        return compiled ({notifications: notifications});
-                    },
-                    placement: "left",
-                }).on("shown.bs.popover", function() {
-                    const contentTypeAttribute = 'application/json';
-                    const urlAttribute = '/api/notifications/';
-
-                    $.ajax({
-                        url: urlAttribute,
-                        method: "POST",
-                        contentType: contentTypeAttribute,
-                    })
-                       .done(function () {
-                            $(".js-notifications-count")
-                                .text("")
-                                .addClass("hide");
-                    });
-                });
-            });
-        });
-    </script>
+   <script type="text/javascript" src="/js/notifications.js"></script>
 
 </body>
 </html>

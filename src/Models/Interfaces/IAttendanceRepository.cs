@@ -7,6 +7,7 @@ namespace PhotoExhibiter.Models.Interfaces
     {
         IEnumerable<Attendance> GetFutureAttendances (string userId);
         Attendance GetAttendance (int exhibitId, string userId);
+        IEnumerable<Attendance> GetAllAttendances ();
         /* void Add (Attendance attendance); */
         /* void Remove (Attendance attendance); */
         bool SaveAll ();

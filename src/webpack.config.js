@@ -21,7 +21,6 @@ module.exports = {
     notifications: './Notifications/notifications.js',
     notificationsController: './Notifications/notificationsController.js',
     notificationService: './Notifications/notificationService.js'
-
   },
   resolve: {
     extensions: ['.js', '.css', '.ts'],

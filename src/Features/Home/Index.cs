@@ -17,31 +17,36 @@ namespace PhotoExhibiter.Features.Home
 
         public class Model
         {
-            private readonly List<Attendance> _attendances = new List<Attendance> ();
-
             public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
             public bool ShowActions { get; set; }
             public string Heading { get; set; }
             public string SearchTerm { get; set; }
-
-            public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly ();
+            public IEnumerable<Attendance> Attendances {get; set; } 
         }
 
         public class Handler : IRequestHandler<Query, Model>
         {
             private readonly IExhibitRepository _repository;
+            private readonly IAttendanceRepository _attendanceRepository;
 
-            public Handler(IExhibitRepository repository) => _repository = repository;
+            public Handler(IExhibitRepository repository,
+                           IAttendanceRepository attendanceRepository) {
+
+                _repository = repository;
+                _attendanceRepository = attendanceRepository;
+            }
 
             public Model Handle (Query message)
             {
-                var upcomingExhibits = _repository.GetUpcomingExhibits(message.SearchTerm); // searchterm || userid
+                var upcomingExhibits = _repository.GetUpcomingExhibits(message.SearchTerm);
+                var attendances = _attendanceRepository.GetAllAttendances();
 
                 var exhibits = new Model
                 {
                     UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
-                    Heading = "Upcoming Exhibits"
+                    Heading = "Upcoming Exhibits",
+                    Attendances = attendances
                 };
 
                 return exhibits;
