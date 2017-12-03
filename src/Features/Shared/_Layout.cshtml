@@ -6,15 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400" rel="stylesheet">
-    <environment include="Development">
-    <link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css">
-    </environment>
-    <environment exclude="Development">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -53,34 +45,16 @@
     </div>
 
     <environment include="Development">
-        <script type="text/javascript" src="/js/node-static.js"></script>
-        <script type="text/javascript" src="/js/entry.js"></script>
-        <script type="text/javascript" src="/js/attendanceService.js"></script>
-        <script type="text/javascript" src="/js/followingService.js"></script>
-        <script type="text/javascript" src="/js/exhibitDetailsController.js"></script>
-        <script type="text/javascript" src="/js/exhibitsController.js"></script>
-        <script type="text/javascript" src="/js/exhibitCancelController.js"></script>
-        <script type="text/javascript" src="/js/exhibitService.js"></script>
-        <script type="text/javascript" src="/js/notificationsController.js"></script>
-        <script type="text/javascript" src="/js/notificationService.js"></script>
-        <script type="text/javascript" src="/underscore-min.js"></script>
-    </environment>
-
-    <environment exclude="Development">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="”sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN“
-        </script>
-        <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                asp-fallback-src="~/lib/bootbox.min.js"
-                crossorigin="anonymous">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="node-static.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <script type="text/javascript" src="attendanceService.js"></script>
+        <script type="text/javascript" src="followingService.js"></script>
+        <script type="text/javascript" src="exhibitDetailsController.js"></script>
+        <script type="text/javascript" src="exhibitsController.js"></script>
+        <script type="text/javascript" src="exhibitCancelController.js"></script>
+        <script type="text/javascript" src="exhibitService.js"></script>
+        <script type="text/javascript" src="notificationsController.js"></script>
+        <script type="text/javascript" src="notificationService.js"></script>
     </environment>
 
     @RenderSection("scripts", required: false)
@@ -122,7 +96,7 @@
         </ul>
     </script>
 
-   <script type="text/javascript" src="/js/notifications.js"></script>
+   <script type="text/javascript" src="notifications.js"></script>
 
 </body>
 </html>

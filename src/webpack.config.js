@@ -1,29 +1,32 @@
 const path = require('path');
-var webpack = require('webpack');
+const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-  context: __dirname + '/Client/js',
+  context: __dirname + '/ClientApp',
   devtool: 'eval-source-map',
   entry: {
-    entry: './entry.js',
-    exhibitDetails: './ExhibitDetails/exhibitDetails.js',
-    exhibitDetailsController: './ExhibitDetails/exhibitDetailsController.js',
-    followingService: './ExhibitDetails/followingService.js',
+    main: './main.js',
+    exhibitDetails: './js/ExhibitDetails/exhibitDetails.js',
+    exhibitDetailsController: './js/ExhibitDetails/exhibitDetailsController.js',
+    followingService: './js/ExhibitDetails/followingService.js',
 
-    exhibits: './Exhibits/exhibits.js',
-    exhibitsController: './Exhibits/exhibitsController.js',
-    attendanceService: './Exhibits/attendanceService.js',
+    exhibits: './js/Exhibits/exhibits.js',
+    exhibitsController: './js/Exhibits/exhibitsController.js',
+    attendanceService: './js/Exhibits/attendanceService.js',
 
-    exhibitCancel: './ExhibitCancel/exhibitCancel.js',
-    exhibitCancelController: './ExhibitCancel/exhibitCancelController.js',
-    exhibitService: './ExhibitCancel/exhibitService.js',
+    exhibitCancel: './js/ExhibitCancel/exhibitCancel.js',
+    exhibitCancelController: './js/ExhibitCancel/exhibitCancelController.js',
+    exhibitService: './js/ExhibitCancel/exhibitService.js',
 
-    notifications: './Notifications/notifications.js',
-    notificationsController: './Notifications/notificationsController.js',
-    notificationService: './Notifications/notificationService.js'
+    notifications: './js/Notifications/notifications.js',
+    notificationsController: './js/Notifications/notificationsController.js',
+    notificationService: './js/Notifications/notificationService.js'
   },
   resolve: {
-    extensions: ['.js', '.css', '.ts'],
+    extensions: ['.js', '.scss', '.css', '.ts'],
     modules: [path.resolve('./'), path.resolve('./node_modules')]
   },
   module: {
@@ -34,7 +37,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -47,28 +50,37 @@ module.exports = {
         loader: 'ts-loader'
       },
       {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000'
+      },
+      {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
       },
       {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000
-        }
-      },
-      {
-        test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/',
-              publicPath: '../'
+        test: /\.(scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader'
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: function() {
+                  return [require('precss'), require('autoprefixer')];
+                }
+              }
+            },
+            {
+              loader: 'sass-loader'
             }
-          }
-        ]
+          ]
+        })
       }
     ]
   },
@@ -86,10 +98,14 @@ module.exports = {
         var context = module.context;
         return context && context.indexOf('node_modules') >= 0;
       }
-    })
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new ExtractTextPlugin('styles.css'),
+    new CleanWebpackPlugin(['wwwroot']),
+    new CopyWebpackPlugin([{ from: 'images', to: 'images' }])
   ],
   output: {
     filename: '[name].js',
-    path: __dirname + '/wwwroot/js/'
+    path: path.resolve(__dirname, 'wwwroot')
   }
 };
