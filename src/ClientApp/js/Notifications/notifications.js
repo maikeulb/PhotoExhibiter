@@ -1,6 +1,5 @@
 import NotificationsController from './notificationsController';
 import NotificationService from './notificationService';
-import $ from 'jquery';
 import _ from 'lodash';
 
 const notificationService = new NotificationService();

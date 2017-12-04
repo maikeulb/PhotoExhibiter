@@ -18,7 +18,9 @@ export default class NotificationService {
           html: true,
           title: 'Notifications',
           content: () => notificationTemplate({ notifications: notifications }),
-          placement: 'left'
+          placement: 'left',
+          template:
+            '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
         })
         .on('shown.bs.popover', () => {
           const contentTypeAttribute = 'application/json';

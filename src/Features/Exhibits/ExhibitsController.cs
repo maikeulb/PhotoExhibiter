@@ -62,9 +62,9 @@ namespace PhotoExhibiter.Features.Exhibits
         }
 
         [HttpPost]
-        public IActionResult Search(Index.Model model)
+        public IActionResult Search(Index.Query model)
         {
-            return RedirectToAction("Index", "Home", new { query = model.SearchTerm });
+            return RedirectToAction("Index", "Home", model);
         }
 
 

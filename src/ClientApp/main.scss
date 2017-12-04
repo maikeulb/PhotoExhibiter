@@ -143,6 +143,10 @@ h2 {
 	border-color: rgba(205, 40, 39, 0.55);
 }
 
+.bg-light {
+	background-color: #ffffff !important;
+}
+
 /* Page-level styles */
 .exhibits {
 	list-style: none;
@@ -154,7 +158,7 @@ h2 {
 }
 
 .exhibits > li .date {
-	background: red;
+	background: #fd5d5d;
 	color: white;
 	text-align: center;
 	width: 60px;
