@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="~/styles.css">
 </head>
 
 <body>
@@ -19,7 +19,7 @@
             </button>
             <a asp-area="" asp-controller="Home" asp-action="Index"
                 class="navbar-brand changeFont">
-                <img src="/images/logoonly.png" height="45" class="d-inline-block
+                <img src="/images/logo.png" height="45" class="d-inline-block
                 align-bottom" alt="">
                 PhotoExhibiter
             </a>
@@ -45,16 +45,8 @@
     </div>
 
     <environment include="Development">
-        <script type="text/javascript" src="node-static.js"></script>
-        <script type="text/javascript" src="main.js"></script>
-        <script type="text/javascript" src="attendanceService.js"></script>
-        <script type="text/javascript" src="followingService.js"></script>
-        <script type="text/javascript" src="exhibitDetailsController.js"></script>
-        <script type="text/javascript" src="exhibitsController.js"></script>
-        <script type="text/javascript" src="exhibitCancelController.js"></script>
-        <script type="text/javascript" src="exhibitService.js"></script>
-        <script type="text/javascript" src="notificationsController.js"></script>
-        <script type="text/javascript" src="notificationService.js"></script>
+        <script type="text/javascript" src="~/node-static.js"></script>
+        <script type="text/javascript" src="~/main.js"></script>
     </environment>
 
     @RenderSection("scripts", required: false)
@@ -96,7 +88,7 @@
         </ul>
     </script>
 
-   <script type="text/javascript" src="notifications.js"></script>
+   <script type="text/javascript" src="~/notifications.js"></script>
 
 </body>
 </html>

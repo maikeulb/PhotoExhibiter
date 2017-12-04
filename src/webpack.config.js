@@ -10,20 +10,9 @@ module.exports = {
   entry: {
     main: './main.js',
     exhibitDetails: './js/ExhibitDetails/exhibitDetails.js',
-    exhibitDetailsController: './js/ExhibitDetails/exhibitDetailsController.js',
-    followingService: './js/ExhibitDetails/followingService.js',
-
     exhibits: './js/Exhibits/exhibits.js',
-    exhibitsController: './js/Exhibits/exhibitsController.js',
-    attendanceService: './js/Exhibits/attendanceService.js',
-
     exhibitCancel: './js/ExhibitCancel/exhibitCancel.js',
-    exhibitCancelController: './js/ExhibitCancel/exhibitCancelController.js',
-    exhibitService: './js/ExhibitCancel/exhibitService.js',
-
-    notifications: './js/Notifications/notifications.js',
-    notificationsController: './js/Notifications/notificationsController.js',
-    notificationService: './js/Notifications/notificationService.js'
+    notifications: './js/Notifications/notifications.js'
   },
   resolve: {
     extensions: ['.js', '.scss', '.css', '.ts'],

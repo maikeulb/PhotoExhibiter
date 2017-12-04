@@ -275,3 +275,4 @@ __pycache__/
 # Ignore temp backup files
 *.bak
 __OmniSharpScratch__
+wwwroot/

@@ -20,9 +20,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.2",
     "popper": "^1.0.1",
-    "popper.js": "^1.12.9",
-    "tether": "^1.4.2",
-    "underscore": "^1.8.3"
+    "popper.js": "^1.12.9"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.17",
@@ -30,7 +28,6 @@
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
-    "font-awesome-loader": "^1.0.2",
     "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.9",
