@@ -268,11 +268,11 @@ __pycache__/
 # tools/
 
 # Ignore build files
-/obj
-/bin
-/Migrations.bak
+obj/
+bin/
+node_modules/
+wwwroot/
 
 # Ignore temp backup files
 *.bak
 __OmniSharpScratch__
-wwwroot/

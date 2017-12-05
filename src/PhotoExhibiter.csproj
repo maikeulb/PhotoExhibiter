@@ -5,10 +5,6 @@
                 aspnet-Web-CB48C5D0-D7FA-42C0-8909-F688A3B2DA2B</UserSecretsId>
         </PropertyGroup>
         <ItemGroup>
-                <None Update="app.db"
-                CopyToOutputDirectory="PreserveNewest" />
-        </ItemGroup>
-        <ItemGroup>
                 <PackageReference Include="AutoMapper"
                 Version="6.2.1" />
                 <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection"
@@ -46,7 +42,4 @@
                 <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools"
                 Version="2.0.0" />
         </ItemGroup>
-        <Target Name="NpmCommands" AfterTargets="Build">
-                <Exec Command="webpack" />
-        </Target>
 </Project>

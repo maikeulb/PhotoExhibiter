@@ -1,0 +1,11 @@
+refactor entity configurations
+refactor razor views
+refactor scss/css
+figure out how to use lodash template only
+figure out how to load moment properly
+figure out how to share view(exhibits)
+seed database
+fix dockerfile
+figure out app.db
+fix razor view imports
+incorporate typescript

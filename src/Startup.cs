@@ -20,19 +20,19 @@ namespace PhotoExhibiter
     {
         private readonly IConfiguration _config;
 
-        public Startup (IConfiguration config, IHostingEnvironment env)
+        public Startup (IConfiguration config)
         {
             _config = config;
         }
 
         public void ConfigureServices (IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext> (options =>
+                options.UseMySql (_config.GetConnectionString ("ApplicationConnectionString")));
+
             services.AddIdentity<ApplicationUser, IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ()
                 .AddDefaultTokenProviders ();
-
-            services.AddDbContext<ApplicationDbContext> (options =>
-                options.UseMySql (_config.GetConnectionString ("ApplicationConnectionString")));
 
             services.AddTransient<IEmailSender, EmailSender> ();
 
