@@ -6,19 +6,6 @@
 
 <h1>@Model.Heading</h1>
 
-@using (Html.BeginForm("Search", "Exhibits"))
-{
-    <div class="form-group">
-        <div id="searchexhibits" class="input-group">
-            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
-            placeholder = "Search by Photographer, Genre or Location..." })
-            <span class="input-group-addon">
-                  <p id = "fa_search"></p>
-            </span>
-        </div>
-    </div>
-}
-
 <ul id = "exhibits" class="exhibits voffset4">
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
@@ -67,7 +54,22 @@
     }
 </ul>
 
+@section search
+{
+  <form asp-controller="Exhibits" asp-action="Search" class="mx-2 my-auto
+    d-inline w-100">
+    <div class="form-horizontal">
+      <div id="searchexhibits" class="input-group">
+            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
+            placeholder = "Search by Photographer, Genre or Location..." })
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+}
+
 @section scripts
 {
         <script type="text/javascript" src="~/exhibits.js"></script>
 }
+

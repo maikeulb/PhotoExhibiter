@@ -42,4 +42,7 @@
                 <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools"
                 Version="2.0.0" />
         </ItemGroup>
+        <Target Name="NpmCommands" AfterTargets="Build">
+                <Exec Command="webpack" />
+        </Target>
 </Project>

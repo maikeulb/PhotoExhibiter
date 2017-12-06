@@ -10,15 +10,52 @@
 </head>
 
 <body>
-    @await Html.PartialAsync("_NavPartial")
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - Web</p>
-        </footer>
-    </div>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+
+        <button class="navbar navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a asp-area="" asp-controller="Home" asp-action="Index"
+            class="navbar-brand changeFont">
+            <img id="logo_sm" height="45" class="d-inline-block
+            align-bottom" alt="">
+            PhotoExhibiter
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" asp-area="" asp-controller="Exhibits" asp-action="Create">
+                Add an Exhibit</a>
+            </li>
+          </ul>
+
+          @RenderSection("search", required: false)
+
+          <ul class="navbar-nav ml-auto">
+              @await Html.PartialAsync("_LoginPartial")
+          </ul>
+        </div>
+
+    </nav>
+
+
+
+       @await Html.PartialAsync("_NavbarPartial")
+
+       <div class="container body-content">
+         @RenderBody()
+         <hr />
+
+         <footer>
+           <p>&copy; 2017 - Web</p>
+         </footer>
+
+       </div>
 
     <script type="text/javascript" src="~/node-static.js"></script>
     <script type="text/javascript" src="~/main.js"></script>

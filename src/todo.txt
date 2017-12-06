@@ -1,11 +1,10 @@
 refactor entity configurations
-refactor razor views
-refactor scss/css
+refactor razor views | enumerable
+refactor scss/css | use variables
 figure out how to use lodash template only
 figure out how to load moment properly
 figure out how to share view(exhibits)
 seed database
-fix dockerfile
-figure out app.db
-fix razor view imports
-incorporate typescript
+add admin
+fix fonts (add fontawesome to search and buttons)
+how to prevent item from wrapping

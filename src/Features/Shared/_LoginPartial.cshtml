@@ -6,34 +6,32 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id =
-    "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-            <li class="notifications">
-                <a href="#">
-                  <p id = "fa_globe"></p>
-                    <span class="badge js-notifications-count hide"></span>
-                </a>
-            </li>
+    <li class="nav-item">
+        <a class="notifications">
+          <a href="#">
+          <div id = "fa_globe"></div>
+          <span class="badge js-notifications-count hide"></span>
+        </a>
+    </li>
 
-        <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
-              role="button" aria-haspopup="true" aria-expanded="false">@UserManager.GetUserName(User)
-              <span class="caret"></span></a>
+    <li class="nav-item dropdown">
+      <form asp-area="" asp-controller="Account" asp-action="Logout"
+        method="post" id="logoutForm">
+          <a href="#" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@UserManager.GetUserName(User) <span class="caret"></span></a>
 
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="@Url.Action("Mine", "Exhibits")">My UpcomingExhibits</a>
-                <a class="dropdown-item" href="@Url.Action("Attending", "Exhibits")">Exhibits I'm Attending</a>
-                <a class="dropdown-item" href="@Url.Action("Followees", "Followees")">Photographers I'm Following</a>
-                <li role="separator" class="divider"></li>
-                <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-            </div>
-        </li>
-    </ul>
-    }
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+             <a class="dropdown-item" href="@Url.Action("Mine",
+              "Exhibits")">My UpcomingExhibits</a>
+             <a class="dropdown-item" href="@Url.Action("Attending",
+              "Exhibits")">Exhibits I'm Attending</a>
+             <a class="dropdown-item" href="@Url.Action("Followees",
+              "Followees")">Photographers I'm Following</a>
+             <li role="separator" class="divider"></li>
+             <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+          </div >
+      </form>
+    </li>
 }
 else
 {

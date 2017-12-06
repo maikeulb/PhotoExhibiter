@@ -1,25 +1,4 @@
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <div class="container">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a asp-area="" asp-controller="Home" asp-action="Index"
-                class="navbar-brand changeFont">
-                <img src="/images/logo.png" height="45" class="d-inline-block
-                align-bottom" alt="">
-                PhotoExhibiter
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" asp-area="" asp-controller="Exhibits" asp-action="Create">Add an Exhibit</a>
-                </li>
-                @await Html.PartialAsync("_LoginPartial")
-            </ul>
-        </div>
-    </nav>
+@using PhotoExhibiter.Features.Home
 
     <script type="text/x-template" id="notifications-template">
         <ul class="notifications">
@@ -57,4 +36,3 @@
             %>
         </ul>
     </script>
-

@@ -1,6 +1,7 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
 $fa-font-path: "~font-awesome/fonts";
+
 @import "~font-awesome/scss/font-awesome.scss";
 
 .body-content {
@@ -43,38 +44,6 @@ span.field-validation-error {
 }
 
 /* Bootstrap Overrides */
-.navbar-inverse {
-	background-color: #ff4342;
-	border-color: #ff4342;
-}
-
-.navbar-inverse .navbar-nav > li > a {
-	color: #fff;
-}
-
-.navbar-inverse .navbar-brand {
-	color: #fff;
-}
-
-.navbar-inverse .btn-link {
-	color: #fff;
-}
-
-.navbar-inverse .navbar-nav > .open > a,
-.navbar-inverse .navbar-nav > .open > a:hover,
-.navbar-inverse .navbar-nav > .open > a:focus {
-	background-color: rgba(205, 40, 39, 0.55);
-}
-
-.dropdown-menu {
-	box-shadow: none;
-	-webkit-box-shadow: none;
-}
-
-.navbar-inverse .navbar-nav > .dropdown > a .caret {
-	border-top-color: #fff;
-	border-bottom-color: #fff;
-}
 
 .changeFont {
 	font-family: "Noto Sans", sans-serif;
@@ -102,44 +71,6 @@ h6,
 .h5,
 .h6 {
 	font-family: Lato;
-}
-
-h2 {
-	margin-top: 20px;
-}
-
-.form-group {
-	margin-bottom: 20px;
-}
-
-.form-control {
-	font-size: 17px;
-	border-radius: 9px;
-}
-
-.form-control:focus {
-	box-shadow: none;
-}
-
-.btn {
-	/* font-size: 17px; */
-	/* padding: 7px 20px; */
-	-ms-border-radius: 9px;
-	border-radius: 9px;
-}
-
-.navbar-inverse .navbar-toggle {
-	border-color: #ff4342;
-}
-
-.navbar-inverse .navbar-toggle:hover,
-.navbar-inverse .navbar-toggle:focus {
-	background-color: rgba(205, 40, 39, 0.55);
-}
-
-.navbar-inverse .navbar-collapse,
-.navbar-inverse .navbar-form {
-	border-color: rgba(205, 40, 39, 0.55);
 }
 
 .bg-light {
@@ -203,17 +134,6 @@ h2 {
 	display: block;
 }
 
-.navbar-inverse .notifications {
-	position: relative;
-}
-
-.navbar-inverse .notifications .badge {
-	position: absolute;
-	top: 8px;
-	right: -1px;
-	background: #a80a0a;
-}
-
 .popover-notifications .popover-content {
 	padding: 0;
 }
@@ -234,4 +154,8 @@ h2 {
 
 .popover-notifications ul.notifications .highlight {
 	font-weight: bold;
+}
+
+.nav-item li {
+	white-space: nowrap;
 }
