@@ -1,10 +1,21 @@
-refactor entity configurations
-refactor razor views | enumerable
-refactor scss/css | use variables
-figure out how to use lodash template only
-figure out how to load moment properly
-figure out how to share view(exhibits)
-seed database
-add admin
-fix fonts (add fontawesome to search and buttons)
-how to prevent item from wrapping
+-refactor razor views ( enumerable)
+-figure out how to share view (exhibits feature folders)
+-decouple identity
+-Add maybe types where applicable
+-incorporate dapper
+-real time notifications
+
+***
+
+-stylize app (css and bootstrap theming)
+-add moment library to client app
+-add typescript (or angular)
+
+***
+
+-stylize forms and buttons with fontawesome
+-async all the way
+
+***
+
+-add admin

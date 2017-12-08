@@ -155,6 +155,9 @@
     "*.bak": "explorerExcludedFiles",
     "__OmniSharpScratch__": "explorerExcludedFiles",
     "todo.txt": "explorerExcludedFiles",
-    ".envrc": "explorerExcludedFiles"
+    ".envrc": "explorerExcludedFiles",
+    "obj/": "explorerExcludedFiles",
+    "bin/": "explorerExcludedFiles",
+    "wwwroot/": "explorerExcludedFiles"
   }
 }
