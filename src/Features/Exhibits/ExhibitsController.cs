@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Features;
-using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Features.Account;
 using PhotoExhibiter.Features.Home;
+using PhotoExhibiter.Models.Entities;
 
 namespace PhotoExhibiter.Features.Exhibits
 {
@@ -45,6 +45,7 @@ namespace PhotoExhibiter.Features.Exhibits
         public async Task<IActionResult> Mine (Mine.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
+            query.ShowActions = _signInManager.IsSignedIn (User);
 
             var model = await _mediator.Send (query);
 

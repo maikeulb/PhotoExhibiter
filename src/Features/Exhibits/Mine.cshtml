@@ -1,43 +1,55 @@
-@using PhotoExhibiter.Models.Entities
-@model IEnumerable<Exhibit>
-@{
-    ViewBag.Title = "Mine";
-}
+@using PhotoExhibiter.Features.Exhibits
+@model Mine.Model
 
-<h1>My Upcoming Exhibits</h1>
+<h1>@Model.Heading</h1>
+
 <ul class="exhibits voffset4">
-    @foreach (var exhibit in Model)
-    {
-        <li>
-            <div class="date">
-                <div class="month">
-                    @exhibit.DateTime.ToString("MMM")
-                </div>
-                <div class="day">
-                    @exhibit.DateTime.ToString("d ")
-                </div>
-            </div>
+  @foreach (var exhibit in Model.UpcomingExhibits)
+  {
+    <li>
+      <div class="date">
+        <div class="month">
+          @exhibit.DateTime.ToString("MMM")
+        </div>
+          <div class="day">
+            @exhibit.DateTime.ToString("d ")
+          </div>
+        </div>
 
-            <div class="details">
-                <span class="photographer">
-                    @exhibit.Location
-                </span>
-                <span class="genre">
-                    @exhibit.Genre.Name
-                </span>
-                <div class="actions">
-                    <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
-                        Edit
-                    </a>
-                    <a href="#" class="js-cancel-exhibit"
-                      data-exhibit-id="@exhibit.Id">
-                        Cancel
-                    </a>
-                </div>
-            </div>
-        </li>
-    }
+        <div class="details">
+          <span class="photographer">
+            @exhibit.Location
+          </span>
+          <span class="genre">
+            @exhibit.Genre.Name
+          </span>
+
+        <div class="actions">
+          <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
+            Edit
+          </a>
+          <a href="#" class="js-cancel-exhibit"
+            data-exhibit-id="@exhibit.Id">
+            Cancel
+          </a>
+         </div>
+      </div>
+    </li>
+  }
 </ul>
+
+@section search
+{
+  <form asp-controller="Exhibits" asp-action="Search">
+    <div class="form-horizontal">
+      <div id="searchexhibits" class="input-group">
+        @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
+        placeholder = "Search by Photographer, Genre or Location..." })
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+}
 
 @section scripts
 {

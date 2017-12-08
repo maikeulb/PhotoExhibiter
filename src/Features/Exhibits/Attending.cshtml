@@ -1,73 +1,69 @@
 @using PhotoExhibiter.Features.Exhibits
 @model Attending.Model
-@{
-    ViewBag.Title = "Home Page";
-}
 
 <h1>@Model.Heading</h1>
 
-@using (Html.BeginForm("Search", "Exhibits"))
-{
-    <div class="form-group">
-        <div id="searchexhibits" class="input-group">
-            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
-            placeholder = "Search by Photographer, Genre or Location..." })
-            <span class="input-group-addon">
-                  <p id = "fa_search"></p>
-            </span>
-        </div>
-    </div>
-}
-
 <ul id = "exhibits" class="exhibits voffset4">
-    @foreach (var exhibit in Model.UpcomingExhibits)
-    {
-        <li>
-            <div class="date">
-                <div class="month">
-                    @exhibit.DateTime.ToString("MMM")
-                </div>
+  @foreach (var exhibit in Model.UpcomingExhibits)
+  {
+    <li>
+      <div class="date">
+        <div class="month">
+          @exhibit.DateTime.ToString("MMM")
+        </div>
 
-                <div class="day">
-                    @exhibit.DateTime.ToString("d ")
-                </div>
-            </div>
+        <div class="day">
+          @exhibit.DateTime.ToString("d ")
+        </div>
+      </div>
 
-            <div class="details">
-                <span class="photographer">
-                    <a href="@Url.Action("Details", "Exhibits", new { id  =exhibit.Id })">
-                        @exhibit.Photographer.Name
-                    </a>
+      <div class="details">
+        <span class="photographer">
+          <a href="@Url.Action("Details", "Exhibits", new { id  =exhibit.Id })">
+            @exhibit.Photographer.Name
+          </a>
 
-                    @if (exhibit.IsCanceled)
-                    {
-                        <span class="label label-warning">Canceled</span>
-                    }
+          @if (exhibit.IsCanceled)
+          {
+            <span class="label label-warning">Canceled</span>
+          }
 
-                </span>
+        </span>
 
-                <span class="genre">
-                    @exhibit.Genre.Name
-                </span>
+        <span class="genre">
+          @exhibit.Genre.Name
+        </span>
 
-                @if (Model.ShowActions && !exhibit.IsCanceled)
-                {
-                    <button
-                        data-exhibit-id="@exhibit.Id"
-                        class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id)? "btn-info" : "btn-secondary")
-                            btn-sm js-toggle-attendance">
-                            @(Model.Attendances.Any(a => a.ExhibitId ==
-                            exhibit.Id)? "Attending": "UnAttend")
-                    </button>
-                }
+        @if (Model.ShowActions && !exhibit.IsCanceled)
+          {
+            <button
+              data-exhibit-id="@exhibit.Id"
+              class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id)? "btn-info" : "btn-secondary")
+              btn-sm js-toggle-attendance">
+              @(Model.Attendances.Any(a => a.ExhibitId ==
+              exhibit.Id)? "Attending": "UnAttend")
+            </button>
+          }
 
-            </div>
-
-        </li>
-    }
+      </div>
+    </li>
+  }
 </ul>
+
+@section search
+{
+<form asp-controller="Exhibits" asp-action="Search">
+    <div class="form-horizontal">
+      <div id="searchexhibits" class="input-group">
+        @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
+        placeholder = "Search by Photographer, Genre or Location..." })
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+}
 
 @section scripts
 {
-    <script type="text/javascript" src="~/exhibits.js"></script>
+  <script type="text/javascript" src="~/exhibits.js"></script>
 }

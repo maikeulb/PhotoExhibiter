@@ -1,14 +1,24 @@
-@using PhotoExhibiter.Models.Entities
-@model IEnumerable<ApplicationUser>
-@{
-    ViewBag.Title = "Index";
-}
+@using PhotoExhibiter.Features.Followees
+@model Followees.Model
 
-<h1>Who I Follow</h1>
-<ul>
-    @foreach (var photographer in Model)
+<h1>@Model.Heading</h1>
+
+<ul class="exhibits voffset4">
+  @foreach (var photographer in Model.Photographers)
     {
-        <li>@photographer.Name</li>
+      <li>@photographer.Name</li>
     }
 </ul>
 
+@section search
+{
+<form asp-controller="Exhibits" asp-action="Search">
+    <div class="form-horizontal">
+      <div id="searchexhibits" class="input-group">
+        @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
+        placeholder = "Search by Photographer, Genre or Location..." })
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+}

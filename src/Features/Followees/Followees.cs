@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MediatR;
+using PhotoExhibiter.Features;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
 
@@ -7,22 +8,50 @@ namespace PhotoExhibiter.Features.Followees
 {
     public class Followees
     {
-        public class Query : IRequest<IEnumerable<ApplicationUser>>
+        public class Query : IRequest<Model>
         {
             public string UserId { get; set; }
+            public bool ShowActions { get; set; }
+            public string SearchTerm {get; set;}
         }
 
-        public class Handler : IRequestHandler<Query, IEnumerable<ApplicationUser>>
+        public class Model
+        {
+            private readonly List<Attendance> _attendances = new List<Attendance> ();
+
+            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
+            public string Heading { get; set; }
+            public string SearchTerm { get; set; }
+            public IEnumerable<ApplicationUser> Photographers {get; set; }
+
+            public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly ();
+        }
+
+        public class Handler : IRequestHandler<Query, Model>
         {
             private readonly IApplicationUserRepository _repository;
+            private readonly IExhibitRepository _exhibitRepository;
 
-            public Handler(IApplicationUserRepository repository) => _repository = repository;
-
-            public IEnumerable<ApplicationUser> Handle (Query message)
+            public Handler (
+              IApplicationUserRepository repository,
+              IExhibitRepository exhibitRepository) 
             {
-                var photographers = _repository.GetPhotographersFollowedBy (message.UserId);
+                _repository = repository;
+                _exhibitRepository = exhibitRepository;
+            }
 
-                return photographers;
+            public Model Handle (Query message)
+            {
+                var upcomingExhibits = _exhibitRepository.GetUpcomingExhibitsByPhotographer (message.UserId);
+                var photographers = _repository.GetPhotographersFollowedBy (message.UserId);
+                var model = new Model
+                {
+                    UpcomingExhibits = upcomingExhibits,
+                    Heading = "Who I Follow",
+                    Photographers = photographers
+                };
+
+                return model;
             }
         }
     }

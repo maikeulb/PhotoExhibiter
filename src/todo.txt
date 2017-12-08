@@ -1,21 +1,19 @@
 -refactor razor views ( enumerable)
--figure out how to share view (exhibits feature folders)
 -decouple identity
 -Add maybe types where applicable
--incorporate dapper
--real time notifications
 
 ***
-
--stylize app (css and bootstrap theming)
+-bootstrap theming
 -add moment library to client app
 -add typescript (or angular)
 
 ***
-
 -stylize forms and buttons with fontawesome
 -async all the way
 
 ***
-
 -add admin
+-incorporate dapper
+-real time notifications
+-fix navbar (search and notifications)
+-image upload

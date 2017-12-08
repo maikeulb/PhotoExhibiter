@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PhotoExhibiter.Features;
+using PhotoExhibiter.Features.Account;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
-using PhotoExhibiter.Features;
 
 namespace PhotoExhibiter.Features.Followees
 {

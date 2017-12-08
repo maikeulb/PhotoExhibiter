@@ -59,7 +59,7 @@ namespace PhotoExhibiter.Infra.Data.Seed
              string email)
         {
             logger.LogInformation($"Create default user with email `{email}` for application");
-            var user = ApplicationUser.Create(email, "user");
+            var user = new ApplicationUser(email, "user");
 
             var identityResult = await userManager.CreateAsync(user);
             if (identityResult.Succeeded)
