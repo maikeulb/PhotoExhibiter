@@ -23,6 +23,14 @@
         placeholder = "eg 1 Jan 2018" })
         @Html.ValidationMessageFor(m => m.Date)
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ImageUrl)
+        @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control",
+        placeholder = "http://" })
+        @Html.ValidationMessageFor(m => m.ImageUrl)
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Time)
         @Html.TextBoxFor(m => m.Time, new { @class = "form-control",

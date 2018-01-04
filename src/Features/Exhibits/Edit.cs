@@ -23,6 +23,7 @@ namespace PhotoExhibiter.Features.Exhibits
             public string UserId { get; set; }
             public int Id { get; set; }
             public string Location { get; set; }
+            public string ImageUrl { get; set; }
             public string Date { get; set; }
             public string Time { get; set; }
             public int GenreId { get; set; }
@@ -57,6 +58,7 @@ namespace PhotoExhibiter.Features.Exhibits
                 {
                     Id = exhibit.Id,
                     Location = exhibit.Location,
+                    ImageUrl = exhibit.ImageUrl,
                     Date = exhibit.DateTime.ToString ("d MMM yyyy"),
                     Time = exhibit.DateTime.ToString ("HH:mm"),
                     GenreId = exhibit.GenreId,
@@ -82,6 +84,8 @@ namespace PhotoExhibiter.Features.Exhibits
                     .NotNull ()
                     .SetValidator (new ValidTimeValidator ());
                 RuleFor (m => m.GenreId)
+                    .NotNull ();
+                RuleFor (m => m.ImageUrl)
                     .NotNull ();
             }
         }

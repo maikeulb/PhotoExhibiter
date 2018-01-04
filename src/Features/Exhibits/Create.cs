@@ -26,6 +26,7 @@ namespace PhotoExhibiter.Features.Exhibits
             public string Date { get; set; }
             public string Time { get; set; }
             public string Heading { get; set; }
+            public string ImageUrl { get; set; }
             public DateTime DateTime { get; set; }
             public IEnumerable<Genre> Genres { get; set; }
         }
@@ -67,6 +68,8 @@ namespace PhotoExhibiter.Features.Exhibits
                     .NotNull ()
                     .SetValidator (new ValidTimeValidator ());
                 RuleFor (m => m.GenreId)
+                    .NotNull ();
+                RuleFor (m => m.ImageUrl)
                     .NotNull ();
             }
         }

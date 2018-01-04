@@ -20,9 +20,13 @@
         }
     }
 </h2>
+
 <p>
     Performing at @Model.Exhibit.Location on
     @Model.Exhibit.DateTime.ToString("d MMM") at @Model.Exhibit.DateTime.ToString("HH:mm")
+
+    <img src="@Model.Exhibit.ImageUrl" alt="Gallery Image">
+
 </p>
 
 @if (User.Identity.IsAuthenticated && Model.IsAttending)

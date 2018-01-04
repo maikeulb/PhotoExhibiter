@@ -39,52 +39,63 @@
 
   <section class="container">
 <h4 class="text-start voffset6">Upcoming Exhibits</h4>
-<ul id = "exhibits" class="exhibits voffset4">
+  <div class="row">
   @foreach (var exhibit in Model.UpcomingExhibits)
   {
-    <li>
-      <div class="date">
-        <div class="month">
-          @exhibit.DateTime.ToString("MMM")
-        </div>
 
-        <div class="day">
-          @exhibit.DateTime.ToString("d ")
+    <div class="col">
+      <div class="card" style="width: 20rem;">
+        <img class="card-img-top" src="@exhibit.ImageUrl" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title">@exhibit.Location</h4>
+          <p class="card-text">
+
+            <div class="details">
+
+              <div class="photographer">
+                <span>
+                <a href="@Url.Action("Details", "Exhibits", new { id =
+                  exhibit.Id })">
+                  @exhibit.Photographer.Name
+                </a> 
+                  : exhibit name
+                </span>
+                @if (exhibit.IsCanceled)
+                {
+                  <span class="label label-warning">Canceled</span>
+                }
+              </div>
+
+              <div class="genre">
+                @exhibit.Genre.Name
+              </div>
+
+              <div class="date">
+                <span class="month">
+                  @exhibit.DateTime.ToString("MMM")
+                </span>
+                <span class="day">
+                  @exhibit.DateTime.ToString("d ")
+                </span>
+              </div>
+
+            </div>
+
+          </p>
+              @if (Model.ShowActions && !exhibit.IsCanceled)
+                {
+                  <button
+                    data-exhibit-id="@exhibit.Id"
+                    class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id) ? "btn-info" : "btn-secondary")
+                    btn-sm js-toggle-attendance">
+                    @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id) ? "Attending": "Attend")
+                  </button>
+                }
         </div>
       </div>
-
-      <div class="details">
-        <span class="photographer">
-          <a href="@Url.Action("Details", "Exhibits", new { id  =exhibit.Id })">
-            @exhibit.Photographer.Name
-          </a>
-
-          @if (exhibit.IsCanceled)
-          {
-            <span class="label label-warning">Canceled</span>
-          }
-
-        </span>
-
-        <span class="genre">
-          @exhibit.Genre.Name
-        </span>
-
-        @if (Model.ShowActions && !exhibit.IsCanceled)
-          {
-            <button
-              data-exhibit-id="@exhibit.Id"
-              class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id) ? "btn-info" : "btn-secondary")
-              btn-sm js-toggle-attendance">
-              @(Model.Attendances.Any(a => a.ExhibitId ==
-              exhibit.Id) ? "Attending": "Attend")
-            </button>
-          }
-
-      </div>
-    </li>
+    </div>
   }
-</ul>
+  </div>
   </section>
 
 @section search

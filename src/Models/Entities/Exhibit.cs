@@ -14,6 +14,7 @@ namespace PhotoExhibiter.Models.Entities
         public int GenreId { get; private set; }
         public string PhotographerId { get; private set; }
         public string Location { get; private set; }
+        public string ImageUrl { get; private set; }
         public DateTime DateTime { get; private set; }
         public bool IsCanceled { get; private set; }
         public ApplicationUser Photographer { get; private set; }
@@ -29,6 +30,7 @@ namespace PhotoExhibiter.Models.Entities
             PhotographerId = command.UserId;
             Location = command.Location;
             DateTime = command.DateTime;
+            ImageUrl = command.ImageUrl;
         }
 
         public static Exhibit Create (Create.Command command) => new Exhibit (command);
@@ -51,6 +53,7 @@ namespace PhotoExhibiter.Models.Entities
 
             Location = command.Location;
             DateTime = command.DateTime;
+            ImageUrl = command.ImageUrl;
             GenreId = command.GenreId;
 
             foreach (var attendee in Attendances.Select (a => a.Attendee))
