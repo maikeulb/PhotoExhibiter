@@ -8,6 +8,7 @@
 @using (Html.BeginForm("Create", "Exhibits"))
 {
     @Html.AntiForgeryToken()
+
     <div class="form-group">
         @Html.LabelFor(m => m.Location)
         @Html.TextBoxFor(m => m.Location, new { @class = "form-control",
@@ -15,6 +16,7 @@
         autofocus = "autofocus" })
         @Html.ValidationMessageFor(m => m.Location)
     </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Date)
         @Html.TextBoxFor(m => m.Date, new { @class = "form-control",

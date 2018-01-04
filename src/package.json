@@ -20,7 +20,8 @@
     "lodash.template": "^4.4.0",
     "moment": "^2.19.2",
     "popper": "^1.0.1",
-    "popper.js": "^1.12.9"
+    "popper.js": "^1.12.9",
+    "rellax": "^1.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

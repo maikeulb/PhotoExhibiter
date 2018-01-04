@@ -45,7 +45,7 @@ namespace PhotoExhibiter.Features.Home
                 {
                     UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
-                    Heading = "Upcoming Exhibits",
+                    Heading = "NYC Photography Exhibits",
                     Attendances = attendances
                 };
 

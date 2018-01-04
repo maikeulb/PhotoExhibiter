@@ -10,9 +10,16 @@ window.moment = moment;
 
 import 'bootstrap';
 
+import Rellax from 'rellax';
+let rellax = new Rellax('.rellax') 
+
 import logoSmall from './images/logo.png';
 var logoImg = document.getElementById('logo_sm');
 logoImg.src = logoSmall;
+
+import banner from './images/banner.jpg';
+var bannerImg = document.getElementById('banner');
+bannerImg.src = banner;
 
 import './main.scss';
 

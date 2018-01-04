@@ -1,8 +1,44 @@
 @using PhotoExhibiter.Features.Home
 @model Index.Model
 
-<h1>@Model.Heading</h1>
+<h1 class="text-center voffset3">@Model.Heading</h1>
 
+  <section>
+    <img class="rellax voffset4" data-rellax-speed="2" style="
+      filter:brightness(60%);
+      background-attachment: fixed;
+      background-position: top;
+      height:25em; 
+      width:100%; 
+      position:relative;
+      max-width:100%; 
+      background-repeat: no-repeat; 
+      background-size: cover; 
+      background-image:url(/8adac5c1055da0fa43e92af8b89706cc.jpg);"/>
+    <div class="container" style="
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      ">
+      <h3 class="text-white">
+      Manhattan is the Modern Age
+      </h3>
+
+      <a href="/account/register" class="btn btn-primary">
+        Register
+      </a>
+      <a href="/account/register" class="btn btn-primary">
+        LogIn
+      </a>
+
+
+    </div>
+  </section>
+ 
+
+  <section class="container">
+<h4 class="text-start voffset6">Upcoming Exhibits</h4>
 <ul id = "exhibits" class="exhibits voffset4">
   @foreach (var exhibit in Model.UpcomingExhibits)
   {
@@ -49,6 +85,7 @@
     </li>
   }
 </ul>
+  </section>
 
 @section search
 {
