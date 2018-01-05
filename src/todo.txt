@@ -17,3 +17,6 @@
 -real time notifications
 -fix navbar (search and notifications)
 -image upload
+***
+add flash messaging
+gravatar

@@ -1,5 +1,5 @@
 @using PhotoExhibiter.Features.Exhibits
-@model Mine.Model
+@model List.Model
 
 <h1 class="text-center voffset3">@Model.Heading</h1>
 
@@ -23,7 +23,6 @@
           <span class="genre">
             @exhibit.Genre.Name
           </span>
-
         <div class="actions">
           <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
             Edit
@@ -39,9 +38,11 @@
 </ul>
 </section>
 
+
+
 @section search
 {
-  <form asp-controller="Exhibits" asp-action="Search">
+<form asp-controller="Exhibits" asp-action="Search">
     <div class="form-horizontal">
       <div id="searchexhibits" class="input-group">
         @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
@@ -54,5 +55,9 @@
 
 @section scripts
 {
-   <script type="text/javascript" src="~/exhibitCancel.js"></script>
+  <script type="text/javascript" src="~/exhibits.js"></script>
+  <script>
+ let rellax = new Rellax('.rellax') 
+  </script>
 }
+

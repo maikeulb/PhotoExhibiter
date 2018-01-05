@@ -42,6 +42,17 @@ namespace PhotoExhibiter.Features.Exhibits
             return View (model);
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> List (List.Query query)
+        {
+            query.UserId = _userManager.GetUserId (User);
+            query.ShowActions = _signInManager.IsSignedIn (User);
+
+            var model = await _mediator.Send (query);
+
+            return View (model);
+        }
+
         public async Task<IActionResult> Mine (Mine.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
@@ -63,11 +74,10 @@ namespace PhotoExhibiter.Features.Exhibits
         }
 
         [HttpPost]
-        public IActionResult Search(Index.Query model)
+        public IActionResult Search (Index.Query model)
         {
-            return RedirectToAction("Index", "Home", model);
+            return RedirectToAction ("List", "Exhibits", model);
         }
-
 
         public async Task<IActionResult> Create (Create.Query query)
         {
@@ -96,7 +106,7 @@ namespace PhotoExhibiter.Features.Exhibits
 
             command.UserId = _userManager.GetUserId (User);
 
-            await _mediator.Send (command);
+            await _mediator.Send (command); // error handling side effect?
 
             return RedirectToAction ("Mine", "Exhibits");
         }
