@@ -52,6 +52,10 @@
 
             <div class="details">
 
+              <div class="Location">
+                @exhibit.Location
+              </div>
+
               <div class="photographer">
                 <span>
                 <a href="@Url.Action("Details", "Exhibits", new { id =
@@ -114,5 +118,8 @@
 @section scripts
 {
   <script type="text/javascript" src="~/exhibits.js"></script>
+  <script>
+ let rellax = new Rellax('.rellax') 
+  </script>
 }
 

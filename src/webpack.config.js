@@ -17,7 +17,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.scss', '.css', '.ts'],
-    modules: [path.resolve('./'), path.resolve('./node_modules')]
+    modules: [
+      path.resolve('./'), 
+      path.resolve('./node_modules')
+    ],
   },
   module: {
     rules: [
