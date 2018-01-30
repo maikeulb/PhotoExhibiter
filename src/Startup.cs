@@ -44,10 +44,11 @@ namespace PhotoExhibiter
             services.AddScoped<INotificationRepository, NotificationRepository> ();
             services.AddScoped<IUserNotificationRepository, UserNotificationRepository> ();
 
-            services.AddMvc (options =>
-                {
-                    options.Filters.Add (typeof (ValidatorActionFilter));
-                })
+            services.AddMvc()
+            /* services.AddMvc (options => */
+                /* { */
+                    /* options.Filters.Add (typeof (ValidatorActionFilter)); */
+                /* }) */
                 .AddFeatureFolders ()
                 .AddFluentValidation (cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup> (); });
 

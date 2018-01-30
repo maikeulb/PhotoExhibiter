@@ -30,8 +30,8 @@ namespace PhotoExhibiter.Features.Exhibits
             private readonly IAttendanceRepository _attendanceRepository;
 
             public Handler(IExhibitRepository repository,
-                           IAttendanceRepository attendanceRepository) {
-
+                           IAttendanceRepository attendanceRepository) 
+            {
                 _repository = repository;
                 _attendanceRepository = attendanceRepository;
             }
