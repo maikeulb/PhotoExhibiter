@@ -43,7 +43,7 @@ namespace PhotoExhibiter.Features.Exhibits
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> List (List.Query query)
+        public async Task<IActionResult> Index (Index.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
             query.ShowActions = _signInManager.IsSignedIn (User);
@@ -76,7 +76,7 @@ namespace PhotoExhibiter.Features.Exhibits
         [HttpPost]
         public IActionResult Search (Index.Query model)
         {
-            return RedirectToAction ("List", "Exhibits", model);
+            return RedirectToAction ("Index", "Exhibits", model);
         }
 
         public async Task<IActionResult> Create (Create.Query query)

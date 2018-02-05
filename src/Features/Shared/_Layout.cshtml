@@ -8,96 +8,89 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400" rel="stylesheet">
     <link rel="stylesheet" href="~/styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/file-uploader/5.15.5/fine-uploader-new.css" rel="stylesheet">
-  <style>
-
-    body {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1;
-    }
-
-  </style>
-
+    <style>
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+      main {
+        flex: 1;
+      }
+    </style>
   </head>
 
-    <body>
-
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
 
       <ul class="navbar-nav flex-row">
-
-      <button class="navbar navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
+        <button class="navbar navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="nav-item ">
           <a class="notifications">
             <a href="#">
             <span class="badge js-notifications-count hide"></span>
           </a>
         </div>
-       </ul>
-    <a asp-area="" asp-controller="Home" asp-action="Index"
-      class="navbar-brand pull-right changeFont">
-      <img id="logo_sm" height="45" class="d-inline-block
-      align-bottom" alt="">
-      PhotoExhibiter
-    </a>
-
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" asp-area="" asp-controller="Exhibits" asp-action="Create">
-            Add an Exhibit</a>
-        </li>
       </ul>
 
-      <ul class="navbar-nav mr-auto d-none d-lg-block mx-2 my-auto w-50">
-        @RenderSection("search", required: false)
-      </ul>
+      <a asp-area="" asp-controller="Home" asp-action="Index"
+        class="navbar-brand pull-right changeFont">
+        <img id="logo_sm" height="45" class="d-inline-block
+        align-bottom" alt="">
+        PhotoExhibiter
+      </a>
 
-      <ul class="navbar-nav ml-auto">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
 
-        <div class="nav-item ">
-          <a class="notifications">
-            <a href="#">
-            <div id = "fa_globe"></div>
-            <span class="badge js-notifications-count hide"></span>
-          </a>
-        </div>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Exhibits" asp-action="Create">
+              Add an Exhibit</a>
+          </li>
+        </ul>
 
+        <ul class="navbar-nav mr-auto d-none d-lg-block mx-2 my-auto w-50">
+          @RenderSection("search", required: false)
+        </ul>
 
-        @await Html.PartialAsync("_LoginPartial")
-      </ul>
+        <ul class="navbar-nav ml-auto">
 
-    </div>
-
-  </nav>
-
-  @await Html.PartialAsync("_NavbarPartial")
-
-  <main>
-    @RenderBody()
-  </main >
-
-  <footer class="container">
-    <hr />
-    <p>&copy; 2017 - Web</p>
-  </footer>
-
-  <script type="text/javascript" src="~/node-static.js"></script>
-  <script type="text/javascript" src="~/main.js"></script>
-  <script type="text/javascript" src="~/notifications.js"></script>
+          <div class="nav-item ">
+            <a class="notifications">
+              <a href="#">
+              <div id = "fa_globe"></div>
+              <span class="badge js-notifications-count hide"></span>
+            </a>
+          </div>
 
 
+          @await Html.PartialAsync("_LoginPartial")
+        </ul>
 
-  @RenderSection("scripts", required: false)
+      </div>
+
+    </nav>
+
+    @await Html.PartialAsync("_NavbarPartial")
+
+    <main>
+      @RenderBody()
+    </main >
+
+    <footer class="container">
+      <hr />
+      <p>&copy; 2017 - Web</p>
+    </footer>
+
+    <script type="text/javascript" src="~/node-static.js"></script>
+    <script type="text/javascript" src="~/main.js"></script>
+    <script type="text/javascript" src="~/notifications.js"></script>
+
+    @RenderSection("scripts", required: false)
 
   </body>
+
 </html>

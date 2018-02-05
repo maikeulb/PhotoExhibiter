@@ -6,7 +6,7 @@ using PhotoExhibiter.Models.Interfaces;
 
 namespace PhotoExhibiter.Features.Exhibits
 {
-    public class List
+    public class Index
     {
         public class Query : IRequest<Model>
         {

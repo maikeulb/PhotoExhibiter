@@ -2,7 +2,7 @@
 
 namespace PhotoExhibiter.Models.Entities
 {
-    public class Notification // Value Object
+    public class Notification 
     {
         public int Id { get; private set; }
         public string OriginalLocation { get; private set; }
