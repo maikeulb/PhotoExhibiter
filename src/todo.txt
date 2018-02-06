@@ -1,22 +1,8 @@
--refactor razor views ( enumerable)
--decouple identity
--Add maybe types where applicable
-
 ***
--bootstrap theming
 -add moment library to client app
--add typescript (or angular)
-
 ***
 -stylize forms and buttons with fontawesome
 -async all the way
-
 ***
 -add admin
--incorporate dapper
--real time notifications
--fix navbar (search and notifications)
--image upload
 ***
-add flash messaging
-gravatar

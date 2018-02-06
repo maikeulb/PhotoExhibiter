@@ -49,6 +49,7 @@ var highlightFields = function (response) {
         }
     });
 };
+
 var highlightErrors = function (xhr) {
     try {
         var data = JSON.parse(xhr.responseText);
@@ -59,6 +60,7 @@ var highlightErrors = function (xhr) {
         // (Hopefully) caught by the generic error handler in `config.js`.
     }
 };
+
 var showSummary = function (response) {
     $('#validationSummary').empty().removeClass('hidden');
 

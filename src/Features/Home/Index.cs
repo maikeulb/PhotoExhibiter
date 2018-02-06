@@ -21,6 +21,7 @@ namespace PhotoExhibiter.Features.Home
             public bool ShowActions { get; set; }
             public string Heading { get; set; }
             public string SearchTerm { get; set; }
+            public string UserId {get; set; }
             public IEnumerable<Attendance> Attendances {get; set; } 
         }
 
@@ -31,7 +32,6 @@ namespace PhotoExhibiter.Features.Home
 
             public Handler(IExhibitRepository repository,
                            IAttendanceRepository attendanceRepository) {
-
                 _repository = repository;
                 _attendanceRepository = attendanceRepository;
             }
@@ -46,7 +46,8 @@ namespace PhotoExhibiter.Features.Home
                     UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
                     Heading = "NYC Photography Exhibits",
-                    Attendances = attendances
+                    Attendances = attendances,
+                    UserId = message.UserId
                 };
 
                 return exhibits;

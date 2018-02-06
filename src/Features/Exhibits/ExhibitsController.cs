@@ -106,7 +106,7 @@ namespace PhotoExhibiter.Features.Exhibits
 
             command.UserId = _userManager.GetUserId (User);
 
-            await _mediator.Send (command); // error handling side effect?
+            await _mediator.Send (command);
 
             return RedirectToAction ("Mine", "Exhibits");
         }

@@ -28,8 +28,6 @@
     </div>
   </section>
  
-      <gravatar email-address="michale@gmail.com"></gravatar>
-
   <section class="container">
     <h4 class="text-start voffset6">Upcoming Exhibits</h4>
     <div class="row">
@@ -81,11 +79,13 @@
             </p>
             @if (Model.ShowActions && !exhibit.IsCanceled)
               {
+
                 <button
                   data-exhibit-id="@exhibit.Id"
-                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id) ? "btn-info" : "btn-secondary") btn-sm js-toggle-attendance">
-                  @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id) ? "Attending": "Attend")
+                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "btn-info" : "btn-secondary") btn-sm js-toggle-attendance">
+                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "Attending": "Attend")
                 </button>
+
               }
           </div>
         </div>

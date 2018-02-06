@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
 using MediatR;
-using PhotoExhibiter.Features;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
 
@@ -17,30 +17,38 @@ namespace PhotoExhibiter.Features.Exhibits
 
         public class Model
         {
-            private readonly List<Attendance> _attendances = new List<Attendance> ();
-
             public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
             public bool ShowActions { get; set; }
             public string Heading { get; set; }
+            public string UserId {get; set; }
             public string SearchTerm { get; set; }
-
-            public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly ();
+            public IEnumerable<Attendance> Attendances {get; set; } 
         }
 
         public class Handler : IRequestHandler<Query, Model>
         {
             private readonly IExhibitRepository _repository;
+            private readonly IAttendanceRepository _attendanceRepository;
 
-            public Handler(IExhibitRepository repository) => _repository = repository;
+            public Handler(IExhibitRepository repository,
+                           IAttendanceRepository attendanceRepository) {
+                _repository = repository;
+                _attendanceRepository = attendanceRepository;
+            }
+
 
             public Model Handle (Query message)
             {
                 var upcomingExhibits = _repository.GetExhibitsUserAttending (message.UserId);
+                var attendances = _attendanceRepository.GetAllAttendances();
+
                 var exhibits = new Model
                 {
                     UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
-                    Heading = "Exhibits I'm Attending"
+                    Heading = "Exhibits I'm Attending",
+                    Attendances = attendances,
+                    UserId = message.UserId
                 };
 
                 return exhibits;

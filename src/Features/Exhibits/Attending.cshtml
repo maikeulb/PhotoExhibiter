@@ -36,13 +36,11 @@
 
         @if (Model.ShowActions && !exhibit.IsCanceled)
           {
-            <button
-              data-exhibit-id="@exhibit.Id"
-              class="btn @(Model.Attendances.Any(a => a.ExhibitId == exhibit.Id)? "btn-info" : "btn-secondary")
-              btn-sm js-toggle-attendance">
-              @(Model.Attendances.Any(a => a.ExhibitId ==
-              exhibit.Id)? "Attending": "UnAttend")
-            </button>
+                <button
+                  data-exhibit-id="@exhibit.Id"
+                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "btn-info" : "btn-secondary") btn-sm js-toggle-attendance">
+                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "Attending": "Attend")
+                </button>
           }
 
       </div>
