@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Features.Manage.ManageViewModels;
 using PhotoExhibiter.Infra.App;
-using PhotoExhibiter.Infra.Data;
+using PhotoExhibiter.Data;
 
 namespace PhotoExhibiter.Features.Manage
 {

@@ -11,8 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Infra.Data.Seed;
-using PhotoExhibiter.Infra.Data.Context;
+using PhotoExhibiter.Data.Seed;
+using PhotoExhibiter.Data.Context;
 
 namespace PhotoExhibiter
 {

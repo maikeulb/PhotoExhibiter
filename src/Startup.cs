@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PhotoExhibiter.Infra.App;
-using PhotoExhibiter.Infra.Data.Context;
-using PhotoExhibiter.Infra.Data.Repositories;
+using PhotoExhibiter.Data.Context;
+using PhotoExhibiter.Data.Repositories;
 using PhotoExhibiter.Models.Entities;
 using PhotoExhibiter.Models.Interfaces;
 
