@@ -24,7 +24,6 @@ namespace PhotoExhibiter.Features.Exhibits
             public string UserId { get; set; }
             public string Location { get; set; }
             public string Date { get; set; }
-            public string Time { get; set; }
             public string Heading { get; set; }
             public string ImageUrl { get; set; }
             public DateTime DateTime { get; set; }
@@ -64,9 +63,6 @@ namespace PhotoExhibiter.Features.Exhibits
                 RuleFor (m => m.Date)
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
-                RuleFor (m => m.Time)
-                    .NotNull ()
-                    .SetValidator (new ValidTimeValidator ());
                 RuleFor (m => m.GenreId)
                     .NotNull ();
                 RuleFor (m => m.ImageUrl)
@@ -82,7 +78,7 @@ namespace PhotoExhibiter.Features.Exhibits
 
             public void Handle (Command message)
             {
-                message.DateTime = DateTime.Parse(string.Format("{0} {1}", message.Date, message.Time));
+                message.DateTime = DateTime.Parse(string.Format("{0}", message.Date));
 
                 var exhibit = Exhibit.Create(message);
 

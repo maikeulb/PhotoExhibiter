@@ -25,7 +25,6 @@ namespace PhotoExhibiter.Features.Exhibits
             public string Location { get; set; }
             public string ImageUrl { get; set; }
             public string Date { get; set; }
-            public string Time { get; set; }
             public int GenreId { get; set; }
             public IEnumerable<Genre> Genres { get; set; }
             public string Heading { get; set; }
@@ -60,7 +59,6 @@ namespace PhotoExhibiter.Features.Exhibits
                     Location = exhibit.Location,
                     ImageUrl = exhibit.ImageUrl,
                     Date = exhibit.DateTime.ToString ("d MMM yyyy"),
-                    Time = exhibit.DateTime.ToString ("HH:mm"),
                     GenreId = exhibit.GenreId,
                     Genres = _genrerepository.GetGenres (),
                     Heading = "Edit a Exhibit",
@@ -80,9 +78,6 @@ namespace PhotoExhibiter.Features.Exhibits
                 RuleFor (m => m.Date)
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
-                RuleFor (m => m.Time)
-                    .NotNull ()
-                    .SetValidator (new ValidTimeValidator ());
                 RuleFor (m => m.GenreId)
                     .NotNull ();
                 RuleFor (m => m.ImageUrl)

@@ -14,6 +14,9 @@ namespace PhotoExhibiter.Infra.Data.Mappings
             builder.Property (e => e.GenreId)
                 .IsRequired ();
 
+            builder.Property (e => e.DateTime)
+                .HasColumnType("Date");
+
             builder.Property (e => e.Location)
                 .IsRequired ()
                 .HasMaxLength (255);
