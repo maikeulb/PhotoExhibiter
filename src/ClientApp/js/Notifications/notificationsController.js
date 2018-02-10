@@ -5,6 +5,7 @@ export default class NotificationsController {
   }
 
   init() {
+    alert('hi');
     this.getBadgeNotifications();
   }
 

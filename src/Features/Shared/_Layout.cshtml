@@ -53,9 +53,8 @@
         <ul class="navbar-nav ml-auto">
 
           <div class="nav-item ">
-            <a class="notifications">
-              <a href="#">
-              <div id = "fa_globe"></div>
+            <a id="notifications-item" class="notifications" href="#">
+              <div id = "fa_globe">globe</div>
               <span class="badge js-notifications-count hide"></span>
             </a>
           </div>
@@ -81,9 +80,37 @@
 
     <script type="text/javascript" src="~/node-static.js"></script>
     <script type="text/javascript" src="~/main.js"></script>
-    <script type="text/javascript" src="~/notifications.js"></script>
 
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/notifications", function (notifications) {
+                if (notifications.length == 0)
+                    return;
+                $(".js-notifications-count")
+                    .text(notifications.length)
+                    .removeClass("hide");
+                $(".notifications").popover({
+                    html: true,
+                    title: "Notifications",
+                    content: function () {
+                        var compiled = _.template($("#notifications-template").html());
+                        return compiled({ notifications: notifications });
+                    },
+                    placement: "left",
+                    template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
+                }).on("shown.bs.popover", function() {
+                    $.post("/api/notifications/")
+                        .done(function () {
+                            $(".js-notifications-count")
+                                .text("")
+                                .addClass("hide");
+                        });
+                });
+            });
+        });
+    </script>
 
   </body>
 

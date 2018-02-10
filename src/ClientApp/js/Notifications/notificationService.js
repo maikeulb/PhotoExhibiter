@@ -13,7 +13,7 @@ export default class NotificationService {
         .text(notifications.length)
         .removeClass('hide');
 
-      $('.notifications')
+      $('#notifications')
         .popover({
           html: true,
           title: 'Notifications',
