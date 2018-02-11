@@ -17,11 +17,11 @@ namespace PhotoExhibiter.Features.Exhibits
 
         public class Model
         {
-            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
-            public bool ShowActions { get; set; }
             public string Heading { get; set; }
             public string UserId {get; set; }
             public string SearchTerm { get; set; }
+            public bool ShowActions { get; set; }
+            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
             public IEnumerable<Attendance> Attendances {get; set; } 
         }
 
@@ -31,11 +31,11 @@ namespace PhotoExhibiter.Features.Exhibits
             private readonly IAttendanceRepository _attendanceRepository;
 
             public Handler(IExhibitRepository repository,
-                           IAttendanceRepository attendanceRepository) {
+                           IAttendanceRepository attendanceRepository) 
+            {
                 _repository = repository;
                 _attendanceRepository = attendanceRepository;
             }
-
 
             public Model Handle (Query message)
             {

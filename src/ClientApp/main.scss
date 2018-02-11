@@ -97,61 +97,6 @@ h6,
 /* Page-level styles */
 $grey: #7A8590 + 20;
 
-.exhibits {
-	list-style: none;
-}
-
-.exhibits > li {
-	position: relative;
-	margin-bottom: 30px;
-}
-
-.exhibits > li .date {
-	background: #fd5d5d;
-	color: white;
-	text-align: center;
-	width: 60px;
-	box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 3px 3px -2px rgba(0, 0, 0, .2), 0 1px 8px 0 rgba(0, 0, 0, .12);
-}
-
-.exhibits > li .date .month {
-	text-transform: uppercase;
-	font-size: 14px;
-	font-weight: bold;
-	padding: 2px 6px;
-}
-
-.exhibits > li .date .day {
-	background: #f7f7f7;
-	color: #333;
-	font-size: 20px;
-	padding: 6px 12px;
-}
-
-.exhibits > li .details {
-	position: absolute;
-	top: 0;
-	left: 70px;
-}
-
-.exhibits > li .details .photographer {
-	font-weight: bold;
-	display: block;
-}
-
-.exhibits > li .details .genre {
-	font-size: 15px;
-}
-
-.exhibits > li .actions {
-	font-size: 15px;
-	display: none;
-}
-
-.exhibits > li:hover .actions {
-	display: block;
-}
-
 .popover-notifications .popover-content {
 	padding: 0;
 }

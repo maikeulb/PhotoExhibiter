@@ -62,6 +62,7 @@
         </div>
         <div >
             <span>
+
               <a href="@Url.Action("Index", "Users", new { photographerId =
                 exhibit.Photographer.Id })">
                 @exhibit.Photographer.Name
@@ -84,7 +85,6 @@
     }
     </div>
   </section>
-  <a href="@Url.Action("Index", "Users", new { userId = "2b47d664-372d-43c6-ac82-1b3356b40e6a"})">mikouser</a>
 
 @section search
 {
@@ -106,4 +106,3 @@
     let rellax = new Rellax('.rellax') 
   </script>
 }
-

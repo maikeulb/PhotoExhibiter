@@ -36,6 +36,9 @@ namespace PhotoExhibiter.Features.Users
         {
             query.UserId = _userManager.GetUserId (User);
             query.ShowActions = _signInManager.IsSignedIn (User);
+            var photographerProfile = await _userManager.FindByIdAsync (query.PhotographerId);
+            query.PhotographerName = photographerProfile.Name;
+
             var model = await _mediator.Send (query);
 
             return View (model);

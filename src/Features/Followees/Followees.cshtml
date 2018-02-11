@@ -6,9 +6,12 @@
 <section class="container">
   <ul class="exhibits voffset4">
     @foreach (var photographer in Model.Photographers)
-      {
-        <li>@photographer.Name</li>
-      }
+    {
+      <a href="@Url.Action("Index", "Users", new { photographerId =
+        photographer.Id })">
+        @photographer.Name
+      </a> 
+    }
   </ul>
 </section>
 

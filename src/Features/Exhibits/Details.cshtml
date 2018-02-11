@@ -6,6 +6,7 @@
     <section class="container">
 <h2>
     @Model.Exhibit.Photographer.Name
+
     @if (User.Identity.IsAuthenticated)
     {
         if (Model.IsFollowing)
@@ -19,11 +20,13 @@
               data-user-id="@Model.Exhibit.PhotographerId">Follow</button>
         }
     }
+
 </h2>
 
 <p>
     Performing at @Model.Exhibit.Location on
     @Model.Exhibit.DateTime.ToString("d MMM").
+
 @if (User.Identity.IsAuthenticated && Model.IsAttending)
 {
     <p>You are going to this event. </p>
@@ -56,20 +59,16 @@
         </div>
     </div>
   </div>
-
 </p>
+</section>
 
-
-
-    </section>
 @section scripts
 {
    <script type="text/javascript" src="~/exhibitDetails.js"></script>
    <script>
-  $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-                event.preventDefault();
-                $(this).ekkoLightbox();
-            }); 
-   
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                  event.preventDefault();
+                  $(this).ekkoLightbox();
+              }); 
    </script>
 }

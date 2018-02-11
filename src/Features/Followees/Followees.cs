@@ -47,7 +47,7 @@ namespace PhotoExhibiter.Features.Followees
                 var model = new Model
                 {
                     UpcomingExhibits = upcomingExhibits,
-                    Heading = "Who I Follow",
+                    Heading = "My Followings",
                     Photographers = photographers
                 };
 

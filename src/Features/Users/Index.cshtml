@@ -10,11 +10,26 @@
 }
 else
 {
-  <h1 class="text-center voffset3">Exhibits</h1>
+  <h1 class="text-center voffset3">@Model.PhotographerName's Exhibits</h1>
+  <p class = "text-center">
+    @if (User.Identity.IsAuthenticated)
+    {
+      if (Model.IsFollowing)
+      {
+        <button class="btn btn-outline-info btn-sm js-toggle-follow"
+            data-user-id="@Model.PhotographerId">Following</button>
+      }
+      else
+      {
+        <button class="btn btn-outline-secondary btn-sm js-toggle-follow"
+            data-user-id="@Model.PhotographerId">Follow</button>
+      }
+    }
+  </p>
 }
 
 <section class="container">
-  <ul class="exhibits voffset4">
+  <ul id = "exhibits" class="exhibits voffset4">
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
       <li>
@@ -22,17 +37,17 @@ else
           <div class="month">
             @exhibit.DateTime.ToString("MMM")
           </div>
-            <div class="day">
+          <div class="day">
               @exhibit.DateTime.ToString("d ")
-            </div>
           </div>
-          <div class="details">
-            <span class="photographer">
-              @exhibit.Location
-            </span>
-            <span class="genre">
-              @exhibit.Genre.Name
-            </span>
+        </div>
+        <div class="details">
+          <span class="photographer">
+            @exhibit.Location
+          </span>
+          <span class="genre">
+            @exhibit.Genre.Name
+          </span>
           @if (Model.UserId == Model.PhotographerId)
           {
             <div class="actions">
@@ -45,6 +60,20 @@ else
               </a>
             </div>
            }
+          <div>
+          @if (Model.ShowActions && !exhibit.IsCanceled)
+          {
+            <button
+              data-exhibit-id="@exhibit.Id"
+              class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+              ? "btn-outline-info" 
+              : "btn-outline-secondary") btn-sm js-toggle-attendance">
+              @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+              ? "Attending"
+              : "Attend")
+            </button>
+          }
+          </div>
         </div>
       </li>
     }
@@ -66,5 +95,7 @@ else
 
 @section scripts
 {
-   <script type="text/javascript" src="~/exhibitCancel.js"></script>
+  <script type="text/javascript" src="~/exhibits.js"></script>
+  <script type="text/javascript" src="~/exhibitCancel.js"></script>
+  <script type="text/javascript" src="~/exhibitDetails.js"></script>
 }
