@@ -6,69 +6,90 @@
 
 <h1 class="text-center">@Model.Heading</h1>
 
-<section  class="container">
+<section class="container">
   <div class="row">
-
     <div class="col-lg-6 col-sm-12 push-sm-12">
-      @using (Html.BeginForm("Create", "Exhibits"))
-      {
-        @Html.AntiForgeryToken()
+
+      <form asp-controller="Exhibits" asp-action="Create" method="post"
+        class="form-group" role="form" novalidate>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
-          @Html.LabelFor(m => m.Location)
-          @Html.TextBoxFor(m => m.Location, new { @class = "form-control",
-          placeholder = "Aperture Gallery",
-          autofocus = "autofocus" })
-          @Html.ValidationMessageFor(m => m.Location)
+          <label for="Location" asp-for="Location"></label>
+          <input asp-for="Location" type="text" class="form-control" placeholder =
+          "Aperture Gallery" required>
+          <div class="invalid-feedback">Please tell us the location!</div>
+          <span asp-validation-for="Location" class="text-danger"></span>
         </div>
+
         <div class="input-daterange form-group" id="datepicker">
           <label asp-for="Date"></label>
           <input asp-for="Date" type="text" class="input-sm form-control"
-          placeholder="1 May 2018" style="text-align:left;" />
+          placeholder="1 May 2018" style="text-align:left;" required>
+          <div class="invalid-feedback" required>Please pick a date!</div>
           <span asp-validation-for="Date" class="text-danger"></span>
         </div>
+
         <div class="form-group">
-          @Html.LabelFor(m => m.GenreId)
-          @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres, "Id",
-          "Name"), new { @class = "form-control" })
-          @Html.ValidationMessageFor(m => m.GenreId)
+          <label asp-for="GenreId"></label>
+          <select asp-for="GenreId" class= "form-control" 
+            asp-items="@(new SelectList(Model.Genres, "Id", "Name"))" required> 
+          </select>
+          <div class="invalid-feedback">Please select a genre!</div>
         </div>
 
         <div class="form-group">
-          @Html.LabelFor(m => m.ImageUrl)
-          @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control imgInp",
-          placeholder = "http://" })
-          @Html.ValidationMessageFor(m => m.ImageUrl)
+          <label asp-for="ImageUrl"></label>
+          <input for="Image" asp-for="ImageUrl" type="url" class="form-control imgInp" placeholder =
+          "http://" required>
+          <span asp-validation-for="ImageUrl" class="text-danger"></span>
+          <div class="invalid-feedback">Please upload and image!</div>
         </div>
-
         <button type="submit" class="btn btn-primary">Save</button>
-      }
+      </form>
     </div>
+
     <div class="col-lg-6 col-sm-12">
-     <br>
+      <br>
       <img id="target" src="http://placehold.it/500x300" alt="your image" />
     </div>
 
-  <div/>
+  </div>
 <section/>
 
 @section scripts
 {
+  <script>
+  $('.input-daterange').datepicker({
+    todayHighlight: true,
+    startDate: '+0d',
+    autoclose: true,
+    format: 'dd M yyyy',
+    viewMode: "months", 
+  });
+  </script>
 
+  <script>
+    $('.imgInp').on('change',
+      function () {
+         $('#target').prop('src', this.value);
+       });
+  </script>
 <script>
-$('.input-daterange').datepicker({
-  todayHighlight: true,
-  startDate: '+0d',
-  autoclose: true,
-  format: 'dd M yyyy',
-  viewMode: "months", 
-});
-</script>
-
-<script>
-  $('.imgInp').on('change',
-    function () {
-       $('#target').prop('src', this.value);
-     });
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('form-group');
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 </script>
 
 }

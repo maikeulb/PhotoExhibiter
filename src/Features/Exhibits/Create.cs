@@ -46,7 +46,7 @@ namespace PhotoExhibiter.Features.Exhibits
                 {
                     UserId = message.UserId,
                     Genres = _repository.GetGenres (),
-                    Heading = "Add a Exhibit"
+                    Heading = "Add an Exhibit"
                 };
 
                 return model;

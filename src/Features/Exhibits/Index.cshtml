@@ -1,41 +1,54 @@
 @using PhotoExhibiter.Features.Exhibits
-@model List.Model
+@model Index.Model
 
 <h1 class="text-center voffset3">@Model.Heading</h1>
 
 <section class="container">
-<ul class="exhibits voffset4">
-  @foreach (var exhibit in Model.UpcomingExhibits)
-  {
-    <li>
-      <div class="date">
-        <div class="month">
-          @exhibit.DateTime.ToString("MMM")
-        </div>
-          <div class="day">
-            @exhibit.DateTime.ToString("d ")
+  <ul id = "exhibits" class="exhibits voffset4">
+    @foreach (var exhibit in Model.UpcomingExhibits)
+    {
+      <li>
+        <div style="display:flex">
+
+          <div class="date">
+            <div class="month">
+              @exhibit.DateTime.ToString("MMM")
+            </div>
+              <div class="day">
+                @exhibit.DateTime.ToString("d ")
+              </div>
+            </div>
+
+            <img class="img-thumbnail" style="height:100px;" src=@exhibit.ImageUrl>
+
+            <div style="padding:10px">
+              <div>
+                <b>@exhibit.Location</b>
+              </div>
+              <div>
+                @exhibit.Genre.Name
+              </div>
+            <div>
+              @if (Model.ShowActions && !exhibit.IsCanceled)
+              {
+                <button
+                  data-exhibit-id="@exhibit.Id"
+                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                  ? "btn-outline-info" 
+                  : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                  ? "Attending"
+                  : "Attend")
+                </button>
+              }
+            </div>
+
           </div>
+
         </div>
-        <div class="details">
-          <span class="photographer">
-            @exhibit.Location
-          </span>
-          <span class="genre">
-            @exhibit.Genre.Name
-          </span>
-        <div class="actions">
-          <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
-            Edit
-          </a>
-          <a href="#" class="js-cancel-exhibit"
-            data-exhibit-id="@exhibit.Id">
-            Cancel
-          </a>
-         </div>
-      </div>
-    </li>
-  }
-</ul>
+      </li>
+    }
+  </ul>
 </section>
 
 @section search
@@ -54,7 +67,4 @@
 @section scripts
 {
   <script type="text/javascript" src="~/exhibits.js"></script>
-  <script>
- let rellax = new Rellax('.rellax') 
-  </script>
 }

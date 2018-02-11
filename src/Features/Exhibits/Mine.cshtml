@@ -8,22 +8,23 @@
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
       <li>
-        <div class="date">
-          <div class="month">
-            @exhibit.DateTime.ToString("MMM")
-          </div>
+        <div style="display:flex">
+          <div class="date">
+            <div class="month">
+              @exhibit.DateTime.ToString("MMM")
+            </div>
             <div class="day">
               @exhibit.DateTime.ToString("d ")
             </div>
           </div>
-          <div class="details">
-            <span class="photographer">
-              @exhibit.Location
-            </span>
-            <span class="genre">
+          <img class="img-thumbnail" style="height:100px;" src=@exhibit.ImageUrl>
+          <div style="padding:10px">
+            <div>
+              <b>@exhibit.Location</b>
+            </div>
+            <div>
               @exhibit.Genre.Name
-            </span>
-          <div class="actions">
+            </div>
             <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
               Edit
             </a>
@@ -31,7 +32,8 @@
               data-exhibit-id="@exhibit.Id">
               Cancel
             </a>
-           </div>
+          </div>
+
         </div>
       </li>
     }

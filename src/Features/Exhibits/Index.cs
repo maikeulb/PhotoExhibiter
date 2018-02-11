@@ -21,6 +21,7 @@ namespace PhotoExhibiter.Features.Exhibits
             public bool ShowActions { get; set; }
             public string Heading { get; set; }
             public string SearchTerm { get; set; }
+            public string UserId {get; set; }
             public IEnumerable<Attendance> Attendances {get; set; } 
         }
 
@@ -46,6 +47,7 @@ namespace PhotoExhibiter.Features.Exhibits
                     UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
                     Heading = "NYC Photography Exhibits",
+                    UserId = message.UserId,
                     Attendances = attendances
                 };
 

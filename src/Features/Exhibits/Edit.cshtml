@@ -4,38 +4,68 @@
     ViewData["Title"] = "Model.Heading";
 }
 
-<h1>@Model.Heading</h1>
-@using (Html.BeginForm("Edit", "Exhibits"))
+<h1 class="text-center">@Model.Heading</h1>
+
+<section  class="container">
+  <div class="row">
+    <div class="col-lg-6 col-sm-12 push-sm-12">
+      @using (Html.BeginForm("Edit", "Exhibits"))
+      {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group">
+          @Html.LabelFor(m => m.Location)
+          @Html.TextBoxFor(m => m.Location, new { @class = "form-control",
+          placeholder = "Aperture Gallery",
+          autofocus = "autofocus" })
+          @Html.ValidationMessageFor(m => m.Location)
+        </div>
+        <div class="input-daterange form-group" id="datepicker">
+          <label asp-for="Date"></label>
+          <input asp-for="Date" type="text" class="input-sm form-control"
+          placeholder="1 May 2018" style="text-align:left;" />
+          <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(m => m.GenreId)
+          @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres,
+          "Id",
+          "Name"), new { @class = "form-control" })
+          @Html.ValidationMessageFor(m => m.GenreId)
+        </div>
+        <div class="form-group">
+          @Html.LabelFor(m => m.ImageUrl)
+          @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control imgInp",
+          placeholder = "http://" })
+          @Html.ValidationMessageFor(m => m.ImageUrl)
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Save</button>
+      }
+    </div>
+
+    <div class="col-lg-6 col-sm-12">
+     <br>
+      <img id="target" src="http://placehold.it/500x300" alt="your image" />
+    </div>
+  </div>
+<section/>
+
+@section scripts
 {
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.Id)
-    <div class="form-group">
-        @Html.LabelFor(m => m.Location)
-        @Html.TextBoxFor(m => m.Location, new { @class = "form-control",
-        placeholder = "Aperture Gallery",
-        autofocus = "autofocus" })
-        @Html.ValidationMessageFor(m => m.Location)
-    </div>
+  <script>
+  $('.input-daterange').datepicker({
+    todayHighlight: true,
+    startDate: '+0d',
+    autoclose: true,
+    format: 'dd M yyyy',
+    viewMode: "months", 
+  });
+  </script>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Date)
-        @Html.TextBoxFor(m => m.Date, new { @class = "form-control",
-        placeholder = "eg 1 Jan 2018" })
-        @Html.ValidationMessageFor(m => m.Date)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.ImageUrl)
-        @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control",
-        placeholder = "http://" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.GenreId)
-        @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres,
-        "Id",
-        "Name"), new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.GenreId)
-    </div>
-    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+  <script>
+    $('.imgInp').on('change',
+      function () {
+         $('#target').prop('src', this.value);
+       });
+  </script>
 }
