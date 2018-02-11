@@ -1,14 +1,16 @@
 @using PhotoExhibiter.Features.Followees
 @model Followees.Model
 
-<h1>@Model.Heading</h1>
+<h1 class="text-center voffset3">@Model.Heading</h1>
 
-<ul class="exhibits voffset4">
-  @foreach (var photographer in Model.Photographers)
-    {
-      <li>@photographer.Name</li>
-    }
-</ul>
+<section class="container">
+  <ul class="exhibits voffset4">
+    @foreach (var photographer in Model.Photographers)
+      {
+        <li>@photographer.Name</li>
+      }
+  </ul>
+</section>
 
 @section search
 {

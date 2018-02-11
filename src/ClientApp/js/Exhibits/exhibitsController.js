@@ -15,7 +15,7 @@ export default class ExhibitController {
   toggleAttendance(e) {
     this.attendanceButton = $(e.target);
     const exhibitId = this.attendanceButton.attr('data-exhibit-id');
-    if (this.attendanceButton.hasClass('btn-secondary'))
+    if (this.attendanceButton.hasClass('btn-outline-secondary'))
       this.attendanceService.createAttendance(
         exhibitId,
         this.done.bind(this),
@@ -30,11 +30,11 @@ export default class ExhibitController {
   }
 
   done() {
-    this.attendanceButton.toggleClass('btn-info').toggleClass('btn-secondary');
-    if (this.attendanceButton.hasClass('btn-info')) {
+    this.attendanceButton.toggleClass('btn-outline-info').toggleClass('btn-outline-secondary');
+    if (this.attendanceButton.hasClass('btn-outline-info')) {
       this.attendanceButton.text('Attending');
     }
-    if (this.attendanceButton.hasClass('btn-secondary')) {
+    if (this.attendanceButton.hasClass('btn-outline-secondary')) {
       this.attendanceButton.text('Attend');
     }
   }

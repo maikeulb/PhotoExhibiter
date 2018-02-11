@@ -13,7 +13,7 @@ export default class ExhibitDetailsController {
   toggleFollowing(e) {
     this.followButton = $(e.target);
     const followeeId = this.followButton.attr('data-user-id');
-    if (this.followButton.hasClass('btn-secondary'))
+    if (this.followButton.hasClass('btn-outline-secondary'))
       this.followingService.createFollowing(
         followeeId,
         this.done.bind(this),
@@ -30,8 +30,8 @@ export default class ExhibitDetailsController {
   done() {
     const text = this.followButton.text() == 'Follow' ? 'Following' : 'Follow';
     this.followButton
-      .toggleClass('btn-info')
-      .toggleClass('btn-secondary')
+      .toggleClass('btn-outline-info')
+      .toggleClass('btn-outline-secondary')
       .text(text);
   }
 

@@ -1,11 +1,12 @@
 @using PhotoExhibiter.Features.Exhibits
 @model Attending.Model
 
-<h1>@Model.Heading</h1>
+<h1 class="text-center voffset3">@Model.Heading</h1>
 
-<ul id = "exhibits" class="exhibits voffset4">
-  @foreach (var exhibit in Model.UpcomingExhibits)
-  {
+<section class="container">
+  <ul id = "exhibits" class="exhibits voffset4">
+   @foreach (var exhibit in Model.UpcomingExhibits)
+   {
     <li>
       <div class="date">
         <div class="month">
@@ -37,17 +38,21 @@
 
         @if (Model.ShowActions && !exhibit.IsCanceled)
           {
-                <button
-                  data-exhibit-id="@exhibit.Id"
-                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "btn-info" : "btn-secondary") btn-sm js-toggle-attendance">
-                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "Attending": "Attend")
-                </button>
+            <button
+              data-exhibit-id="@exhibit.Id"
+              class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+              ? "btn-outline-info" 
+              : "btn-outline-secondary") btn-sm js-toggle-attendance">
+              @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+              ? "Attending"
+              : "Attend")
+            </button>
           }
-
-      </div>
-    </li>
-  }
-</ul>
+        </div>
+      </li>
+    }
+  </ul>
+</section>
 
 @section search
 {

@@ -12,6 +12,7 @@ namespace PhotoExhibiter.Features.Home
         {
             public string SearchTerm { get; set; }
             public string UserId { get; set; }
+            public string PhotographerId { get; set; }
             public bool ShowActions { get; set; }
         }
 
@@ -22,6 +23,7 @@ namespace PhotoExhibiter.Features.Home
             public string Heading { get; set; }
             public string SearchTerm { get; set; }
             public string UserId {get; set; }
+            public string PhotographerId {get; set; }
             public IEnumerable<Attendance> Attendances {get; set; } 
         }
 
@@ -31,7 +33,8 @@ namespace PhotoExhibiter.Features.Home
             private readonly IAttendanceRepository _attendanceRepository;
 
             public Handler(IExhibitRepository repository,
-                           IAttendanceRepository attendanceRepository) {
+                           IAttendanceRepository attendanceRepository) 
+            {
                 _repository = repository;
                 _attendanceRepository = attendanceRepository;
             }
@@ -47,6 +50,7 @@ namespace PhotoExhibiter.Features.Home
                     ShowActions = message.ShowActions,
                     Heading = "NYC Photography Exhibits",
                     Attendances = attendances,
+                    PhotographerId = message.PhotographerId,
                     UserId = message.UserId
                 };
 

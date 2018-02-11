@@ -20,11 +20,13 @@
 
       .card-container {
         position: relative;
-        margin-top: 50px;
-        width: 500px;
-        height: 300px;
+        display: flex;
+        align-items: center;
+        vertical-align: middle;
+        overflow: hidden;
+        height: 200px;
+        width: 100%;
       }
-
       .card-overlay {
         position: absolute;
         top: 0;
@@ -34,56 +36,33 @@
         background: rgba(0, 0, 0, 0);
         transition: background 0.5s ease;
       }
-
       .card-container:hover .card-overlay {
         display: block;
         background: rgba(0, 0, 0, .3);
       }
-
-      .card-img {
+      .card img {
         position: absolute;
-        width: 500px;
-        height: 300px;
+        height: 200px;
+        overflow: hidden;
+        top: 50%;
         left: 0;
       }
-
       .card-title {
         position: absolute;
-        width: 500px;
+        width: 100%;
         left: 0;
-        top: 120px;
-        font-weight: 700;
-        font-size: 30px;
+        top: 45px;
+        font-weight: 400;
+        font-size: 20px;
         text-align: center;
         text-transform: uppercase;
         color: white;
         z-index: 1;
         transition: top .5s ease;
       }
-
       .card-container:hover .card-title {
-        top: 90px;
+        top: 50px;
       }
-
-      .card-button {
-        position: absolute;
-        width: 500px;
-        left:0;
-        top: 180px;
-        text-align: center;
-        opacity: 0;
-        transition: opacity .35s ease;
-      }
-
-      .card-button a {
-        width: 200px;
-        padding: 12px 48px;
-        text-align: center;
-        color: white;
-        border: solid 2px white;
-        z-index: 1;
-      }
-
       .card-container:hover .card-button {
         opacity: 1;
       }
@@ -118,7 +97,7 @@
           </li>
         </ul>
 
-        <ul class="navbar-nav mr-auto d-none d-lg-block mx-2 my-auto w-50">
+        <ul class="navbar-nav mr-auto d-none d-md-block mx-2 my-auto w-50">
           @RenderSection("search", required: false)
         </ul>
 
@@ -130,8 +109,6 @@
               <span class="badge js-notifications-count hide"></span>
             </a>
           </div>
-
-
           @await Html.PartialAsync("_LoginPartial")
         </ul>
 

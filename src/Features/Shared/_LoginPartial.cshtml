@@ -6,7 +6,6 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-
     <li class="nav-item dropdown">
       <form asp-area="" asp-controller="Account" asp-action="Logout"
         method="post" id="logoutForm">

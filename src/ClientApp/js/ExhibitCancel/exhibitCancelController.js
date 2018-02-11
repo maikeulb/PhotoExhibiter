@@ -20,12 +20,12 @@ export default class ExhibitCancelController {
       buttons: {
         no: {
           label: 'No',
-          className: 'btn-secondary',
+          className: 'btn-outline-secondary',
           callback: () => bootbox.hideAll()
         },
         yes: {
           label: 'Yes',
-          className: 'btn-danger',
+          className: 'btn-outline-danger',
           callback: () =>
             this.exhibitService.cancelExhibit(
               exhibitId,

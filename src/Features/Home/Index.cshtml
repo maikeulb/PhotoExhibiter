@@ -34,65 +34,57 @@
     <div id="exhibits" class="row">
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
-      <div class="col-4">
+      <div class="col-lg-3 col-sm-6 col-xs-12">
         <div class="card-container">
-          <img class="card-image img-fluid" src="@exhibit.ImageUrl" alt="Card
-          image cap">
-          <div class="card-block">
-            <h4 class="card-title">@exhibit.Location</h4>
-            <p class="card-text">
-              <div class="details">
+        <img class="card-image img-fluid" src="@exhibit.ImageUrl">
+          <div class="card-title">
+            <p>Location: @exhibit.Location</p>
+            <p>@exhibit.Genre.Name</p>
 
-                <div class="card-title">
-                  @exhibit.Location
-                </div>
-                <div class="card-overlay"></div>
-
-                <div class="photographer">
-                  <span>
-                  <a href="@Url.Action("Details", "Exhibits", new { id =
-                    exhibit.Id })">
-                    @exhibit.Photographer.Name
-                  </a> 
-                    : exhibit name
-                  </span>
-                  @if (exhibit.IsCanceled)
-                  {
-                    <span class="label label-warning">Canceled</span>
-                  }
-                </div>
-
-                <div class="genre">
-                  @exhibit.Genre.Name
-                </div>
-
-                <div class="date">
-                  <span class="month">
-                    @exhibit.DateTime.ToString("MMM")
-                  </span>
-                  <span class="day">
-                    @exhibit.DateTime.ToString("d ")
-                  </span>
-                </div>
-                <div class="card-button"><a href="#"> BUTTON </a></div>
-
-              </div>
-            </p>
-            @if (Model.ShowActions && !exhibit.IsCanceled)
+              @if (exhibit.IsCanceled)
               {
-                <button
-                  data-exhibit-id="@exhibit.Id"
-                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "btn-info" : "btn-secondary") btn-sm js-toggle-attendance">
-                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) ? "Attending": "Attend")
-                </button>
+                <span class="label label-warning">Canceled</span>
               }
+              @if (Model.ShowActions && !exhibit.IsCanceled)
+              {
+                <a data-exhibit-id="@exhibit.Id"
+                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                  ? "btn-outline-info" 
+                  : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                  ? "Attending"
+                  : "Attend")
+                </a>
+              }
+
           </div>
+          <div class="card-overlay"></div>
         </div>
+        <div >
+            <span>
+              <a href="@Url.Action("Index", "Users", new { photographerId =
+                exhibit.Photographer.Id })">
+                @exhibit.Photographer.Name
+              </a> 
+
+              <div class="date">
+                <span class="month">
+                  @exhibit.DateTime.ToString("MMM")
+                </span>
+                <span class="day">
+                  @exhibit.DateTime.ToString("d ")
+                </span>
+              </div>
+
+            </span>
+
+          </div>
       </div>
       <br>
     }
     </div>
   </section>
+  <a href="@Url.Action("Index", "Users", new { userId = "2b47d664-372d-43c6-ac82-1b3356b40e6a"})">mikouser</a>
 
 @section search
 {
