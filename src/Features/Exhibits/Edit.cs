@@ -20,15 +20,15 @@ namespace PhotoExhibiter.Features.Exhibits
 
         public class Command : IRequest<Result>
         {
-            public string UserId { get; set; }
-            public int Id { get; set; }
-            public string Location { get; set; }
-            public string ImageUrl { get; set; }
-            public string Date { get; set; }
             public int GenreId { get; set; }
-            public IEnumerable<Genre> Genres { get; set; }
+            public int Id { get; set; }
+            public string UserId { get; set; }
+            public string Location { get; set; }
+            public string Date { get; set; }
             public string Heading { get; set; }
+            public string ImageUrl { get; set; }
             public DateTime DateTime { get; set; }
+            public IEnumerable<Genre> Genres { get; set; }
         }
 
         public class QueryHandler : IRequestHandler<Query, Result<Command>>
@@ -55,13 +55,13 @@ namespace PhotoExhibiter.Features.Exhibits
 
                 var model = new Command
                 {
-                    Id = exhibit.Id,
-                    Location = exhibit.Location,
-                    ImageUrl = exhibit.ImageUrl,
-                    Date = exhibit.DateTime.ToString ("d MMM yyyy"),
-                    GenreId = exhibit.GenreId,
-                    Genres = _genrerepository.GetGenres (),
                     Heading = "Edit a Exhibit",
+                    Id = exhibit.Id,
+                    Genres = _genrerepository.GetGenres (),
+                    Date = exhibit.DateTime.ToString ("d MMM yyyy"),
+                    ImageUrl = exhibit.ImageUrl,
+                    GenreId = exhibit.GenreId,
+                    Location = exhibit.Location
                 };
 
                 return Result.Ok (model);
@@ -96,6 +96,7 @@ namespace PhotoExhibiter.Features.Exhibits
 
             public Result Handle (Command message)
             {
+                message.DateTime = DateTime.Parse(string.Format("{0}", message.Date));
                 var exhibit = _repository.GetExhibit (message.Id);
                 if (exhibit == null)
                     return Result.Fail<Command> ("Exhibit does not exit");

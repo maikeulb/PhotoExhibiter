@@ -51,6 +51,7 @@ namespace PhotoExhibiter.Models.Entities
         {
             var notification = Notification.ExhibitUpdated (this, DateTime, Location);
 
+            Id = command.Id;
             Location = command.Location;
             DateTime = command.DateTime;
             ImageUrl = command.ImageUrl;
