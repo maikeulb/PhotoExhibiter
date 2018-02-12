@@ -2,9 +2,10 @@
 @model Details.Model
 @{
     ViewBag.Title = "Details";
-    }
-    <section class="container">
-<h2>
+}
+<section class="container">
+
+<h2 class="text-center voffset2">
     @Model.Exhibit.Photographer.Name
 
     @if (User.Identity.IsAuthenticated)
@@ -20,7 +21,6 @@
               data-user-id="@Model.Exhibit.PhotographerId">Follow</button>
         }
     }
-
 </h2>
 
 <p>

@@ -6,11 +6,11 @@
 
 @if (Model.UserId == Model.PhotographerId)
 {
-  <h1 class="text-center voffset3">My Exhibits</h1>
+  <h2 class="text-center voffset2">My Exhibits</h2>
 }
 else
 {
-  <h1 class="text-center voffset3">@Model.PhotographerName's Exhibits</h1>
+  <h2 class="text-center voffset2">@Model.PhotographerName's Exhibits</h2>
   <p class = "text-center">
     @if (User.Identity.IsAuthenticated)
     {
