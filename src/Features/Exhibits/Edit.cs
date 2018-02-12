@@ -55,7 +55,7 @@ namespace PhotoExhibiter.Features.Exhibits
 
                 var model = new Command
                 {
-                    Heading = "Edit a Exhibit",
+                    Heading = "Edit an Exhibit",
                     Id = exhibit.Id,
                     Genres = _genrerepository.GetGenres (),
                     Date = exhibit.DateTime.ToString ("d MMM yyyy"),
