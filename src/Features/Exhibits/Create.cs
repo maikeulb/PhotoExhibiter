@@ -58,8 +58,8 @@ namespace PhotoExhibiter.Features.Exhibits
             public Validator ()
             {
                 RuleFor (m => m.Location)
-                    .NotNull ().WithMessage("Name is required.")
-                    .Length(1,100).WithMessage("Length must be between 1 and 100 characters");
+                    .NotNull ().WithMessage ("Name is required.")
+                    .Length (1, 100).WithMessage ("Length must be between 1 and 100 characters");
                 RuleFor (m => m.Date)
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
@@ -74,13 +74,13 @@ namespace PhotoExhibiter.Features.Exhibits
         {
             private readonly IExhibitRepository _repository;
 
-            public CommandHandler(IExhibitRepository repository) => _repository = repository;
+            public CommandHandler (IExhibitRepository repository) => _repository = repository;
 
             public void Handle (Command message)
             {
-                message.DateTime = DateTime.Parse(string.Format("{0}", message.Date));
+                message.DateTime = DateTime.Parse (string.Format ("{0}", message.Date));
 
-                var exhibit = Exhibit.Create(message);
+                var exhibit = Exhibit.Create (message);
 
                 _repository.Add (exhibit);
                 _repository.SaveAll ();
