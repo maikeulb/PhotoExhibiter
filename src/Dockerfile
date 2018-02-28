@@ -3,7 +3,7 @@ WORKDIR /build
 
 # Copy  client app and build Client
 COPY ./package.json /build
-COPY ./ClientApp ./ClientApp
+COPY ./Assets ./Assets
 COPY ./webpack.config.js .
 RUN npm install
 RUN npm install webpack -g

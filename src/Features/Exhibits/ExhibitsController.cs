@@ -33,9 +33,10 @@ namespace PhotoExhibiter.Features.Exhibits
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Details (Details.Query query)
+        public async Task<IActionResult> Index (Index.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
+            query.ShowActions = _signInManager.IsSignedIn (User);
 
             var model = await _mediator.Send (query);
 
@@ -43,10 +44,9 @@ namespace PhotoExhibiter.Features.Exhibits
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index (Index.Query query)
+        public async Task<IActionResult> Details (Details.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
-            query.ShowActions = _signInManager.IsSignedIn (User);
 
             var model = await _mediator.Send (query);
 
