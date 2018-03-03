@@ -47,6 +47,18 @@ namespace PhotoExhibiter.Features.Users
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update (Update.Command command)
+        {
+            command.Id = _userManager.GetUserId (User);
+            var result = await _mediator.Send (command);
+
+            return result.IsSuccess
+                ? (IActionResult)RedirectToAction ("Index")
+                : (IActionResult)BadRequest(result.Error);
+        }
+
+        [HttpPost]
         public IActionResult Search (Index.Query model)
         {
             return RedirectToAction ("Index", "Exhibits", model);

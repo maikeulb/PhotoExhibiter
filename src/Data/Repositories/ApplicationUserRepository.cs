@@ -28,6 +28,13 @@ namespace PhotoExhibiter.Data.Repositories
                 .SingleOrDefault();
         }
 
+        public ApplicationUser GetUserById (string userId)
+        {
+            return _context.Users
+                .Where (u => u.Id == userId)
+                .SingleOrDefault();
+        }
+  
         public bool SaveAll () => _context.SaveChanges () > 0;
     }
 }

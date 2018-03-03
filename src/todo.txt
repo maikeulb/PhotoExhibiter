@@ -1,4 +1,5 @@
 - finish cqrs of api controller
+- take advantage of user manager for getting userIds (applicationuser dbcontext is maybe insufficent)
 
 -image in table
 -CAPS LOCK usernames

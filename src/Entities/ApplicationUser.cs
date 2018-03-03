@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using PhotoExhibiter.Features.Users;
 
 namespace PhotoExhibiter.Entities
 {
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
 
         private readonly List<Following> _followers = new List<Following> ();
         private readonly List<Following> _followees = new List<Following> ();
@@ -17,10 +19,16 @@ namespace PhotoExhibiter.Entities
 
         public ApplicationUser() : base() {} 
 
-        public ApplicationUser(string userName, string name) : base(userName)
+        public ApplicationUser(string userName, string name, string imageUrl) : base(userName)
         {
            base.Email = userName;
            Name = name;
+           ImageUrl = imageUrl;
+        }
+
+        public void UpdateDetails (Update.Command command)
+        {
+            ImageUrl = command.ImageUrl;
         }
 
         public void Notify (Notification notification) => _userNotifications.Add (UserNotification.Create (this, notification));

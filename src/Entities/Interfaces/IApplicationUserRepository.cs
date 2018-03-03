@@ -7,6 +7,7 @@ namespace PhotoExhibiter.Entities.Interfaces
     {
         IEnumerable<ApplicationUser> GetPhotographersFollowedBy (string userId);
         string GetPhotographerEmailById (string userId);
+        ApplicationUser GetUserById (string userId);
         bool SaveAll ();
     }
 }
