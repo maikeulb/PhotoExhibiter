@@ -1,14 +1,12 @@
-***
--add admin
-***
-- build  user profile features
 - finish cqrs of api controller
-- pagination
-->user route;
 
--user will show
-- exhibits
-- followers
-- user profile image
-- gravatar
+-image in table
+-CAPS LOCK usernames
+
 -social authentication
+-add admin
+-add area element
+
+*ADD Pagination -> profile page
+*ADD Admin -> profile page
+*ADD Profile Edit -> profile page

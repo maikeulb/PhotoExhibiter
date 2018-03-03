@@ -53,9 +53,10 @@ namespace PhotoExhibiter
                 .AddFluentValidation (cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup> (); });
 
             services.AddMediatR ();
-            // services.AddTransient(typeof(IPipelineBehavior<Edit.Command,>), typeof(Edit.ValidationPipeline<Edit.Command,>));
             services.AddAutoMapper ();
             Mapper.AssertConfigurationIsValid ();
+
+            services.AddMemoryCache();
         }
 
         public void Configure (IApplicationBuilder app, IHostingEnvironment env)
