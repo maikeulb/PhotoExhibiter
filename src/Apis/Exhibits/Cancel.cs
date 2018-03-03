@@ -28,7 +28,7 @@ namespace PhotoExhibiter.Apis.Exhibits
                 /* if (exhibit.PhotographerId != message.UserId) */
                 /* return Result.Fail<Command> ("Unauthorized"); */
 
-                exhibit.Cancel (); //event
+                exhibit.Cancel ();
                 _repository.SaveAll ();
 
                 return Result.Ok ();

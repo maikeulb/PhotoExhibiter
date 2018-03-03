@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
 using PhotoExhibiter.Features;
@@ -42,14 +41,14 @@ namespace PhotoExhibiter.Features.Exhibits
 
             public Command Handle (Query message)
             {
-                var model = new Command
+                var command = new Command
                 {
                     UserId = message.UserId,
                     Genres = _repository.GetGenres (),
                     Heading = "Add an Exhibit"
                 };
 
-                return model;
+                return command;
             }
         }
 

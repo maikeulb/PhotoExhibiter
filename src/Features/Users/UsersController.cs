@@ -49,6 +49,5 @@ namespace PhotoExhibiter.Features.Users
         {
             return RedirectToAction ("Index", "Exhibits", model);
         }
-
     }
 }

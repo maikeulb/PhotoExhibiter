@@ -1,8 +1,7 @@
 ***
--add moment library to client app
-***
--stylize forms and buttons with fontawesome
 -async all the way
 ***
 -add admin
 ***
+- build  user profile features
+- finish cqrs of api controller

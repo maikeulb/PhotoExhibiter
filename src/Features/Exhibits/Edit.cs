@@ -53,7 +53,7 @@ namespace PhotoExhibiter.Features.Exhibits
                 if (exhibit.PhotographerId != message.UserId)
                     return Result.Fail<Command> ("Unauthorized");
 
-                var model = new Command
+                var command = new Command
                 {
                     Heading = "Edit an Exhibit",
                     Id = exhibit.Id,
@@ -64,7 +64,7 @@ namespace PhotoExhibiter.Features.Exhibits
                     Location = exhibit.Location
                 };
 
-                return Result.Ok (model);
+                return Result.Ok (command);
             }
         }
 
@@ -98,6 +98,7 @@ namespace PhotoExhibiter.Features.Exhibits
             {
                 message.DateTime = DateTime.Parse(string.Format("{0}", message.Date));
                 var exhibit = _repository.GetExhibit (message.Id);
+
                 if (exhibit == null)
                     return Result.Fail<Command> ("Exhibit does not exit");
                 if (exhibit.PhotographerId != message.UserId)
