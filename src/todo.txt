@@ -15,3 +15,5 @@
 *ADD Pagination -> profile page
 *ADD Admin -> profile page
 *ADD Profile Edit -> profile page
+*ADD Attendance
+*REMOVE Ids(photographer)

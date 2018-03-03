@@ -6,196 +6,296 @@
 
 @if (Model.UserId == Model.PhotographerId)
 {
-  <h2 class="text-center voffset2">My Profile</h2>
+  <h2 class="text-center mt-3 mb-3">My Profile</h2>
 }
 else
 {
-  <h2 class="text-center voffset2">@Model.PhotographerName's Profile</h2>
-  <p class = "text-center">
-    @if (User.Identity.IsAuthenticated)
-    {
-      if (Model.IsFollowing)
-      {
-        <button class="btn btn-outline-info btn-sm js-toggle-follow"
-            data-user-id="@Model.PhotographerId">Following</button>
-      }
-      else
-      {
-        <button class="btn btn-outline-secondary btn-sm js-toggle-follow"
-            data-user-id="@Model.PhotographerId">Follow</button>
-      }
-    }
-  </p>
+  <h2 class="text-center mt-3 mb-3">@Model.PhotographerName's Profile</h2>
+
 }
-<section class="container">
-  <div class="row">
+<section class="container mt-4">
+  <div class="row ">
 
-    <div class="col order-2">
+    <div class="col order-2 mb-3">
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-          role="tab" aria-controls="home" aria-selected="true">
-            <span>Upcoming Exhibits</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="followers-tab" data-toggle="tab"
-          href="#followers"
-          role="tab" aria-controls="profile" aria-selected="false">Followers</a>
-      </li>
-    </ul>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+            role="tab" aria-controls="home" aria-selected="true">Upcoming Exhibits</a>
+        </li>
 
-    <div class="tab-content">
-      <div class="tab-pane active" id="home" role="tabpanel" 
-        aria-labelledby="home-tab">
-          <ul id = "exhibits" class="exhibits voffset4">
-            @foreach (var exhibit in Model.UpcomingExhibits)
-            {
-              <li>
-                <div style="display:flex">
+        @if (Model.UserId == Model.PhotographerId)
+        {
+        <li class="nav-item">
+          <a class="nav-link" id="attendance-tab" data-toggle="tab"
+            href="#attendance"
+            role="tab" aria-controls="profile" aria-selected="false">Attending Exhibits</a>
+        </li>
+        }
 
-                  <div class="date">
-                    <div class="month">
-                      @exhibit.DateTime.ToString("MMM")
+        <li class="nav-item">
+          <a class="nav-link" id="followers-tab" data-toggle="tab"
+            href="#followers"
+            role="tab" aria-controls="profile" aria-selected="false">Followers</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="following-tab" data-toggle="tab"
+            href="#following"
+            role="tab" aria-controls="profile" aria-selected="false">Following</a>
+        </li>
+
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane active" id="home" role="tabpanel" 
+          aria-labelledby="home-tab">
+            <ul id = "exhibits" class="exhibits mt-4">
+              @foreach (var exhibit in Model.UpcomingExhibits)
+              {
+                <li>
+                  <div style="display:flex">
+                    <div class="date">
+                      <div class="month">
+                        @exhibit.DateTime.ToString("MMM")
+                      </div>
+                      <div class="day">
+                          @exhibit.DateTime.ToString("d ")
+                      </div>
                     </div>
-                    <div class="day">
-                        @exhibit.DateTime.ToString("d ")
+                    <img class="img-thumbnail mx-2" style="height:100px;" src=@exhibit.ImageUrl>
+                    <div>
+                      <div>
+                        <b>@exhibit.Location</b>
+                      </div>
+                      <div>
+                        @exhibit.Genre.Name
+                      </div>
+                      @if (Model.UserId == Model.PhotographerId)
+                      {
+                        <div class="actions">
+                          <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
+                            Edit
+                          </a>
+                          <a href="#" class="js-cancel-exhibit"
+                            data-exhibit-id="@exhibit.Id">
+                            Cancel
+                          </a>
+                        </div>
+                       }
+                      else
+                      {
+                      <div>
+                        @if (Model.ShowActions && !exhibit.IsCanceled)
+                        {
+                          <button
+                            data-exhibit-id="@exhibit.Id"
+                            class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                            ? "btn-outline-info" 
+                            : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                            @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                            ? "Attending"
+                            : "Attend")
+                          </button>
+                        }
+                      </div>
+                       }
                     </div>
                   </div>
+                </li>
+              }
+            </ul>
+        </div>
 
-                  <img class="img-thumbnail" style="height:100px;" src=@exhibit.ImageUrl>
-
-                  <div style="padding:10px">
+        @if (Model.UserId == Model.PhotographerId)
+        {
+        <div class="tab-pane" id="attendance" role="tabpanel" 
+          aria-labelledby="attendance-tab">
+          <ul id = "exhibits" class="exhibits mt-4">
+           @foreach (var exhibit in Model.AttendingExhibits)
+           {
+             <li>
+               <div style="display:flex">
+                 <div class="date">
+                   <div class="month">
+                     @exhibit.DateTime.ToString("MMM")
+                   </div>
+                   <div class="day">
+                     @exhibit.DateTime.ToString("d ")
+                   </div>
+                 </div>
+                 <img class="img-thumbnail mx-2" style="height:100px;" src=@exhibit.ImageUrl>
+                 <div>
                     <div>
                       <b>@exhibit.Location</b>
                     </div>
                     <div>
-                      @exhibit.Genre.Name
+                      <a href="@Url.Action("Index", "Users", new { photographerId =
+                        exhibit.Photographer.Id })">
+                        @exhibit.Photographer.Name
+                      </a>
                     </div>
-                    @if (Model.UserId == Model.PhotographerId)
-                    {
-                      <div class="actions">
-                        <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
-                          Edit
-                        </a>
-                        <a href="#" class="js-cancel-exhibit"
-                          data-exhibit-id="@exhibit.Id">
-                          Cancel
-                        </a>
-                      </div>
-                     }
-
                     <div>
-                      @if (Model.ShowActions && !exhibit.IsCanceled)
+                      @if (exhibit.IsCanceled)
                       {
-                        <button
-                          data-exhibit-id="@exhibit.Id"
-                          class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                          ? "btn-outline-info" 
-                          : "btn-outline-secondary") btn-sm js-toggle-attendance">
-                          @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                          ? "Attending"
-                          : "Attend")
-                        </button>
+                        <span class="label label-warning">Canceled</span>
+                      }
+                     @if (Model.ShowActions && !exhibit.IsCanceled)
+                     {
+                       <button
+                         data-exhibit-id="@exhibit.Id"
+                         class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                         ? "btn-outline-info" 
+                         : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                         @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                         ? "Attending"
+                         : "Attend")
+                       </button>
                       }
                     </div>
-
-                  </div>
-
-                </div>
-              </li>
+                 </div>
+               </div>
+             </li>
             }
           </ul>
-      </div>
+        </div>
+        }
 
-      <div class="tab-pane" id="followers" role="tabpanel"
-        aria-labelledby="followers-tab">
-
-        <ul class="list uk-list uk-list-striped">
-        @foreach (var photographer in Model.Followers)
-        {
-          <li>
-            <table class="table">
-                <tr>
-                  <td>
-                      <gravatar image-size=70 default-image="Identicon"
-                        email-address="@photographer.Email"></gravatar>
-                  </td>
-                  <td style="padding-left:10px">
-                    <p class="name">
-
-                      <a href="@Url.Action("Index", "Users", 
-                        new { photographerId =
-                      photographer.Id })">
-                      @photographer.Name
-                    </a> 
-
-                  </td>
-                </tr>
-            </table>
+        <div class="tab-pane" id="followers" role="tabpanel">
+          <ul class="mt-4" style="list-style-type:none;">
+          @foreach (var photographer in Model.Followers)
+          {
+          <li class="mb-3">
+              <span class=pr-2>
+              @if (String.IsNullOrEmpty(photographer.ImageUrl))
+              {
+                  <gravatar image-size=70 default-image="Identicon"
+                    email-address="@photographer.Email"></gravatar>
+              }
+              else
+              {
+                  <img src="@photographer.ImageUrl" style="height:70px"/>
+              }
+               </span>
+              <span class=pl-2>
+              <a href="@Url.Action("Index", "Users", new { photographerId =photographer.Id })">
+              @photographer.Name
+              </a> 
+              </span>
           </li>
-         }
-        </ul>
+          }
+          </ul>
+        </div>
+
+        <div class="tab-pane" id="following" role="tabpanel">
+          <ul class="mt-4" style="list-style-type:none;">
+          @foreach (var photographer in Model.Following)
+          {
+          <li class="mb-3">
+              <span class=pr-2>
+              @if (String.IsNullOrEmpty(photographer.ImageUrl))
+              {
+                  <gravatar image-size=70 default-image="Identicon"
+                    email-address="@photographer.Email"></gravatar>
+              }
+              else
+              {
+                  <img src="@photographer.ImageUrl" style="height:70px"/>
+              }
+               </span>
+              <span class=pl-2>
+              <a href="@Url.Action("Index", "Users", new { photographerId =photographer.Id })">
+              @photographer.Name
+              </a> 
+              </span>
+          </li>
+          }
+          </ul>
+        </div>
+
       </div>
 
-      <div class="tab-pane" id="followers" role="tabpanel"
-        aria-labelledby="followers-tab">
-       ...
-      </div>
-
-    </div>
   </div>
 
-    <div class="col order-1">
-      <gravatar image-size=402 default-image="Identicon"
-        email-address="@Model.PhotographerEmail"></gravatar>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        Update Profile Photo
-      </button>
+    <div class="col order-1 mb-3 text-center">
 
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
+      @if (String.IsNullOrEmpty(Model.ImageUrl))
+      {
+          <gravatar image-size=400 default-image="Identicon"
+            email-address="@Model.PhotographerEmail"></gravatar>
+      }
+      else
+      {
+          <img src="@Model.ImageUrl" style="width:400px"/>
+      }
 
-              <div class="col-lg-6 col-sm-12">
-                <br>
-                <img id="target" class="img-thumbnail" src="http://placehold.it/500x300" alt="your image" />
+      @if (Model.UserId == Model.PhotographerId)
+      {
+        <div class="mt-4 mb-3">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          Update Profile Photo
+        </button>
+        </div>
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content container-fluid">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Please Enter
+                Photo URL</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
+              <div class="modal-body container-fluid text-center">
 
-              <div class="col-lg-6 col-sm-12 push-sm-12">
-              <form asp-controller="Users" asp-action="Update" method="post"
-                role="form" novalidate>
-                <div class="form-group">
-                  <label asp-for="ImageUrl"></label>
-                  <input for="Image" asp-for="ImageUrl" type="url" class="form-control imgInp" placeholder =
-                  "http://" required>
-                  <span asp-validation-for="ImageUrl" class="text-danger"></span>
-                  <div class="invalid-feedback">Please upload and image!</div>
+                <div>
+                  <img id="target" class="img-thumbnail my-2"
+                  src="http://placehold.it/200" alt="your image" />
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-              </form>
-              </div>
 
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+                <form asp-controller="Users" asp-action="Update" method="post"
+                  role="form" class="text-left my-2" novalidate>
+                  <div class="form-group">
+                    <label asp-for="ImageUrl"></label>
+                    <input for="Image" asp-for="ImageUrl" type="url" class="form-control imgInp" placeholder =
+                    "http://" required>
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    <div class="invalid-feedback">Please upload and image!</div>
+                  </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <div>
+                </form>
+
+              </div>
             </div>
           </div>
         </div>
+      }
+      else
+      {
+      <div class="mt-4 mb-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+          if (Model.IsFollowing)
+          {
+            <button class="btn btn-outline-info btn-sm js-toggle-follow"
+                data-user-id="@Model.PhotographerId">Following</button>
+          }
+          else
+          {
+            <button class="btn btn-outline-secondary btn-sm js-toggle-follow"
+                data-user-id="@Model.PhotographerId">Follow</button>
+          }
+        }
       </div>
+      }
+
     </div>
 
   </div>
-
 </section>
 
 

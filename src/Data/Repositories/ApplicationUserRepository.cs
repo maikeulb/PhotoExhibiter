@@ -20,6 +20,14 @@ namespace PhotoExhibiter.Data.Repositories
                 .ToList ();
         }
 
+        public IEnumerable<ApplicationUser> GetPhotographersFollowing (string userId)
+        {
+            return _context.Followings
+                .Where (f => f.FolloweeId == userId)
+                .Select (f => f.Follower)
+                .ToList ();
+        }
+
         public string GetPhotographerEmailById (string userId)
         {
             return _context.Users

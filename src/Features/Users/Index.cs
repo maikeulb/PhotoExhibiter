@@ -32,9 +32,10 @@ namespace PhotoExhibiter.Features.Users
             public bool ShowActions { get; set; }
             public bool IsFollowing { get; set; }
             public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
-            public IEnumerable<Exhibit> MyUpcomingExhibits { get; set; }
+            public IEnumerable<Exhibit> AttendingExhibits { get; set; }
             public IEnumerable<Attendance> Attendances {get; set;}
             public IEnumerable<ApplicationUser> Followers {get; set; }
+            public IEnumerable<ApplicationUser> Following {get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Model>
@@ -58,25 +59,31 @@ namespace PhotoExhibiter.Features.Users
 
             public Model Handle (Query message)
             {
-                var upcomingExhibits = _exhibitRepository.GetUpcomingExhibitsByPhotographer (message.PhotographerId);
-                var myUpcomingExhibits = _exhibitRepository.GetUpcomingExhibitsByPhotographer (message.PhotographerId);
                 var attendances = _attendanceRepository.GetAllAttendances();
                 var photographerEmail = _applicationUserRepository.GetPhotographerEmailById (message.PhotographerId);
+                var photographer = _applicationUserRepository.GetUserById (message.PhotographerId);
+
                 var followers = _applicationUserRepository.GetPhotographersFollowedBy (message.PhotographerId);
+                var following = _applicationUserRepository.GetPhotographersFollowing (message.PhotographerId);
+
+                var upcomingExhibits = _exhibitRepository.GetUpcomingExhibitsByPhotographer (message.PhotographerId);
+                var attendingExhibits = _exhibitRepository.GetExhibitsUserAttending (message.PhotographerId);
+
                 var isFollowing = _followingRepository.GetFollowing(message.UserId, message.PhotographerId) != null;
 
                 var exhibits = new Model
                 {
                     PhotographerId = message.PhotographerId,
                     PhotographerName = message.PhotographerName,
+                    PhotographerEmail = photographerEmail,
                     UserId = message.UserId,
                     ShowActions = message.ShowActions,
-                    ImageUrl = message.ImageUrl,
-                    PhotographerEmail = photographerEmail,
+                    ImageUrl = photographer.ImageUrl,
                     UpcomingExhibits = upcomingExhibits,
-                    MyUpcomingExhibits = myUpcomingExhibits,
+                    AttendingExhibits = attendingExhibits,
                     Attendances = attendances,
                     Followers = followers,
+                    Following = following,
                     IsFollowing = isFollowing,
                     Heading = "[Users] Exhibits"
                 };

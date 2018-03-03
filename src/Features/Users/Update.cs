@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Features;
 using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Entities;
@@ -21,10 +22,13 @@ namespace PhotoExhibiter.Features.Users
         public class CommandHandler : IRequestHandler<Command, Result>
         {
             private readonly IApplicationUserRepository _repository;
+            private readonly ILogger _logger;
 
-            public CommandHandler (IApplicationUserRepository repository)
+            public CommandHandler (IApplicationUserRepository repository,
+            ILogger<CommandHandler> logger)
             {
                 _repository = repository;
+                _logger = logger;
             }
 
             public Result Handle (Command message)
@@ -36,10 +40,12 @@ namespace PhotoExhibiter.Features.Users
 
                 var command = new Command
                 {
-                    ImageUrl = applicationUser.ImageUrl,
+                    ImageUrl = message.ImageUrl,
                 };
 
-                applicationUser.UpdateDetails (command);
+                _logger.LogInformation("command in Update object *********{}", command.ImageUrl);
+                _logger.LogInformation("command in Update object *********{}", message.ImageUrl);
+                applicationUser.ImageUrl = command.ImageUrl;
                 _repository.SaveAll ();
 
                 return Result.Ok (command);
