@@ -11,6 +11,7 @@ namespace PhotoExhibiter.Features.Users
         public class Query : IRequest<Model>
         {
             public string UserId { get; set; }
+            public string ImageUrl { get; set; }
             public string PhotographerId { get; set; }
             public string PhotographerName { get; set; }
             public bool ShowActions { get; set; }
@@ -26,6 +27,7 @@ namespace PhotoExhibiter.Features.Users
             public string PhotographerName {get; set; }
             public string PhotographerEmail {get; set; }
             public string Heading { get; set; }
+            public string ImageUrl { get; set; }
             public string SearchTerm { get; set; }
             public bool ShowActions { get; set; }
             public bool IsFollowing { get; set; }
@@ -69,6 +71,7 @@ namespace PhotoExhibiter.Features.Users
                     PhotographerName = message.PhotographerName,
                     UserId = message.UserId,
                     ShowActions = message.ShowActions,
+                    ImageUrl = message.ImageUrl,
                     PhotographerEmail = photographerEmail,
                     UpcomingExhibits = upcomingExhibits,
                     MyUpcomingExhibits = myUpcomingExhibits,

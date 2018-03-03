@@ -36,14 +36,7 @@ else
       <li class="nav-item">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
           role="tab" aria-controls="home" aria-selected="true">
-          @if (Model.UserId == Model.PhotographerId)
-          {
             <span>Upcoming Exhibits</span>
-          }
-          else
-          {
-            <span>My Upcoming Exhibits</span>
-          }
         </a>
       </li>
       <li class="nav-item">
@@ -157,6 +150,48 @@ else
     <div class="col order-1">
       <gravatar image-size=402 default-image="Identicon"
         email-address="@Model.PhotographerEmail"></gravatar>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Update Profile Photo
+      </button>
+
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="col-lg-6 col-sm-12">
+                <br>
+                <img id="target" class="img-thumbnail" src="http://placehold.it/500x300" alt="your image" />
+              </div>
+
+              <div class="col-lg-6 col-sm-12 push-sm-12">
+              <form asp-controller="Users" asp-action="Edit" method="post"
+                role="form" novalidate>
+                <div class="form-group">
+                  <label asp-for="ImageUrl"></label>
+                  <input for="Image" asp-for="ImageUrl" type="url" class="form-control imgInp" placeholder =
+                  "http://" required>
+                  <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                  <div class="invalid-feedback">Please upload and image!</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </form>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -179,6 +214,13 @@ else
 
 @section scripts
 {
+  <script>
+    $('.imgInp').on('change',
+      function () {
+         $('#target').prop('src', this.value);
+       });
+  </script>
+
   <script type="text/javascript" src="~/exhibits.js"></script>
   <script type="text/javascript" src="~/exhibitCancel.js"></script>
   <script type="text/javascript" src="~/exhibitDetails.js"></script>
