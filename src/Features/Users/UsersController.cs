@@ -35,6 +35,8 @@ namespace PhotoExhibiter.Features.Users
         public async Task<IActionResult> Index (Index.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
+            if (query.PhotographerId == null)
+              query.PhotographerId = query.UserId;
             query.ShowActions = _signInManager.IsSignedIn (User);
             var photographerProfile = await _userManager.FindByIdAsync (query.PhotographerId);
             query.PhotographerName = photographerProfile.Name;

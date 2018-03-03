@@ -2,7 +2,6 @@
 @model Followees.Model
 
 <h2 class="text-center voffset2">@Model.Heading</h2>
-
 <section class="container">
   <ul class="exhibits voffset4">
     @foreach (var photographer in Model.Photographers)
@@ -14,7 +13,6 @@
     }
   </ul>
 </section>
-
 @section search
 {
 <form asp-controller="Exhibits" asp-action="Search">

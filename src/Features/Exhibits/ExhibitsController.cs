@@ -37,7 +37,6 @@ namespace PhotoExhibiter.Features.Exhibits
         {
             query.UserId = _userManager.GetUserId (User);
             query.ShowActions = _signInManager.IsSignedIn (User);
-
             var model = await _mediator.Send (query);
 
             return View (model);
@@ -58,6 +57,7 @@ namespace PhotoExhibiter.Features.Exhibits
             query.UserId = _userManager.GetUserId (User);
             query.ShowActions = _signInManager.IsSignedIn (User);
             var model = await _mediator.Send (query);
+
             return View (model);
         }
 

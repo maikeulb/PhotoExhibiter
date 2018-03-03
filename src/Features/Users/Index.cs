@@ -57,7 +57,6 @@ namespace PhotoExhibiter.Features.Users
                 var exhibits = new Model
                 {
                     PhotographerId = message.PhotographerId,
-
                     UserId = message.UserId,
                     PhotographerName = message.PhotographerName,
                     UpcomingExhibits = upcomingExhibits,
