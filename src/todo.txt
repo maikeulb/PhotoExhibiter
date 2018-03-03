@@ -1,7 +1,14 @@
 ***
--async all the way
-***
 -add admin
 ***
 - build  user profile features
 - finish cqrs of api controller
+- pagination
+->user route;
+
+-user will show
+- exhibits
+- followers
+- user profile image
+- gravatar
+-social authentication

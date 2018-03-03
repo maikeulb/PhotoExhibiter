@@ -27,67 +27,78 @@ else
     }
   </p>
 }
-
 <section class="container">
-  <ul id = "exhibits" class="exhibits voffset4">
-    @foreach (var exhibit in Model.UpcomingExhibits)
-    {
-      <li>
-        <div style="display:flex">
+  <div class="row">
 
-          <div class="date">
-            <div class="month">
-              @exhibit.DateTime.ToString("MMM")
-            </div>
-            <div class="day">
-                @exhibit.DateTime.ToString("d ")
-            </div>
-          </div>
+    <div class="col order-2">
+      <ul id = "exhibits" class="exhibits voffset4">
+        @foreach (var exhibit in Model.UpcomingExhibits)
+        {
+          <li>
+            <div style="display:flex">
 
-          <img class="img-thumbnail" style="height:100px;" src=@exhibit.ImageUrl>
-
-          <div style="padding:10px">
-            <div>
-              <b>@exhibit.Location</b>
-            </div>
-            <div>
-              @exhibit.Genre.Name
-            </div>
-            @if (Model.UserId == Model.PhotographerId)
-            {
-              <div class="actions">
-                <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
-                  Edit
-                </a>
-                <a href="#" class="js-cancel-exhibit"
-                  data-exhibit-id="@exhibit.Id">
-                  Cancel
-                </a>
+              <div class="date">
+                <div class="month">
+                  @exhibit.DateTime.ToString("MMM")
+                </div>
+                <div class="day">
+                    @exhibit.DateTime.ToString("d ")
+                </div>
               </div>
-             }
 
-            <div>
-              @if (Model.ShowActions && !exhibit.IsCanceled)
-              {
-                <button
-                  data-exhibit-id="@exhibit.Id"
-                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                  ? "btn-outline-info" 
-                  : "btn-outline-secondary") btn-sm js-toggle-attendance">
-                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                  ? "Attending"
-                  : "Attend")
-                </button>
-              }
+              <img class="img-thumbnail" style="height:100px;" src=@exhibit.ImageUrl>
+
+              <div style="padding:10px">
+                <div>
+                  <b>@exhibit.Location</b>
+                </div>
+                <div>
+                  @exhibit.Genre.Name
+                </div>
+                @if (Model.UserId == Model.PhotographerId)
+                {
+                  <div class="actions">
+                    <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
+                      Edit
+                    </a>
+                    <a href="#" class="js-cancel-exhibit"
+                      data-exhibit-id="@exhibit.Id">
+                      Cancel
+                    </a>
+                  </div>
+                 }
+
+                <div>
+                  @if (Model.ShowActions && !exhibit.IsCanceled)
+                  {
+                    <button
+                      data-exhibit-id="@exhibit.Id"
+                      class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                      ? "btn-outline-info" 
+                      : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                      @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                      ? "Attending"
+                      : "Attend")
+                    </button>
+                  }
+                </div>
+
+              </div>
+
             </div>
+          </li>
+        }
+      </ul>
+    </div>
 
-          </div>
+    <div class="col order-1">
+      <gravatar image-size=402 default-image="Identicon" email-address="awesomeness@awesome.net"></gravatar>
+    </div>
 
-        </div>
-      </li>
-    }
-  </ul>
+  </div>
+
 </section>
+
 
 @section search
 {
