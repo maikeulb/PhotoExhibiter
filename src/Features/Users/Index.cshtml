@@ -60,7 +60,8 @@ else
     </ul>
 
     <div class="tab-content">
-      <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div class="tab-pane active" id="home" role="tabpanel" 
+        aria-labelledby="home-tab">
           <ul id = "exhibits" class="exhibits voffset4">
             @foreach (var exhibit in Model.UpcomingExhibits)
             {
@@ -120,21 +121,86 @@ else
             }
           </ul>
       </div>
-@if (Model.UserId == Model.PhotographerId)
-{
-      <div class="tab-pane" id="mine" role="tabpanel"
-        aria-labelledby="mine-tab">
-       ...
+
+      @if (Model.UserId == Model.PhotographerId)
+      {
+        <div class="tab-pane" id="mine" role="tabpanel"
+          aria-labelledby="mine-tab">
+          <ul id = "exhibits" class="exhibits voffset4">
+           @foreach (var exhibit in Model.MyUpcomingExhibits)
+           {
+             <li>
+               <div style="display:flex">
+                 <div class="date">
+                   <div class="month">
+                     @exhibit.DateTime.ToString("MMM")
+                   </div>
+                   <div class="day">
+                     @exhibit.DateTime.ToString("d ")
+                   </div>
+                 </div>
+                 <img class="img-thumbnail" style="height:100px;" src=@exhibit.ImageUrl>
+                 <div style="padding:10px">
+                    <div>
+                      <b>@exhibit.Location</b>
+                    </div>
+                    <div>
+                      <a href="@Url.Action("Index", "Users", new { photographerId =
+                        exhibit.Photographer.Id })">
+                        @exhibit.Photographer.Name
+                      </a>
+                    </div>
+                    <div>
+                      @if (exhibit.IsCanceled)
+                      {
+                        <span class="label label-warning">Canceled</span>
+                      }
+                     @if (Model.ShowActions && !exhibit.IsCanceled)
+                     {
+                       <button
+                         data-exhibit-id="@exhibit.Id"
+                         class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                         ? "btn-outline-info" 
+                         : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                         @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                         ? "Attending"
+                         : "Attend")
+                       </button>
+                      }
+                    </div>
+                 </div>
+               </div>
+             </li>
+           }
+          </ul>
+        </div>
+      }
+
+      <div class="tab-pane" id="followers" role="tabpanel"
+        aria-labelledby="followers-tab">
+
+        <ul class="exhibits voffset4">
+          @foreach (var photographer in Model.Followers)
+          {
+            <a href="@Url.Action("Index", "Users", new { photographerId =
+              photographer.Id })">
+              @photographer.Name
+            </a> 
+          }
+        </ul>
+
       </div>
-}
+
       <div class="tab-pane" id="followers" role="tabpanel"
         aria-labelledby="followers-tab">
        ...
       </div>
+
       <div class="tab-pane" id="followings" role="tabpanel"
         aria-labelledby="followings-tab">
        ...
       </div>
+
     </div>
   </div>
 

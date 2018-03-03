@@ -6,6 +6,9 @@
 -social authentication
 -add admin
 -add area element
+-get rid of exposed userids
+-check security
+-better way or make several db calls (cahce)
 
 *ADD Pagination -> profile page
 *ADD Admin -> profile page
