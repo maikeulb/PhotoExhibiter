@@ -1,6 +1,6 @@
 ﻿using PhotoExhibiter.Apis.Attendances;
 
-namespace PhotoExhibiter.Models.Entities
+namespace PhotoExhibiter.Entities
 {
     public class Attendance
     {

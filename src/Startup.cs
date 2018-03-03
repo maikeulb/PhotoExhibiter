@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PhotoExhibiter.Infra.App;
+using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Data.Context;
 using PhotoExhibiter.Data.Repositories;
-using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Entities;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter
 {

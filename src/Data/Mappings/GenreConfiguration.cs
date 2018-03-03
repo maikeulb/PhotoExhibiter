@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Entities;
 
 namespace PhotoExhibiter.Data.Mappings
 {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using PhotoExhibiter.Data.Context;
-using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Entities;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Data.Repositories
 {

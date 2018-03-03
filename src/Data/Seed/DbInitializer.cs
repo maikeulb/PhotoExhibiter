@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Entities;
 using PhotoExhibiter.Data.Context;
 using System.Threading.Tasks;
 

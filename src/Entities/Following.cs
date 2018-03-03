@@ -1,6 +1,6 @@
 ﻿using PhotoExhibiter.Apis.Followings;
 
-namespace PhotoExhibiter.Models.Entities
+namespace PhotoExhibiter.Entities
 {
     public class Following
     {

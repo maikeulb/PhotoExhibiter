@@ -1,6 +1,6 @@
 using CSharpFunctionalExtensions;
 using MediatR;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.Exhibits
 {

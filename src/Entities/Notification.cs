@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PhotoExhibiter.Models.Entities
+namespace PhotoExhibiter.Entities
 {
     public class Notification 
     {

@@ -4,9 +4,9 @@ using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
 using PhotoExhibiter.Features;
-using PhotoExhibiter.Infra.App;
-using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Infrastructure;
+using PhotoExhibiter.Entities;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Features.Exhibits
 {

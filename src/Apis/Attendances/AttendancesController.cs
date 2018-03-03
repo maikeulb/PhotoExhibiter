@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Entities;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.Attendances
 {

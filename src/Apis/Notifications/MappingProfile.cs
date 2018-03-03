@@ -1,5 +1,5 @@
 using AutoMapper;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Entities;
 
 namespace PhotoExhibiter.Apis.Notifications
 {

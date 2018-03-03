@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using PhotoExhibiter.Features.Exhibits;
 
-namespace PhotoExhibiter.Models.Entities
+namespace PhotoExhibiter.Entities
 {
     public class Exhibit
     {

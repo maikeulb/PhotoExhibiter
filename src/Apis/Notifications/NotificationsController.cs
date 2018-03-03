@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Apis.Attendances;
 using PhotoExhibiter.Apis.Notifications;
-using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Entities;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.Notifications
 {

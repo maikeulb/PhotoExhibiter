@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Features.Home;
 using PhotoExhibiter.Features.Account.AccountViewModels;
-using PhotoExhibiter.Infra.App;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Infrastructure;
+using PhotoExhibiter.Entities;
 
 namespace PhotoExhibiter.Features.Account
 {

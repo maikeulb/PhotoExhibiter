@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Entities;
 
-namespace PhotoExhibiter.Models.Interfaces
+namespace PhotoExhibiter.Entities.Interfaces
 {
     public interface IApplicationUserRepository
     {

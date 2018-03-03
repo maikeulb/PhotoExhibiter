@@ -9,7 +9,7 @@ using PhotoExhibiter.Data.Context;
 using PhotoExhibiter.Features;
 using PhotoExhibiter.Features.Account;
 using PhotoExhibiter.Features.Home;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Entities;
 
 namespace PhotoExhibiter.Features.ManageExhibits
 {

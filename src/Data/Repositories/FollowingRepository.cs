@@ -1,6 +1,6 @@
 using System.Linq;
-using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Entities;
+using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Data.Context;
 
 namespace PhotoExhibiter.Data.Repositories

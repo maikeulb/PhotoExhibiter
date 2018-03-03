@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Entities;
 using PhotoExhibiter.Features.Manage.ManageViewModels;
-using PhotoExhibiter.Infra.App;
+using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Data;
 
 namespace PhotoExhibiter.Features.Manage

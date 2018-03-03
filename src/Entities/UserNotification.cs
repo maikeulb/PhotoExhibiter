@@ -1,4 +1,4 @@
-﻿namespace PhotoExhibiter.Models.Entities
+﻿namespace PhotoExhibiter.Entities
 {
     public class UserNotification
     {

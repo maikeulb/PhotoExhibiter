@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PhotoExhibiter.Models.Entities;
+using PhotoExhibiter.Entities;
 using PhotoExhibiter.Data.Interfaces;
 using PhotoExhibiter.Data.Mappings;
 

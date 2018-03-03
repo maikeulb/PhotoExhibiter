@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using FluentValidation.Validators;
 
-namespace PhotoExhibiter.Infra.App
+namespace PhotoExhibiter.Infrastructure
 {
     public class ValidTimeValidator : PropertyValidator
     {

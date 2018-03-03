@@ -1,8 +1,8 @@
 using System.Linq;
 using CSharpFunctionalExtensions;
 using MediatR;
-using PhotoExhibiter.Models.Entities;
-using PhotoExhibiter.Models.Interfaces;
+using PhotoExhibiter.Entities;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.Notifications
 {
