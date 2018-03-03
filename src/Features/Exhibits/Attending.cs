@@ -47,8 +47,8 @@ namespace PhotoExhibiter.Features.Exhibits
                     UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
                     Heading = "Exhibits I'm Attending",
+                    UserId = message.UserId,
                     Attendances = attendances,
-                    UserId = message.UserId
                 };
 
                 return exhibits;

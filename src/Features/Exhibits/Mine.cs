@@ -17,14 +17,11 @@ namespace PhotoExhibiter.Features.Exhibits
 
         public class Model
         {
-            private readonly List<Attendance> _attendances = new List<Attendance> ();
-
-            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
             public bool ShowActions { get; set; }
             public string Heading { get; set; }
             public string SearchTerm { get; set; }
-
-            public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly ();
+            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
+            public IEnumerable<Attendance> Attendances  { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Model>

@@ -45,7 +45,9 @@ namespace PhotoExhibiter.Data.Repositories
         public IEnumerable<Exhibit> GetExhibitsUserAttending (string userId)
         {
             return _context.Attendances
-                .Where (a => a.AttendeeId == userId && a.Exhibit.DateTime > DateTime.Now)
+                .Where (a => 
+                        a.AttendeeId == userId && 
+                        a.Exhibit.DateTime > DateTime.Now)
                 .Select (a => a.Exhibit)
                 .Include (g => g.Photographer)
                 .Include (g => g.Genre)
