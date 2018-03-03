@@ -35,27 +35,21 @@ else
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-          role="tab" aria-controls="home" aria-selected="true">Upcoming
-          Exhibits</a>
+          role="tab" aria-controls="home" aria-selected="true">
+          @if (Model.UserId == Model.PhotographerId)
+          {
+            <span>Upcoming Exhibits</span>
+          }
+          else
+          {
+            <span>My Upcoming Exhibits</span>
+          }
+        </a>
       </li>
-
-@if (Model.UserId == Model.PhotographerId)
-{
-      <li class="nav-item">
-        <a class="nav-link" id="mine-tab" data-toggle="tab" href="#mine"
-          role="tab" aria-controls="profile" aria-selected="false">My Exhibits</a>
-      </li>
-}
-
       <li class="nav-item">
         <a class="nav-link" id="followers-tab" data-toggle="tab"
           href="#followers"
           role="tab" aria-controls="profile" aria-selected="false">Followers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="followings-tab" data-toggle="tab"
-          href="#followings"
-          role="tab" aria-controls="profile" aria-selected="false">Followings</a>
       </li>
     </ul>
 
@@ -122,82 +116,38 @@ else
           </ul>
       </div>
 
-      @if (Model.UserId == Model.PhotographerId)
-      {
-        <div class="tab-pane" id="mine" role="tabpanel"
-          aria-labelledby="mine-tab">
-          <ul id = "exhibits" class="exhibits voffset4">
-           @foreach (var exhibit in Model.MyUpcomingExhibits)
-           {
-             <li>
-               <div style="display:flex">
-                 <div class="date">
-                   <div class="month">
-                     @exhibit.DateTime.ToString("MMM")
-                   </div>
-                   <div class="day">
-                     @exhibit.DateTime.ToString("d ")
-                   </div>
-                 </div>
-                 <img class="img-thumbnail" style="height:100px;" src=@exhibit.ImageUrl>
-                 <div style="padding:10px">
-                    <div>
-                      <b>@exhibit.Location</b>
-                    </div>
-                    <div>
-                      <a href="@Url.Action("Index", "Users", new { photographerId =
-                        exhibit.Photographer.Id })">
-                        @exhibit.Photographer.Name
-                      </a>
-                    </div>
-                    <div>
-                      @if (exhibit.IsCanceled)
-                      {
-                        <span class="label label-warning">Canceled</span>
-                      }
-                     @if (Model.ShowActions && !exhibit.IsCanceled)
-                     {
-                       <button
-                         data-exhibit-id="@exhibit.Id"
-                         class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                         ? "btn-outline-info" 
-                         : "btn-outline-secondary") btn-sm js-toggle-attendance">
-                         @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                         ? "Attending"
-                         : "Attend")
-                       </button>
-                      }
-                    </div>
-                 </div>
-               </div>
-             </li>
-           }
-          </ul>
-        </div>
-      }
-
       <div class="tab-pane" id="followers" role="tabpanel"
         aria-labelledby="followers-tab">
 
-        <ul class="exhibits voffset4">
-          @foreach (var photographer in Model.Followers)
-          {
-            <a href="@Url.Action("Index", "Users", new { photographerId =
-              photographer.Id })">
-              @photographer.Name
-            </a> 
-          }
+        <ul class="list uk-list uk-list-striped">
+        @foreach (var photographer in Model.Followers)
+        {
+          <li>
+            <table class="table">
+                <tr>
+                  <td>
+                      <gravatar image-size=70 default-image="Identicon"
+                        email-address="@photographer.Email"></gravatar>
+                  </td>
+                  <td style="padding-left:10px">
+                    <p class="name">
+
+                      <a href="@Url.Action("Index", "Users", 
+                        new { photographerId =
+                      photographer.Id })">
+                      @photographer.Name
+                    </a> 
+
+                  </td>
+                </tr>
+            </table>
+          </li>
+         }
         </ul>
-
       </div>
 
       <div class="tab-pane" id="followers" role="tabpanel"
         aria-labelledby="followers-tab">
-       ...
-      </div>
-
-      <div class="tab-pane" id="followings" role="tabpanel"
-        aria-labelledby="followings-tab">
        ...
       </div>
 
@@ -206,7 +156,7 @@ else
 
     <div class="col order-1">
       <gravatar image-size=402 default-image="Identicon"
-        email-address="@User.Identity.Name"></gravatar>
+        email-address="@Model.PhotographerEmail"></gravatar>
     </div>
 
   </div>

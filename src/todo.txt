@@ -9,6 +9,7 @@
 -get rid of exposed userids
 -check security
 -better way or make several db calls (cahce)
+-Profile management, delete profile
 
 *ADD Pagination -> profile page
 *ADD Admin -> profile page

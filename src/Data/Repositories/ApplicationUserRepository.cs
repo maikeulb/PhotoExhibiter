@@ -20,6 +20,14 @@ namespace PhotoExhibiter.Data.Repositories
                 .ToList ();
         }
 
+        public string GetPhotographerEmailById (string userId)
+        {
+            return _context.Users
+                .Where (u => u.Id == userId)
+                .Select (u => u.Email)
+                .SingleOrDefault();
+        }
+
         public bool SaveAll () => _context.SaveChanges () > 0;
     }
 }

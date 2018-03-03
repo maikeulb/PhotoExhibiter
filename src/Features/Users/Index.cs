@@ -24,6 +24,7 @@ namespace PhotoExhibiter.Features.Users
             public string UserId {get; set; }
             public string PhotographerId {get; set; }
             public string PhotographerName {get; set; }
+            public string PhotographerEmail {get; set; }
             public string Heading { get; set; }
             public string SearchTerm { get; set; }
             public bool ShowActions { get; set; }
@@ -55,31 +56,22 @@ namespace PhotoExhibiter.Features.Users
 
             public Model Handle (Query message)
             {
-                var myUpcomingExhibits = _exhibitRepository.GetExhibitsUserAttending (message.UserId);
                 var upcomingExhibits = _exhibitRepository.GetUpcomingExhibitsByPhotographer (message.PhotographerId);
+                var myUpcomingExhibits = _exhibitRepository.GetUpcomingExhibitsByPhotographer (message.PhotographerId);
                 var attendances = _attendanceRepository.GetAllAttendances();
-
-              // query.PhotographerId = query.UserId; when photographerId ==
-              // null. This happens when it is the current user. THERFORE, for
-              // the current user, photoID == userID. There is always a userID
+                var photographerEmail = _applicationUserRepository.GetPhotographerEmailById (message.PhotographerId);
                 var followers = _applicationUserRepository.GetPhotographersFollowedBy (message.PhotographerId);
-                /* if (message.UserId == message.PhotographerId) */ 
-                /* { */
-                /* } */
-                /* else */ 
-                /* { */
-                    /* var followers = _applicationUserRepository.GetPhotographersFollowedBy (message.PhotographerId); */
-                /* } */
                 var isFollowing = _followingRepository.GetFollowing(message.UserId, message.PhotographerId) != null;
 
                 var exhibits = new Model
                 {
                     PhotographerId = message.PhotographerId,
-                    UserId = message.UserId,
                     PhotographerName = message.PhotographerName,
+                    UserId = message.UserId,
                     ShowActions = message.ShowActions,
-                    MyUpcomingExhibits = myUpcomingExhibits,
+                    PhotographerEmail = photographerEmail,
                     UpcomingExhibits = upcomingExhibits,
+                    MyUpcomingExhibits = myUpcomingExhibits,
                     Attendances = attendances,
                     Followers = followers,
                     IsFollowing = isFollowing,
