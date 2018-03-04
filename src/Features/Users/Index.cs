@@ -64,7 +64,6 @@ namespace PhotoExhibiter.Features.Users
             public Model Handle (Query message)
             {
                 var attendances = _attendanceRepository.GetAllAttendances();
-                /* var photographerEmail = _applicationUserRepository.GetPhotographerEmailById (message.PhotographerId); */
                 var photographer = _applicationUserRepository.GetUserById (message.PhotographerId);
 
                 var following = _applicationUserRepository.GetPhotographersFollowedBy (message.PhotographerId);

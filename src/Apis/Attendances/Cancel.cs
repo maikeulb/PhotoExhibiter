@@ -8,33 +8,34 @@ namespace PhotoExhibiter.Apis.Attendances
 {
     public class Cancel
     {
-        public class Command : IRequest<int>
+        public class Command : IRequest<Result<int>>
         {
             public string UserId { get; set; }
             public int ExhibitId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, int>
+        public class Handler : IRequestHandler<Command, Result<int>>
         {
-            private readonly IExhibitRepository _repository;
-            private readonly IAttendanceRepository _attendanceRepository;
+            private readonly IExhibitRepository _exhibitRepository;
 
-            public Handler (IExhibitRepository repository, IAttendanceRepository attendanceRepository)
+            public Handler (IExhibitRepository exhibitRepository)
             {
-                _repository = repository;
-                _attendanceRepository = attendanceRepository;
+                _exhibitRepository = exhibitRepository;
             }
 
-            public int Handle (Command message)
+            public Result<int> Handle (Command message)
             {
-                var exhibit = _repository.GetExhibit (message.ExhibitId);
+                var exhibit = _exhibitRepository.GetExhibit (message.ExhibitId);
+                if (exhibit == null)
+                    return Result.Fail<int> ("Exhibit does not exit");
                 var attendance = exhibit.Attendances.FirstOrDefault (a => a.AttendeeId == message.UserId);
+                if (attendance == null)
+                    return Result.Fail<int> ("Attendance does not exit");
 
                 exhibit.RemoveAttendance (attendance);
-                _repository.SaveAll ();
-                _attendanceRepository.SaveAll ();
+                _exhibitRepository.SaveAll ();
 
-                return message.ExhibitId;
+                return Result.Ok(message.ExhibitId);
             }
         }
     }

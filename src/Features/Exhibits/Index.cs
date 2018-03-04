@@ -42,7 +42,7 @@ namespace PhotoExhibiter.Features.Exhibits
                 var upcomingExhibits = _repository.GetUpcomingExhibits(message.SearchTerm);
                 var attendances = _attendanceRepository.GetAllAttendances();
 
-                var exhibits = new Model
+                var model = new Model
                 {
                     UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
@@ -51,7 +51,7 @@ namespace PhotoExhibiter.Features.Exhibits
                     Heading = "SEARCH RESULTS"
                 };
 
-                return exhibits;
+                return model;
             }
         }
     }

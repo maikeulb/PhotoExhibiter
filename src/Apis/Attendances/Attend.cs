@@ -16,36 +16,25 @@ namespace PhotoExhibiter.Apis.Attendances
 
         public class Handler : IRequestHandler<Command, Result>
         {
-            private readonly IExhibitRepository _repository;
-            private readonly IAttendanceRepository _attendanceRepository;
+            private readonly IExhibitRepository _exhibitRepository;
 
-            public Handler (IExhibitRepository repository, IAttendanceRepository attendanceRepository)
+            public Handler (IExhibitRepository exhibitRepository)
             {
-                _repository = repository;
-                _attendanceRepository = attendanceRepository;
+                _exhibitRepository = exhibitRepository;
             }
 
             public Result Handle (Command message)
             {
-                /* var attendance = _repository.GetAttendance (message.ExhibitId, message.UserId); */
-                /* if (attendance != null) */
-                /* return Result.Fail<Command> ("Attendance already exists."); */
-                /* var newAttendance = Attendance.Create(message); */
-                /* _repository.AddAttendance (newAttendance); */
+                var exhibit = _exhibitRepository.GetExhibit (message.ExhibitId);
+                if (exhibit == null)
+                    return Result.Fail<int> ("Exhibit does not exit");
 
-                var exhibit = _repository.GetExhibit (message.ExhibitId);
-                /* var attendance = _attendancerepository.GetAttendance (message.ExhibitId, message.UserId); */
-                /* if (attendance != null) */
-                /* return Result.Fail<Command> ("Attendance already exists."); */
-
-                /* var contains = exhibit.Attendances.Any(a => a.AttendeeId == message.UserId); */
                 var contains = exhibit.Attendances.Any (a => a.AttendeeId == message.UserId);
                 if (contains == true)
                     return Result.Fail<Command> ("Attendance already exists.");
 
                 exhibit.AddAttendance (Attendance.Create (message));
-
-                _repository.SaveAll ();
+                _exhibitRepository.SaveAll ();
 
                 return Result.Ok ();
             }

@@ -2,9 +2,6 @@
 - take advantage of user manager for getting userIds (applicationuser dbcontext is maybe insufficent)
 
 -check security
--better way or make several db calls (cahce)
--Profile management, delete profile
--remove dependency on domain classes in views
-
-*ADD Pagination -> profile page
+**Profile management, delete profile
+**clean up seeder
 *ADD Admin -> profile page

@@ -39,9 +39,9 @@ namespace PhotoExhibiter.Features.Users
               query.PhotographerId = query.UserId;
             query.ShowActions = _signInManager.IsSignedIn (User);
 
-            var model = await _mediator.Send (query);
+            var modelOrError = await _mediator.Send (query);
 
-            return View (model);
+            return View (modelOrError);
         }
 
         [HttpPost]

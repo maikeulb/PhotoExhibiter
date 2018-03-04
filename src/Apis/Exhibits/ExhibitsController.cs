@@ -37,11 +37,9 @@ namespace PhotoExhibiter.Apis.Exhibits
 
             var result = await _mediator.Send (command);
 
-            return Ok ();
-
-            /* return result.IsSuccess ? */
-            /* (IActionResult) Ok () : */
-            /* (IActionResult) BadRequest (result.Error); */
+            return result.IsSuccess ?
+            (IActionResult) Ok () :
+            (IActionResult) BadRequest (result.Error);
         }
     }
 }

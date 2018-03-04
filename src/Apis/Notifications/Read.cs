@@ -22,9 +22,6 @@ namespace PhotoExhibiter.Apis.Notifications
             public Result Handle (Command message)
             {
                 var notifications = _repository.GetUserNotificationsFor (message.UserId);
-                /* if (notifications != null) */
-                    /* return Result.Fail<Command> ("Notification does not exists."); */
-
                 notifications.ToList ().ForEach (n => n.Read ()); //event
                 _repository.SaveAll ();
 

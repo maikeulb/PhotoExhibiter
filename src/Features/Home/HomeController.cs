@@ -37,17 +37,6 @@ namespace PhotoExhibiter.Features.Home
             return View (model);
         }
 
-        /* [Authorize] */
-        /* public async Task<IActionResult> Attending (Index.Query query) */
-        /* { */
-        /*     query.UserId = _userManager.GetUserId (User); */
-        /*     query.ShowActions = _signInManager.IsSignedIn (User); */
-
-        /*     var model = await _mediator.Send (query); */
-
-        /*     return View (model); */
-        /* } */
-
         public IActionResult Error ()
         {
             return View (new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -46,9 +46,11 @@ namespace PhotoExhibiter.Apis.Attendances
         {
             command.UserId = _userManager.GetUserId (User);
 
-            var response = await _mediator.Send (command);
+            var result = await _mediator.Send (command);
 
-            return Ok (response);
+            return result.IsSuccess ?
+                (IActionResult) Ok (result) :
+                (IActionResult) BadRequest (result.Error);
         }
     }
 }

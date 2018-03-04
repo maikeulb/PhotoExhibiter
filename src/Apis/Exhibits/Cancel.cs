@@ -21,12 +21,12 @@ namespace PhotoExhibiter.Apis.Exhibits
             public Result Handle (Command message)
             {
                 var exhibit = _repository.GetExhibitWithAttendees (message.Id);
-                /* if (exhibit == null) */
-                /* return Result.Fail<Command> ("Exhibit does not exist"); */
-                /* if (exhibit.IsCanceled) */
-                /* return Result.Fail<Command> ("Exhibit is cancelled."); */
-                /* if (exhibit.PhotographerId != message.UserId) */
-                /* return Result.Fail<Command> ("Unauthorized"); */
+                if (exhibit == null)
+                  return Result.Fail<Command> ("Exhibit does not exist");
+                if (exhibit.IsCanceled)
+                  return Result.Fail<Command> ("Exhibit is cancelled.");
+                if (exhibit.PhotographerId != message.UserId)
+                  return Result.Fail<Command> ("Unauthorized");
 
                 exhibit.Cancel ();
                 _repository.SaveAll ();
