@@ -27,10 +27,15 @@ namespace PhotoExhibiter
                var services = scope.ServiceProvider;
                try
                {
-                   var context = services.GetRequiredService<ApplicationDbContext>();
+                   var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
+                   var applicationDbInitializerLogger = services.GetRequiredService<ILogger<ApplicationDbInitializer>>();
+                   ApplicationDbInitializer.Initialize(applicationDbContext, applicationDbInitializerLogger).Wait();
+
                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                   var dbInitializerLogger = services.GetRequiredService<ILogger<DbInitializer>>();
-                   DbInitializer.Initialize(context, userManager, dbInitializerLogger).Wait();
+                   var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                   var configuration = services.GetRequiredService<IConfiguration>();
+                   var identityDbInitializerLogger = services.GetRequiredService<ILogger<IdentityDbInitializer>>();
+                   IdentityDbInitializer.Initialize(userManager, roleManager, configuration).Wait();
                }
                catch (Exception ex)
                {
