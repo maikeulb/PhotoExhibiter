@@ -1,4 +1,6 @@
 @using PhotoExhibiter.Features.Users
+@using X.PagedList.Mvc.Core; 
+@using X.PagedList;
 @model Index.Model
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -60,6 +62,10 @@
       </li>
     }
   </ul>
+  <nav class="d-flex justify-content-center">
+    @Html.PagedListPager( (IPagedList)Model.UpcomingExhibits, upcomingPage =>
+    Url.Action("Index", new { UpcomingPage = upcomingPage }) )
+  </nav>
 }
 else
 {

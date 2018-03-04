@@ -32,16 +32,6 @@ namespace PhotoExhibiter.Data.Repositories
                 .ToList ();
         }
 
-        /* public void Add (Attendance attendance) */
-        /* { */
-        /*     _context.Attendances.Add (attendance); */
-        /* } */
-
-        /* public void Remove (Attendance attendance) */
-        /* { */
-        /*     _context.Attendances.Remove (attendance); */
-        /* } */
-
         public bool SaveAll () => _context.SaveChanges () > 0;
     }
 }

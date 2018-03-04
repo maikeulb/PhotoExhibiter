@@ -1,4 +1,7 @@
 @using PhotoExhibiter.Features.Users
+@using X.PagedList.Mvc.Core; 
+@using X.PagedList;
+<link href="~/css/PagedList.css" rel="stylesheet" type="text/css" />
 @model Index.Model
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -10,14 +13,12 @@
 else
 {
   <h2 class="text-center mt-3 mb-3">@Model.PhotographerName's Profile</h2>
-
 }
 
 <section class="container mt-4">
   <div class="row ">
 
     <div class="col order-2 mb-3">
-
       <ul class="nav nav-pills" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="upcoming-tab" data-toggle="tab"
@@ -27,58 +28,51 @@ else
         @if (Model.UserId == Model.PhotographerId)
         {
           <li class="nav-item">
-            <a class="nav-link" id="attendances-tab" data-toggle="tab"
-              href="#attendances"
+            <a class="nav-link" id="attending-tab" data-toggle="tab"
+              href="#attending"
               role="tab" aria-controls="profile" aria-selected="false">Attending Exhibits</a>
           </li>
         }
-
         <li class="nav-item">
           <a class="nav-link" id="followers-tab" data-toggle="tab"
             href="#followers"
             role="tab" aria-controls="profile" aria-selected="false">Followers</a>
         </li>
-
         <li class="nav-item">
           <a class="nav-link" id="following-tab" data-toggle="tab"
             href="#following"
             role="tab" aria-controls="profile" aria-selected="false">Following</a>
         </li>
       </ul>
-
       <div class="tab-content">
         <div class="tab-pane active" id="upcoming" role="tabpanel">
           @await Html.PartialAsync("_Upcoming")
         </div>
-
         @if (Model.UserId == Model.PhotographerId)
         {
-          <div class="tab-pane" id="attendances" role="tabpanel">
-            @await Html.PartialAsync("_Attendances")
+          <div class="tab-pane" id="attending" role="tabpanel">
+            @await Html.PartialAsync("_Attending")
           </div>
         }
-
         <div class="tab-pane" id="followers" role="tabpanel">
           @await Html.PartialAsync("_Followers")
         </div>
-
         <div class="tab-pane" id="following" role="tabpanel">
           @await Html.PartialAsync("_Followings")
         </div>
       </div>
-
   </div>
 
     <div class="col order-1 mb-3 text-center">
 
       @if (String.IsNullOrEmpty(Model.ImageUrl))
       {
-          <gravatar image-size=400 default-image="Identicon"
-            email-address="@Model.PhotographerEmail"></gravatar>
+        <gravatar image-size=400 default-image="Identicon"
+          email-address="@Model.PhotographerEmail"></gravatar>
       }
       else
       {
-          <img src="@Model.ImageUrl" style="width:400px"/>
+        <img src="@Model.ImageUrl" style="width:400px"/>
       }
       @if (Model.UserId == Model.PhotographerId)
       {
@@ -108,9 +102,7 @@ else
         }
       </div>
       }
-
     </div>
-
   </div>
 </section>
 

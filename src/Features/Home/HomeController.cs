@@ -37,31 +37,16 @@ namespace PhotoExhibiter.Features.Home
             return View (model);
         }
 
-        [Authorize]
-        public async Task<IActionResult> Attending (Index.Query query)
-        {
-            query.UserId = _userManager.GetUserId (User);
-            query.ShowActions = _signInManager.IsSignedIn (User);
+        /* [Authorize] */
+        /* public async Task<IActionResult> Attending (Index.Query query) */
+        /* { */
+        /*     query.UserId = _userManager.GetUserId (User); */
+        /*     query.ShowActions = _signInManager.IsSignedIn (User); */
 
-            var model = await _mediator.Send (query);
+        /*     var model = await _mediator.Send (query); */
 
-            return View (model);
-        }
-
-
-        public IActionResult About ()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View ();
-        }
-
-        public IActionResult Contact ()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View ();
-        }
+        /*     return View (model); */
+        /* } */
 
         public IActionResult Error ()
         {

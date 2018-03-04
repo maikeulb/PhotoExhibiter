@@ -3,6 +3,7 @@ using System.Linq;
 using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
+using X.PagedList;
 
 namespace PhotoExhibiter.Features.Home
 {
@@ -10,51 +11,56 @@ namespace PhotoExhibiter.Features.Home
     {
         public class Query : IRequest<Model>
         {
-            public string SearchTerm { get; set; }
             public string UserId { get; set; }
             public string PhotographerId { get; set; }
+            public string SearchTerm { get; set; }
             public bool ShowActions { get; set; }
+            public int? Page { get; set; }
         }
 
         public class Model
         {
-            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
-            public bool ShowActions { get; set; }
             public string Heading { get; set; }
             public string SearchTerm { get; set; }
             public string UserId {get; set; }
             public string PhotographerId {get; set; }
+            public bool ShowActions { get; set; }
             public IEnumerable<Attendance> Attendances {get; set; } 
+
+            public IPagedList<Exhibit> UpcomingExhibits { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Model>
         {
-            private readonly IExhibitRepository _repository;
+            private readonly IExhibitRepository _exhibitRepository;
             private readonly IAttendanceRepository _attendanceRepository;
 
-            public Handler(IExhibitRepository repository,
+            public Handler(IExhibitRepository exhibitRepository,
                            IAttendanceRepository attendanceRepository) 
             {
-                _repository = repository;
+                _exhibitRepository = exhibitRepository;
                 _attendanceRepository = attendanceRepository;
             }
 
             public Model Handle (Query message)
             {
-                var upcomingExhibits = _repository.GetUpcomingExhibits(message.SearchTerm);
+                var upcomingExhibits = _exhibitRepository.GetUpcomingExhibits(message.SearchTerm);
                 var attendances = _attendanceRepository.GetAllAttendances();
 
-                var exhibits = new Model
+                var model = new Model
                 {
-                    UpcomingExhibits = upcomingExhibits,
                     ShowActions = message.ShowActions,
-                    Heading = "NYC Photography Exhibits",
-                    Attendances = attendances,
+                    UserId = message.UserId,
                     PhotographerId = message.PhotographerId,
-                    UserId = message.UserId
+                    Attendances = attendances,
+                    Heading = "NYC Photography Exhibits"
                 };
 
-                return exhibits;
+                int pageSize = 8;
+                int pageNumber = (message.Page ?? 1);
+                model.UpcomingExhibits = upcomingExhibits.ToPagedList(pageNumber, pageSize);
+
+                return model;
             }
         }
     }

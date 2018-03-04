@@ -43,8 +43,6 @@ namespace PhotoExhibiter.Features.Users
                     ImageUrl = message.ImageUrl,
                 };
 
-                _logger.LogInformation("command in Update object *********{}", command.ImageUrl);
-                _logger.LogInformation("command in Update object *********{}", message.ImageUrl);
                 applicationUser.ImageUrl = command.ImageUrl;
                 _repository.SaveAll ();
 

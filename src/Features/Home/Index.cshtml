@@ -1,8 +1,10 @@
 @using PhotoExhibiter.Features.Home
 @using Microsoft.AspNetCore.Identity
 @using System.Security.Claims 
-@inject UserManager<ApplicationUser> UserManager
+@using X.PagedList.Mvc.Core; 
+@using X.PagedList;
 @model Index.Model
+@inject UserManager<ApplicationUser> UserManager
 
 <h1 class="text-center mt-4">@Model.Heading</h1>
 
@@ -31,9 +33,15 @@
  
   <section class="container">
     <h4 class="text-start">Upcoming Exhibits</h4>
-          @await Html.PartialAsync("_Exhibits")
+        @await Html.PartialAsync("_Exhibits")
     </div>
   </section>
+
+  <nav class="d-flex justify-content-center">
+    @Html.PagedListPager( (IPagedList)Model.UpcomingExhibits, page => Url.Action("Index", new { page }) )
+  </nav>
+
+</main>
 
 @section search
 {

@@ -3,6 +3,7 @@ using MediatR;
 using PhotoExhibiter.Features;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
+using X.PagedList;
 
 namespace PhotoExhibiter.Features.Users
 {
@@ -12,13 +13,17 @@ namespace PhotoExhibiter.Features.Users
         {
             public string UserId { get; set; }
             public string PhotographerId { get; set; }
-            public bool ShowActions { get; set; }
             public string SearchTerm {get; set;}
+            public bool ShowActions { get; set; }
+            public int? UpcomingPage { get; set; }
+            public int? AttendingPage { get; set; }
+            public int? FollowersPage { get; set; }
+            public int? FollowingPage { get; set; }
         }
 
         public class Model
         {
-            private readonly List<Attendance> _attendances = new List<Attendance> ();
+            /* private readonly List<Attendance> _attendances = new List<Attendance> (); */
 
             public string UserId {get; set; }
             public string PhotographerId {get; set; }
@@ -29,11 +34,12 @@ namespace PhotoExhibiter.Features.Users
             public string SearchTerm { get; set; }
             public bool ShowActions { get; set; }
             public bool IsFollowing { get; set; }
-            public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
-            public IEnumerable<Exhibit> AttendingExhibits { get; set; }
             public IEnumerable<Attendance> Attendances {get; set;}
-            public IEnumerable<ApplicationUser> Followers {get; set; }
-            public IEnumerable<ApplicationUser> Following {get; set; }
+
+            public IPagedList<Exhibit> UpcomingExhibits { get; set; }
+            public IPagedList<Exhibit> AttendingExhibits { get; set; }
+            public IPagedList<ApplicationUser> Followers { get; set; }
+            public IPagedList<ApplicationUser> Following { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Model>
@@ -69,7 +75,7 @@ namespace PhotoExhibiter.Features.Users
 
                 var isFollowing = _followingRepository.GetFollowing(message.UserId, message.PhotographerId) != null;
 
-                var exhibits = new Model
+                var model = new Model
                 {
                     PhotographerId = message.PhotographerId,
                     PhotographerName = photographer.Name,
@@ -77,15 +83,22 @@ namespace PhotoExhibiter.Features.Users
                     UserId = message.UserId,
                     ShowActions = message.ShowActions,
                     ImageUrl = photographer.ImageUrl,
-                    UpcomingExhibits = upcomingExhibits,
-                    AttendingExhibits = attendingExhibits,
                     Attendances = attendances,
-                    Followers = followers,
-                    Following = following,
                     IsFollowing = isFollowing,
                     Heading = "[Users] Exhibits"
                 };
-                return exhibits;
+
+                int pageSize = 4;
+                int upcomingPageNumber = (message.UpcomingPage ?? 1);
+                int attendingPageNumber = (message.AttendingPage ?? 1);
+                int followersPageNumber = (message.FollowersPage ?? 1);
+                int followingPageNumber = (message.FollowingPage ?? 1);
+                model.UpcomingExhibits = upcomingExhibits.ToPagedList(upcomingPageNumber, pageSize);
+                model.AttendingExhibits = attendingExhibits.ToPagedList(attendingPageNumber, pageSize);
+                model.Followers = followers.ToPagedList(followersPageNumber, pageSize);
+                model.Following = following.ToPagedList(followingPageNumber, pageSize);
+
+                return model;
             }
         }
     }

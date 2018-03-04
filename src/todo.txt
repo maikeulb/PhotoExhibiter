@@ -4,6 +4,7 @@
 -check security
 -better way or make several db calls (cahce)
 -Profile management, delete profile
+-remove dependency on domain classes in views
 
 *ADD Pagination -> profile page
 *ADD Admin -> profile page
