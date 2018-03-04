@@ -24,8 +24,7 @@
               <b>@exhibit.Location</b>
             </div>
             <div>
-              <a href="@Url.Action("Index", "Users", new { photographerId =
-                exhibit.Photographer.Id })">
+              <a asp-controller="Users" asp-action="Index" asp-route-photographerId="@exhibit.Photographer.Id">
                 @exhibit.Photographer.Name
               </a>
             </div>

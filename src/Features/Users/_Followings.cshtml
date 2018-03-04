@@ -21,9 +21,10 @@
         }
          </span>
         <span class=pl-2>
-        <a href="@Url.Action("Index", "Users", new { photographerId =photographer.Id })">
-          @photographer.Name
-        </a> 
+          <a asp-controller="Users" asp-action="Index"
+            asp-route-photographerId="@photographer.Id">
+            @photographer.Name
+          </a> 
         </span>
       </li>
     }

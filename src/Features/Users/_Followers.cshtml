@@ -5,7 +5,7 @@
 
 @if (Model.Followers.Any()) 
 {
-  <ul class="mt-4" style="list-style-type:none;">
+  <ul class="followers-list mt-4" style="list-style-type:none;">
     @foreach (var photographer in Model.Followers)
     {
       <li class="mb-3">
@@ -19,11 +19,12 @@
         {
            <img src="@photographer.ImageUrl" style="height:70px"/>
         }
-         </span>
+        </span>
         <span class=pl-2>
-        <a href="@Url.Action("Index", "Users", new { photographerId =photographer.Id })">
-          @photographer.Name
-        </a> 
+          <a asp-controller="Users" asp-action="Index"
+            asp-route-photographerId="@photographer.Id">
+            @photographer.Name
+          </a> 
         </span>
       </li>
     }

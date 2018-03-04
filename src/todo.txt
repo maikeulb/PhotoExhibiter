@@ -1,22 +1,9 @@
 - finish cqrs of api controller
 - take advantage of user manager for getting userIds (applicationuser dbcontext is maybe insufficent)
 
--image in table
--CAPS LOCK usernames
-
--social authentication
--add admin
--add area element
--get rid of exposed userids
 -check security
 -better way or make several db calls (cahce)
 -Profile management, delete profile
 
 *ADD Pagination -> profile page
 *ADD Admin -> profile page
-*ADD Profile Edit -> profile page
-*ADD Attendance
-*REMOVE Ids(photographer)
-*IMpl Pagingin
-*Agjax div
-*fix navs (need active page)

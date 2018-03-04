@@ -33,9 +33,15 @@ export default class FollowingsController {
       .toggleClass('btn-outline-info')
       .toggleClass('btn-outline-secondary')
       .text(text);
+    $('.followers-list').append(
+    "<li> \
+      hi \
+     </li>" 
+    ); 
   }
 
   fail() {
     return alert('Something failed');
   }
+
 }

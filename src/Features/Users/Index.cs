@@ -11,9 +11,7 @@ namespace PhotoExhibiter.Features.Users
         public class Query : IRequest<Model>
         {
             public string UserId { get; set; }
-            public string ImageUrl { get; set; }
             public string PhotographerId { get; set; }
-            public string PhotographerName { get; set; }
             public bool ShowActions { get; set; }
             public string SearchTerm {get; set;}
         }
@@ -60,7 +58,7 @@ namespace PhotoExhibiter.Features.Users
             public Model Handle (Query message)
             {
                 var attendances = _attendanceRepository.GetAllAttendances();
-                var photographerEmail = _applicationUserRepository.GetPhotographerEmailById (message.PhotographerId);
+                /* var photographerEmail = _applicationUserRepository.GetPhotographerEmailById (message.PhotographerId); */
                 var photographer = _applicationUserRepository.GetUserById (message.PhotographerId);
 
                 var following = _applicationUserRepository.GetPhotographersFollowedBy (message.PhotographerId);
@@ -74,8 +72,8 @@ namespace PhotoExhibiter.Features.Users
                 var exhibits = new Model
                 {
                     PhotographerId = message.PhotographerId,
-                    PhotographerName = message.PhotographerName,
-                    PhotographerEmail = photographerEmail,
+                    PhotographerName = photographer.Name,
+                    PhotographerEmail = photographer.Email,
                     UserId = message.UserId,
                     ShowActions = message.ShowActions,
                     ImageUrl = photographer.ImageUrl,

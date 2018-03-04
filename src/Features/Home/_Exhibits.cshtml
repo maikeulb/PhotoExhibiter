@@ -59,8 +59,7 @@
         </div>
         <div >
             <span>
-              <a href="@Url.Action("Index", "Users", new { photographerId =
-                exhibit.Photographer.Id })">
+              <a asp-controller="Users" asp-action="Index" asp-route-id="@exhibit.Photographer.Id"> 
                 @exhibit.Photographer.Name
               </a> 
               <div class="date">
