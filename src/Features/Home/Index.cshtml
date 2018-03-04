@@ -1,10 +1,10 @@
 @using PhotoExhibiter.Features.Home
 @model Index.Model
 
-<h1 class="text-center voffset3">@Model.Heading</h1>
+<h1 class="text-center mt-4">@Model.Heading</h1>
 
   <section>
-    <img class="rellax voffset4" data-rellax-speed="2" style="
+    <img class="rellax mt-4" data-rellax-speed="2" style="
       filter:brightness(60%);
       background-attachment: fixed;
       background-position: top;
@@ -29,7 +29,7 @@
   <section class="container">
     <h4 class="text-start">Upcoming Exhibits</h4>
 
-    <div id="exhibits" class="row voffset4">
+    <div id="exhibits" class="row mt-4">
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
       <div class="col-lg-3 col-sm-6 col-xs-12">
