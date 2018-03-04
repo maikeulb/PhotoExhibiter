@@ -19,3 +19,4 @@
 *REMOVE Ids(photographer)
 *IMpl Pagingin
 *Agjax div
+*fix navs (need active page)

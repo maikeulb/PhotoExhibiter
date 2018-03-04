@@ -4,4 +4,4 @@ import AttendanceService from './attendanceService';
 const attendanceService = new AttendanceService();
 const attendancesController = new AttendancesController(attendanceService);
 
-$(document).ready(() => attendancesController.init('#exhibits'));
+$(document).ready(() => attendancesController.init('.upcoming-exhibits'));

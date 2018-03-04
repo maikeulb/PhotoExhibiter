@@ -7,7 +7,7 @@
 
 @if (Model.UpcomingExhibits.Any()) 
 {
-  <ul id = "exhibits" class="exhibits mt-4">
+  <ul class="upcoming-exhibits exhibits mt-4">
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
       <li>
@@ -32,8 +32,6 @@
                 @exhibit.Genre.Name
               </div>
             <div>
-
-
               @if (Model.ShowActions && !exhibit.IsCanceled)
               {
                 @if (Model.UserId == exhibit.PhotographerId)
@@ -66,9 +64,7 @@
                 </div>
                 }
               }
-
           </div>
-
         </div>
       </li>
     }
@@ -78,6 +74,7 @@ else
 {
 <p> Sorry, no results found. </p>
 }
+
 </section>
 @section search
 {
@@ -86,5 +83,4 @@ else
 
 @section scripts
 {
-  <script type="text/javascript" src="~/attendances.js"></script>
 }

@@ -3,26 +3,33 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 
-<ul class="mt-4" style="list-style-type:none;">
-@foreach (var photographer in Model.Following)
+@if (Model.Following.Any()) 
 {
-<li class="mb-3">
-    <span class=pr-2>
-    @if (String.IsNullOrEmpty(photographer.ImageUrl))
-    {
-        <gravatar image-size=70 default-image="Identicon"
-          email-address="@photographer.Email"></gravatar>
+  <ul class="mt-4" style="list-style-type:none;">
+  @foreach (var photographer in Model.Following)
+  {
+    <li class="mb-3">
+      <span class=pr-2>
+      @if (String.IsNullOrEmpty(photographer.ImageUrl))
+      {
+          <gravatar image-size=70 default-image="Identicon"
+            email-address="@photographer.Email"></gravatar>
+      }
+      else
+      {
+          <img src="@photographer.ImageUrl" style="height:70px"/>
+      }
+       </span>
+      <span class=pl-2>
+      <a href="@Url.Action("Index", "Users", new { photographerId =photographer.Id })">
+      @photographer.Name
+      </a> 
+      </span>
+    </li>
     }
-    else
-    {
-        <img src="@photographer.ImageUrl" style="height:70px"/>
-    }
-     </span>
-    <span class=pl-2>
-    <a href="@Url.Action("Index", "Users", new { photographerId =photographer.Id })">
-    @photographer.Name
-    </a> 
-    </span>
-</li>
+  </ul>
 }
-</ul>
+else
+{
+  <p> No followings :( </p>
+}
