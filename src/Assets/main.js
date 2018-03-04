@@ -122,3 +122,34 @@ $('form[method=post]').not('.no-ajax').on('submit', function () {
 
     return false;
 });
+
+  $('.input-daterange').datepicker({
+    todayHighlight: true,
+    startDate: '+0d',
+    autoclose: true,
+    format: 'dd M yyyy',
+    viewMode: "months", 
+  });
+  </script>
+  <script>
+    $('.imgInp').on('change',
+      function () {
+         $('#target').prop('src', this.value);
+       });
+  </script>
+  <script>
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('form-group');
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();

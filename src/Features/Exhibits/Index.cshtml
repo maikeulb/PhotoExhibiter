@@ -53,15 +53,7 @@
 
 @section search
 {
-  <form asp-controller="Exhibits" asp-action="Search">
-    <div class="form-horizontal">
-      <div id="searchexhibits" class="input-group">
-        @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
-        placeholder = "Search by Photographer, Genre or Location..." })
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </div>
-    </div>
-  </form>
+  @await Html.PartialAsync("_Search")
 }
 
 @section scripts

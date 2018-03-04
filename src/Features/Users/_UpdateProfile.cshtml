@@ -1,0 +1,39 @@
+@using PhotoExhibiter.Features.Users
+@model Index.Model
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Please Enter
+        Photo URL</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body container-fluid text-center">
+        <div>
+          <img id="target" class="img-thumbnail my-2"
+          src="http://placehold.it/200" alt="your image" />
+        </div>
+        <form asp-controller="Users" asp-action="Update" method="post"
+          role="form" class="text-left my-2" novalidate>
+          <div class="form-group">
+            <label asp-for="ImageUrl"></label>
+            <input for="Image" asp-for="ImageUrl" type="url" class="form-control imgInp" placeholder =
+            "http://" required>
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            <div class="invalid-feedback">Please upload and image!</div>
+          </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
