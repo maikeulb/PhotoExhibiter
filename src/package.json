@@ -34,6 +34,7 @@
     "lodash": "^4.17.4",
     "lodash.template": "^4.4.0",
     "moment": "^2.19.2",
+    "noty": "^3.2.0-beta",
     "popper": "^1.0.1",
     "popper.js": "^1.12.9",
     "rellax": "^1.4.0",

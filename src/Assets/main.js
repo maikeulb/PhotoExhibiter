@@ -24,6 +24,16 @@ window.datepicker = datepicker;
 import dt from 'datatables.net';
 window.dt = dt;
 
+import Noty from 'noty';
+window.Noty = Noty;
+
+require("datatables.net-bs")(window, $);
+require("datatables.net-responsive")(window, $);
+require("datatables.net-responsive-bs")(window, $);
+
+require("!style!css!datatables.net-bs/css/dataTables.bootstrap.css");
+require("!style!css!datatables.net-responsive-bs/css/responsive.bootstrap.css");
+
 import logoSmall from './images/logo.png';
 var logoImg = document.getElementById('logo_sm');
 logoImg.src = logoSmall;
