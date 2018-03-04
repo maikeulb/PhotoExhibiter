@@ -6,9 +6,10 @@
 <form asp-controller="Exhibits" asp-action="Search">
   <div class="form-horizontal">
     <div id="search-exhibits" class="input-group">
-      @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
+      <input asp-for"SearchTerm" class="form-control" placement="Search..">
       placeholder = "Search by Photographer, Genre or Location..." })
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button class="btn btn-outline-success" type="submit"
+        data-toggle="tooltip" data-placement="bottom" title="Search by photographer, location, or genre">Search</button>
     </div>
   </div>
 </form>

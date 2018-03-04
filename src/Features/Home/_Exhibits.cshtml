@@ -25,10 +25,11 @@
                 @if (Model.UserId == exhibit.PhotographerId)
                 {
                   <div class="actions">
-                    <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
+                    <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
                       Edit
                     </a>
-                    <a href="#" class="js-cancel-exhibit"
+                    <a href="#" class="js-cancel-exhibit btn btn-sm
+                      btn-outline-secondary"
                       data-exhibit-id="@exhibit.Id">
                       Cancel
                     </a>

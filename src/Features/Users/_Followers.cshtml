@@ -8,30 +8,28 @@
   <ul class="mt-4" style="list-style-type:none;">
     @foreach (var photographer in Model.Followers)
     {
-
       <li class="mb-3">
         <span class=pr-2>
         @if (String.IsNullOrEmpty(photographer.ImageUrl))
         {
-            <gravatar image-size=70 default-image="Identicon"
-              email-address="@photographer.Email"></gravatar>
+          <gravatar image-size=70 default-image="Identicon"
+            email-address="@photographer.Email"></gravatar>
         }
         else
         {
-            <img src="@photographer.ImageUrl" style="height:70px"/>
+           <img src="@photographer.ImageUrl" style="height:70px"/>
         }
          </span>
         <span class=pl-2>
         <a href="@Url.Action("Index", "Users", new { photographerId =photographer.Id })">
-        @photographer.Name
+          @photographer.Name
         </a> 
         </span>
       </li>
-
     }
   </ul>
 }
 else
 {
-  <p> No followers :( </p>
+  <p class="mt-2"> No followers :( </p>
 }
