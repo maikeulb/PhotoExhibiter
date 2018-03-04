@@ -42,34 +42,34 @@ namespace PhotoExhibiter.Features.Exhibits
             return View (model);
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> Details (Details.Query query)
-        {
-            query.UserId = _userManager.GetUserId (User);
+        /* [AllowAnonymous] */
+        /* public async Task<IActionResult> Details (Details.Query query) */
+        /* { */
+        /*     query.UserId = _userManager.GetUserId (User); */
 
-            var model = await _mediator.Send (query);
+        /*     var model = await _mediator.Send (query); */
 
-            return View (model);
-        }
+        /*     return View (model); */
+        /* } */
 
-        public async Task<IActionResult> Mine (Mine.Query query)
-        {
-            query.UserId = _userManager.GetUserId (User);
-            query.ShowActions = _signInManager.IsSignedIn (User);
-            var model = await _mediator.Send (query);
+        /* public async Task<IActionResult> Mine (Mine.Query query) */
+        /* { */
+        /*     query.UserId = _userManager.GetUserId (User); */
+        /*     query.ShowActions = _signInManager.IsSignedIn (User); */
+        /*     var model = await _mediator.Send (query); */
 
-            return View (model);
-        }
+            /* return View (model); */
+        /* } */
 
-        public async Task<IActionResult> Attending (Attending.Query query)
-        {
-            query.UserId = _userManager.GetUserId (User);
-            query.ShowActions = _signInManager.IsSignedIn (User);
+        /* public async Task<IActionResult> Attending (Attending.Query query) */
+        /* { */
+        /*     query.UserId = _userManager.GetUserId (User); */
+        /*     query.ShowActions = _signInManager.IsSignedIn (User); */
 
-            var model = await _mediator.Send (query);
+/*             var model = await _mediator.Send (query); */
 
-            return View (model);
-        }
+/*             return View (model); */
+/*         } */
 
         [HttpPost]
         public IActionResult Search (Index.Query model)

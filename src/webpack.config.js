@@ -10,10 +10,9 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: {
     main: './main.js',
-    exhibitDetails: './js/ExhibitDetails/exhibitDetails.js',
-    exhibits: './js/Exhibits/exhibits.js',
+    attendances: './js/Attendance/attendances.js',
+    followings: './js/Following/followings.js',
     exhibitCancel: './js/ExhibitCancel/exhibitCancel.js',
-    notifications: './js/Notifications/notifications.js'
   },
   resolve: {
     extensions: ['.js', '.scss', '.css', '.ts'],

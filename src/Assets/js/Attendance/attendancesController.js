@@ -1,4 +1,4 @@
-export default class ExhibitController {
+export default class AttendancesController {
   constructor(attendanceService) {
     this.attendanceService = attendanceService;
     this.attendanceButton = null;

@@ -1,4 +1,4 @@
-export default class ExhibitDetailsController {
+export default class FollowingsController {
   constructor(followingService) {
     this.followingService = followingService;
     this.followButton = null;

@@ -52,8 +52,6 @@ namespace PhotoExhibiter.Features.Users
         {
             command.Id = _userManager.GetUserId (User);
             var result = await _mediator.Send (command);
-            _logger.LogInformation("**command id in controller*******{}**",command.Id);
-            _logger.LogInformation("**command id imgurl controller*******{}****",command.ImageUrl);
 
             return result.IsSuccess
                 ? (IActionResult)RedirectToAction ("Index")
