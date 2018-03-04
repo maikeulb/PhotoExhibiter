@@ -40,7 +40,8 @@
 
         <div class="form-group">
           <label asp-for="ImageUrl"></label>
-          <input for="Image" asp-for="ImageUrl" type="url" class="form-control imgInp" placeholder =
+          <input for="Image" asp-for="ImageUrl" type="url" class="form-control
+          img-inp" placeholder =
           "http://" required>
           <span asp-validation-for="ImageUrl" class="text-danger"></span>
           <div class="invalid-feedback">Please upload and image!</div>
@@ -52,8 +53,7 @@
 
     <div class="col-lg-6 col-sm-12">
       <br>
-      <img id="target" src="http://placehold.it/500x300"
-      style="max-height:500px" />
+      <img class="img-target" src="http://placehold.it/500x300" style="max-height:500px" />
     </div>
   </div>
 <section/>
@@ -70,9 +70,9 @@
   });
   </script>
   <script>
-    $('.imgInp').on('change',
+    $('.img-inp').on('change',
       function () {
-         $('#target').prop('src', this.value);
+         $('.img-target').prop('src', this.value);
        });
   </script>
   <script>

@@ -50,7 +50,7 @@
 
     <div class="col-lg-6 col-sm-12">
       <br>
-      <img id="target" src="http://placehold.it/500x300" alt="your image" />
+      <img class="imgTarget" src="http://placehold.it/500x300" style="max-height:500px" />
     </div>
   </div>
 </section>
@@ -69,7 +69,7 @@
   <script>
     $('.imgInp').on('change',
       function () {
-         $('#target').prop('src', this.value);
+         $('.imgTarget').prop('src', this.value);
        });
   </script>
   <script>

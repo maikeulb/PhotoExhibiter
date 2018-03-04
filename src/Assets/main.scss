@@ -1,11 +1,8 @@
-@import "./css/bootstrap.min.css";
-
 $fa-font-path: "~font-awesome/fonts";
 
 @import "~font-awesome/scss/font-awesome.scss";
-
 @import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
-
+@import "./css/bootstrap.min.css";
 @import "./css/_global.scss";
 @import "./css/_popover.scss";
 @import "./css/_exhibit-calender.scss";

@@ -83,7 +83,8 @@ else
       @if (Model.UserId == Model.PhotographerId)
       {
         <div class="mt-4 mb-3">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#update_profile">
             Update Profile Photo
           </button>
         </div>
@@ -113,7 +114,6 @@ else
   </div>
 </section>
 
-
 @section search
 {
   @await Html.PartialAsync("_Search")
@@ -122,9 +122,9 @@ else
 @section scripts
 {
   <script>
-    $('.imgInp').on('change',
+    $('.img-inp').on('change',
       function () {
-         $('#target').prop('src', this.value);
+         $('.img-target').prop('src', this.value);
        });
   </script>
 
