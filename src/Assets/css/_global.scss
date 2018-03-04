@@ -1,0 +1,35 @@
+/* Page-level styles */
+body {
+  font-size: 17px;
+  padding-top: 10px;
+}
+.form-control:focus {
+  outline: 0;
+  border-color: #80bdff;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(100, 100, 100, 0.6);
+}
+.nav-item li {
+  white-space: nowrap;
+}
+
+/* Sticky Footer */
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+main {
+  flex: 1;
+}
+
+/* Navbar */
+.changeFont {
+  font-family: "Noto Sans", sans-serif;
+  border-bottom-width: 26px;
+  padding-bottom: 20px;
+  padding-top: 6px;
+}
+.bg-light {
+  background-color: #ffffff !important;
+}
+
