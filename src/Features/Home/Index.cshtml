@@ -31,79 +31,9 @@
  
   <section class="container">
     <h4 class="text-start">Upcoming Exhibits</h4>
-    <ul class="upcoming-exhibits exhibits row mt-4">
-    @foreach (var exhibit in Model.UpcomingExhibits)
-    {
-      <div class="col-lg-3 col-sm-6 col-xs-12">
-        <div class="card-container">
-        <img class="card-image img-fluid" src="@exhibit.ImageUrl">
-          <div class="card-title">
-            <p>Location: @exhibit.Location</p>
-            <p>@exhibit.Genre.Name</p>
-
-              @if (exhibit.IsCanceled)
-              {
-                <span class="label label-warning">Canceled</span>
-              }
-
-              @if (Model.ShowActions && !exhibit.IsCanceled)
-              {
-                @if (Model.UserId == exhibit.PhotographerId)
-                {
-                  <div class="actions">
-                    <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
-                      Edit
-                    </a>
-                    <a href="#" class="js-cancel-exhibit"
-                      data-exhibit-id="@exhibit.Id">
-                      Cancel
-                    </a>
-                  </div>
-                 }
-                else
-                {
-                <div>
-                  @if (Model.ShowActions && !exhibit.IsCanceled)
-                  {
-                    <a
-                      data-exhibit-id="@exhibit.Id"
-                      class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                      ? "btn-outline-info" 
-                      : "btn-outline-secondary") btn-sm js-toggle-attendance">
-                      @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                      ? "Attending"
-                      : "Attend")
-                    </a>
-                  }
-                </div>
-                }
-              }
-
-          </div>
-          <div class="card-overlay"></div>
-        </div>
-        <div >
-            <span>
-              <a href="@Url.Action("Index", "Users", new { photographerId =
-                exhibit.Photographer.Id })">
-                @exhibit.Photographer.Name
-              </a> 
-              <div class="date">
-                <span class="month">
-                  @exhibit.DateTime.ToString("MMM")
-                </span>
-                <span class="day">
-                  @exhibit.DateTime.ToString("d ")
-                </span>
-              </div>
-
-            </span>
-
-          </div>
-      </div>
-      <br>
-    }
+          @await Html.PartialAsync("_Exhibits")
     </div>
+
   </section>
 
 @section search
