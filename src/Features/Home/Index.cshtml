@@ -1,4 +1,7 @@
 @using PhotoExhibiter.Features.Home
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims 
+@inject UserManager<ApplicationUser> UserManager
 @model Index.Model
 
 <h1 class="text-center mt-4">@Model.Heading</h1>
@@ -28,7 +31,6 @@
  
   <section class="container">
     <h4 class="text-start">Upcoming Exhibits</h4>
-
     <div id="exhibits" class="row mt-4">
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
@@ -43,16 +45,38 @@
               {
                 <span class="label label-warning">Canceled</span>
               }
+
               @if (Model.ShowActions && !exhibit.IsCanceled)
               {
-                <a data-exhibit-id="@exhibit.Id"
-                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                  ? "btn-outline-info" 
-                  : "btn-outline-secondary") btn-sm js-toggle-attendance">
-                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                  ? "Attending"
-                  : "Attend")
-                </a>
+                @if (Model.UserId == exhibit.PhotographerId)
+                {
+                  <div class="actions">
+                    <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
+                      Edit
+                    </a>
+                    <a href="#" class="js-cancel-exhibit"
+                      data-exhibit-id="@exhibit.Id">
+                      Cancel
+                    </a>
+                  </div>
+                 }
+                else
+                {
+                <div>
+                  @if (Model.ShowActions && !exhibit.IsCanceled)
+                  {
+                    <a
+                      data-exhibit-id="@exhibit.Id"
+                      class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                      ? "btn-outline-info" 
+                      : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                      @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                      ? "Attending"
+                      : "Attend")
+                    </a>
+                  }
+                </div>
+                }
               }
 
           </div>
@@ -60,12 +84,10 @@
         </div>
         <div >
             <span>
-
               <a href="@Url.Action("Index", "Users", new { photographerId =
                 exhibit.Photographer.Id })">
                 @exhibit.Photographer.Name
               </a> 
-
               <div class="date">
                 <span class="month">
                   @exhibit.DateTime.ToString("MMM")

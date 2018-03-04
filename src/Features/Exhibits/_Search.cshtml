@@ -1,9 +1,10 @@
 @using PhotoExhibiter.Features.Exhibits
 @model Index.Model
 
+
 <form asp-controller="Exhibits" asp-action="Search">
   <div class="form-horizontal">
-    <div class="search-exhibits" class="input-group">
+    <div id="search-exhibits" class="input-group">
       @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control",
       placeholder = "Search by Photographer, Genre or Location..." })
       <button class="btn btn-outline-success" type="submit">Search</button>

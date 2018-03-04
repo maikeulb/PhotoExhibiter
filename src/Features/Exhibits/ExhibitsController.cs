@@ -106,7 +106,7 @@ namespace PhotoExhibiter.Features.Exhibits
 
             await _mediator.Send (command);
 
-            return RedirectToAction ("Mine", "Exhibits");
+            return RedirectToAction ("Index", "Users");
         }
 
         [HttpPost]
@@ -118,7 +118,7 @@ namespace PhotoExhibiter.Features.Exhibits
             var result = await _mediator.Send (command);
 
             return result.IsSuccess
-                ? (IActionResult)RedirectToAction ("Mine", "Exhibits")
+                ? (IActionResult)RedirectToAction ("Index", "Users")
                 : (IActionResult)BadRequest(result.Error);
         }
     }

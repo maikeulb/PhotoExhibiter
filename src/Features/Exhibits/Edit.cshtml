@@ -13,6 +13,7 @@
         class="form-group" role="form" novalidate>
         <div asp-validation-summary="All" class="text-danger"></div>
         <input asp-for="Id" name="Id" type="hidden" value="@Model.Id" />
+
         <div class="form-group">
           <label for="Location" asp-for="Location"></label>
           <input asp-for="Location" type="text" class="form-control" placeholder =
@@ -39,7 +40,8 @@
 
         <div class="form-group">
           <label asp-for="ImageUrl"></label>
-          <input for="Image" asp-for="ImageUrl" type="url" class="form-control imgInp" placeholder =
+          <input for="Image" asp-for="ImageUrl" type="url" class="form-control
+          img-inp" placeholder =
           "http://" required>
           <span asp-validation-for="ImageUrl" class="text-danger"></span>
           <div class="invalid-feedback">Please upload and image!</div>
@@ -49,44 +51,17 @@
     </div>
 
     <div class="col-lg-6 col-sm-12">
-      <br>
-      <img class="imgTarget" src="http://placehold.it/500x300" style="max-height:500px" />
+      @if (String.IsNullOrEmpty(Model.ImageUrl))
+      {
+         <img src="http://placehold.it/500x300" class="img-target my-2"
+         style="max-height:500px;max-height:500px" />
+      }
+      else
+      {
+        <img src="@Model.ImageUrl" class="img-target my-2" 
+        style="max-width:300px max-height:500px" />
+      }
     </div>
+
   </div>
 </section>
-
-@section scripts
-{
-  <script>
-  $('.input-daterange').datepicker({
-    todayHighlight: true,
-    startDate: '+0d',
-    autoclose: true,
-    format: 'dd M yyyy',
-    viewMode: "months", 
-  });
-  </script>
-  <script>
-    $('.imgInp').on('change',
-      function () {
-         $('.imgTarget').prop('src', this.value);
-       });
-  </script>
-  <script>
-  (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      var forms = document.getElementsByClassName('form-group');
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
-  </script>
-}

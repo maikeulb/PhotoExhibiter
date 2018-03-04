@@ -16,8 +16,14 @@
       </div>
       <div class="modal-body container-fluid text-center">
         <div>
-          <img class="img-target img-thumbnail my-2"
-          src="http://placehold.it/200" alt="your image" />
+        @if (String.IsNullOrEmpty(Model.ImageUrl))
+        {
+           <img src="http://placehold.it/200" class="img-target img-thumbnail my-2" alt="your image" />
+        }
+        else
+        {
+           <img src="@Model.ImageUrl" class="img-target img-thumbnail my-2" />
+        }
         </div>
         <form asp-controller="Users" asp-action="Update" method="post"
           role="form" class="text-left my-2" novalidate>
@@ -37,4 +43,3 @@
     </div>
   </div>
 </div>
-

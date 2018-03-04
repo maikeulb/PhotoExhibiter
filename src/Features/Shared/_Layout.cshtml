@@ -34,7 +34,7 @@
           </li>
         </ul>
 
-        <ul class="navbar-nav mr-auto d-none d-md-block mx-2 my-auto w-50">
+        <ul class="navbar-nav d-none d-md-block mx-2 my-auto w-50">
           @RenderSection("search", required: false)
         </ul>
 
@@ -107,6 +107,38 @@
       });
     </script>
 
+  <script>
+  $('.input-daterange').datepicker({
+    todayHighlight: true,
+    startDate: '+0d',
+    autoclose: true,
+    format: 'dd M yyyy',
+    viewMode: "months", 
+  });
+  </script>
+  <script>
+    $('.img-inp').on('change',
+      function () {
+         $('.img-target').prop('src', this.value);
+       });
+  </script>
+  <script>
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('form-group');
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+  </script>
   </body>
 
 </html>

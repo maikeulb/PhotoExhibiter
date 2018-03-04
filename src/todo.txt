@@ -17,3 +17,5 @@
 *ADD Profile Edit -> profile page
 *ADD Attendance
 *REMOVE Ids(photographer)
+*IMpl Pagingin
+*Agjax div

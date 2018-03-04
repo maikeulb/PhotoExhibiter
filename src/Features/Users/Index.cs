@@ -63,8 +63,8 @@ namespace PhotoExhibiter.Features.Users
                 var photographerEmail = _applicationUserRepository.GetPhotographerEmailById (message.PhotographerId);
                 var photographer = _applicationUserRepository.GetUserById (message.PhotographerId);
 
-                var followers = _applicationUserRepository.GetPhotographersFollowedBy (message.PhotographerId);
-                var following = _applicationUserRepository.GetPhotographersFollowing (message.PhotographerId);
+                var following = _applicationUserRepository.GetPhotographersFollowedBy (message.PhotographerId);
+                var followers = _applicationUserRepository.GetPhotographersFollowing (message.PhotographerId);
 
                 var upcomingExhibits = _exhibitRepository.GetUpcomingExhibitsByPhotographer (message.PhotographerId);
                 var attendingExhibits = _exhibitRepository.GetExhibitsUserAttending (message.PhotographerId);

@@ -16,7 +16,6 @@ export default class ExhibitCancelController {
 
     bootbox.dialog({
       message: 'Are you sure you want to cancel this Exhibit?',
-      title: 'Confirmation',
       buttons: {
         no: {
           label: 'No',

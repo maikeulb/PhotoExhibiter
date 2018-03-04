@@ -28,6 +28,8 @@ namespace PhotoExhibiter.Features.Home
         public async Task<IActionResult> Index (Index.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
+            if (query.PhotographerId == null)
+              query.PhotographerId = query.UserId;
             query.ShowActions = _signInManager.IsSignedIn (User);
 
             var model = await _mediator.Send (query);

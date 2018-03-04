@@ -1,9 +1,12 @@
 @using PhotoExhibiter.Features.Exhibits
 @model Index.Model
 
-<h2 class="text-center mt-2">@Model.Heading</h2>
+<h2 class="text-center mt-3 mb-3">@Model.Heading</h2>
 
-<section class="container">
+<section class="container mt-4">
+
+@if (Model.UpcomingExhibits.Any()) 
+{
   <ul id = "exhibits" class="exhibits mt-4">
     @foreach (var exhibit in Model.UpcomingExhibits)
     {
@@ -29,19 +32,40 @@
                 @exhibit.Genre.Name
               </div>
             <div>
+
+
               @if (Model.ShowActions && !exhibit.IsCanceled)
               {
-                <button
-                  data-exhibit-id="@exhibit.Id"
-                  class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                  ? "btn-outline-info" 
-                  : "btn-outline-secondary") btn-sm js-toggle-attendance">
-                  @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
-                  ? "Attending"
-                  : "Attend")
-                </button>
+                @if (Model.UserId == exhibit.PhotographerId)
+                {
+                  <div class="actions">
+                    <a href="@Url.Action("Edit", "Exhibits", new { Id = exhibit.Id })">
+                      Edit
+                    </a>
+                    <a href="#" class="js-cancel-exhibit"
+                      data-exhibit-id="@exhibit.Id">
+                      Cancel
+                    </a>
+                  </div>
+                 }
+                else
+                {
+                <div>
+                  @if (Model.ShowActions && !exhibit.IsCanceled)
+                  {
+                    <button
+                      data-exhibit-id="@exhibit.Id"
+                      class="btn @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                      ? "btn-outline-info" 
+                      : "btn-outline-secondary") btn-sm js-toggle-attendance">
+                      @(Model.Attendances.Any(a => a.ExhibitId == @exhibit.Id && a.AttendeeId == @Model.UserId) 
+                      ? "Attending"
+                      : "Attend")
+                    </button>
+                  }
+                </div>
+                }
               }
-            </div>
 
           </div>
 
@@ -49,8 +73,12 @@
       </li>
     }
   </ul>
+}
+else
+{
+<p> Sorry, no results found. </p>
+}
 </section>
-
 @section search
 {
   @await Html.PartialAsync("_Search")

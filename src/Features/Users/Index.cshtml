@@ -18,7 +18,7 @@ else
 
     <div class="col order-2 mb-3">
 
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <ul class="nav" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="upcoming-tab" data-toggle="tab"
             href="#upcoming"
@@ -121,13 +121,6 @@ else
 
 @section scripts
 {
-  <script>
-    $('.img-inp').on('change',
-      function () {
-         $('.img-target').prop('src', this.value);
-       });
-  </script>
-
   <script type="text/javascript" src="~/attendances.js"></script>
   <script type="text/javascript" src="~/exhibitCancel.js"></script>
   <script type="text/javascript" src="~/followings.js"></script>
