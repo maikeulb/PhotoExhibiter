@@ -10,9 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Data.Context;
-using PhotoExhibiter.Features;
-using PhotoExhibiter.Features.Account;
-using PhotoExhibiter.Features.Home;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
@@ -20,97 +17,49 @@ namespace PhotoExhibiter.Features.ManageExhibits
 {
     public class ManageExhibitsController : Controller
     {
-        private readonly IExhibitRepository _repository;
+        private readonly IMediator _mediator;
 
-        public ManageExhibitsController (IExhibitRepository repository) => _repository = repository;
+        public ManageExhibitsController (IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         [Authorize(Roles="Admin, DemoAdmin")]
-        public async Task<IActionResult> Index ()
+        public IActionResult Index ()
         {
             return View ();
         }
 
         [Authorize(Roles="Admin, DemoAdmin")]
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details (Details.Query query)
         {
-            var exhibit = _repository.GetExhibit(id);
+            var modelOrError = await _mediator.Send (query);
 
-            if (exhibit  == null)
-                return NotFound();
-
-            var viewModel = new ExhibitViewModel
-            {
-                Id = exhibit.Id,
-                Genre = exhibit.Genre.Name,
-                Photographer = exhibit.Photographer.Name,
-                Date = exhibit.DateTime.ToString ("d MMM yyyy"),
-                Location = exhibit.Location,
-                ImageUrl = exhibit.ImageUrl,
-                DateTime = exhibit.DateTime,
-                IsCanceled = exhibit.IsCanceled,
-            };
-
-            return View(viewModel);
+            return modelOrError.IsSuccess
+                ? (IActionResult)View(modelOrError.Value)
+                : (IActionResult)BadRequest(modelOrError.Error);
         }
 
         [Authorize(Roles="Admin, DemoAdmin")]
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit (Edit.Query query)
         {
-            var exhibit = _repository.GetExhibit(id);
+            var modelOrError = await _mediator.Send (query);
 
-            if (exhibit == null)
-                return NotFound();
-
-            var viewModel = new ExhibitViewModel
-            {
-                Id = exhibit.Id,
-                Genre = exhibit.Genre.Name,
-                Photographer = exhibit.Photographer.Name,
-                Location = exhibit.Location,
-                Date = exhibit.DateTime.ToString ("d MMM yyyy"),
-                ImageUrl = exhibit.ImageUrl,
-                DateTime = exhibit.DateTime,
-                IsCanceled = exhibit.IsCanceled,
-            };
-
-            return View("Edit", viewModel);
+            return modelOrError.IsSuccess
+                ? (IActionResult)View("Edit", modelOrError.Value)
+                : (IActionResult)BadRequest(modelOrError.Error);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles="Admin")]
-        public ActionResult Edit(Exhibit exhibit)
+        public async Task<IActionResult> Edit (Edit.Command command)
         {
-            var exhibitInDb = _repository.GetExhibit(exhibit.Id);
+            var result = await _mediator.Send (command);
 
-            exhibitInDb.ManagerUpdate( 
-                    exhibit.Location,
-                    exhibit.DateTime,
-                    exhibit.ImageUrl,
-                    exhibit.GenreId);
-            
-            if (exhibit.IsCanceled == true)
-                exhibitInDb.Cancel();
-
-            _repository.SaveAll();
-
-            return RedirectToAction("Index");
+            return result.IsSuccess
+                ? (IActionResult)RedirectToAction ("Index")
+                : (IActionResult)BadRequest(result.Error);
         }
-    }
-
-    public class ExhibitViewModel
-    {
-        public int Id { get; set; }
-        [Display(Name = "Genre")]
-        public int GenreId { get; set; }
-        public string Date { get; set; }
-        public string Genre { get; set; }
-        public string UserId { get; set; }
-        public string Location { get; set; }
-        public string Photographer { get; set; }
-        public string ImageUrl { get; set; }
-        public bool IsCanceled { get; set; }
-        public DateTime DateTime { get; set; }
-        public IEnumerable<Genre> Genres { get; set; }
     }
 }

@@ -13,28 +13,27 @@ using PhotoExhibiter.Data.Repositories;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure;
+using NLog.Web;
 
 namespace PhotoExhibiter
 {
     public class Startup
     {
-        private readonly IConfiguration _config;
+        public IConfiguration Configuration { get; }
 
-        public Startup (IConfiguration config)
+        public Startup (IConfiguration configuration)
         {
-            _config = config;
+            Configuration = configuration;
         }
 
         public void ConfigureServices (IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext> (options =>
-                options.UseMySql (_config.GetConnectionString ("ApplicationConnectionString")));
+                options.UseMySql (Configuration.GetConnectionString ("ApplicationConnectionString")));
 
             services.AddIdentity<ApplicationUser, IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ()
                 .AddDefaultTokenProviders ();
-
-            services.AddTransient<IEmailSender, EmailSender> ();
 
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository> ();
             services.AddScoped<IAttendanceRepository, AttendanceRepository> ();
@@ -44,19 +43,16 @@ namespace PhotoExhibiter
             services.AddScoped<INotificationRepository, NotificationRepository> ();
             services.AddScoped<IUserNotificationRepository, UserNotificationRepository> ();
 
-            services.AddMvc ()
-                /* services.AddMvc (options => */
-                /* { */
-                /* options.Filters.Add (typeof (ValidatorActionFilter)); */
-                /* }) */
+            services.AddMvc (options =>
+                {
+                    options.Filters.Add (typeof (ValidatorActionFilter));
+                })
                 .AddFeatureFolders ()
                 .AddFluentValidation (cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup> (); });
 
             services.AddMediatR ();
             services.AddAutoMapper ();
             Mapper.AssertConfigurationIsValid ();
-
-            services.AddMemoryCache ();
         }
 
         public void Configure (IApplicationBuilder app, IHostingEnvironment env)

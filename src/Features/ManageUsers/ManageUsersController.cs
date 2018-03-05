@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Data.Context;
-using PhotoExhibiter.Features;
-using PhotoExhibiter.Features.Account;
-using PhotoExhibiter.Features.Home;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
@@ -17,76 +14,49 @@ namespace PhotoExhibiter.Features.ManageUsers
 {
     public class ManageUsersController : Controller
     {
-        private readonly IApplicationUserRepository _repository;
+        private readonly IMediator _mediator;
 
-        public ManageUsersController (IApplicationUserRepository repository) => _repository = repository;
+        public ManageUsersController (IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         [Authorize(Roles="Admin, DemoAdmin")]
-        public async Task<IActionResult> Index ()
+        public IActionResult Index ()
         {
             return View ();
         }
 
         [Authorize(Roles="Admin, DemoAdmin")]
-        public ActionResult Details(string id)
+        public async Task<IActionResult> Details (Details.Query query)
         {
-            var user = _repository.GetPhotographer(id);
+            var modelOrError = await _mediator.Send (query);
 
-            if (user  == null)
-                return NotFound();
-
-            return View(user);
+            return modelOrError.IsSuccess
+                ? (IActionResult)View(modelOrError.Value)
+                : (IActionResult)BadRequest(modelOrError.Error);
         }
 
         [Authorize(Roles="Admin, DemoAdmin")]
-        public ActionResult Edit(string id)
+        public async Task<IActionResult> Edit (Edit.Query query)
         {
-            var user = _repository.GetPhotographer(id);
+            var modelOrError = await _mediator.Send (query);
 
-            if (user == null)
-                return NotFound();
-
-            var viewModel = new UserViewModel
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email,
-                ImageUrl = user.ImageUrl,
-                IsSuspended = user.IsSuspended
-            };
-
-            return View("Edit", viewModel);
+            return modelOrError.IsSuccess
+                ? (IActionResult)View(modelOrError.Value)
+                : (IActionResult)BadRequest(modelOrError.Error);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles="Admin")]
-        public ActionResult Edit(ApplicationUser user)
+        public async Task<IActionResult> Edit (Edit.Command command)
         {
-            var userInDb = _repository.GetPhotographerWithExhibits(user.Id);
+            var result = await _mediator.Send (command);
 
-            if (userInDb == null)
-                return NotFound();
-
-            userInDb.Name = user.Name;
-            userInDb.ImageUrl = user.ImageUrl;
-            userInDb.IsSuspended = user.IsSuspended;
-
-            if (user.IsSuspended == true)
-                userInDb.Suspend();
-
-            _repository.SaveAll();
-
-            return RedirectToAction("Index");
+            return result.IsSuccess
+                ? (IActionResult)RedirectToAction ("Index")
+                : (IActionResult)BadRequest(result.Error);
         }
-    }
-
-    public class UserViewModel
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string ImageUrl { get; set; }
-        public bool IsSuspended { get; set; }
     }
 }

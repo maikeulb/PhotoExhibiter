@@ -1,6 +1,6 @@
-@model PhotoExhibiter.Features.ManageExhibits.ExhibitViewModel
+@model PhotoExhibiter.Features.ManageExhibits.Edit.Command
 @{
-    ViewData["Title"] = "Model.Heading";
+    ViewData["Title"] = "Manage Exhibit Edit";
 }
 
 <h2 class="text-center mt-3 mb-3">@Model.Photographer's exhibit</h2>
@@ -9,7 +9,7 @@
   <div class="row justify-content-center mt-4">
 
     <div class="col-lg-6 col-sm-12 push-sm-12 px-4">
-      <form asp-controller="Exhibits" asp-action="Edit" method="post"
+      <form asp-controller="ManageExhibits" asp-action="Edit" method="post"
         class="form-group" role="form" novalidate>
         <div asp-validation-summary="All" class="text-danger"></div>
         <input asp-for="Id" name="Id" type="hidden" value="@Model.Id" />

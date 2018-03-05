@@ -1,8 +1,5 @@
-- polish fluent validation
-- route parameters, jsut ID
-
--check form display (genreId)
 -toggle cancel and suspension
 -toggle suspension
-**check to make sure entity ids are passed such, entity ids and not entityId
-**check model.title all routes
+**filter by date created in exhibits and users
+*fix date validator
+*remove div from home

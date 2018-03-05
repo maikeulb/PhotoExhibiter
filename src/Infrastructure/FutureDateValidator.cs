@@ -19,7 +19,7 @@ namespace PhotoExhibiter.Infrastructure
                 DateTimeStyles.None,
                 out dateTime);
 
-            if (isValid & dateTime > DateTime.Now)
+            if (isValid & dateTime >= DateTime.Now)
                 return true;
 
             return false;

@@ -61,14 +61,13 @@ namespace PhotoExhibiter.Entities
                 attendee.Notify (notification);
         }
 
-        public void ManagerUpdate (string location, DateTime dateTime, string imageUrl, int genreId)
+        public void ManagerUpdate (string location, DateTime dateTime, string imageUrl)
         {
             var notification = Notification.ExhibitUpdated (this, DateTime, Location);
 
             Location = location;
             DateTime = dateTime;
             ImageUrl = imageUrl;
-            GenreId = genreId;
 
             foreach (var attendee in Attendances.Select (a => a.Attendee))
                 attendee.Notify (notification);

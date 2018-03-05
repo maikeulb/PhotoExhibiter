@@ -33,6 +33,8 @@ namespace PhotoExhibiter.Apis.Exhibits
         [HttpDelete]
         public async Task<IActionResult> Cancel ([FromBody] Cancel.Command command)
         {
+            command.UserId = _userManager.GetUserId (User);
+
             var result = await _mediator.Send (command);
 
             return result.IsSuccess ?

@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Data.Seed;
 using PhotoExhibiter.Data.Context;
+using NLog.Web;
 
 namespace PhotoExhibiter
 {
@@ -49,6 +50,7 @@ namespace PhotoExhibiter
         public static IWebHost BuildWebHost (string[] args) =>
             WebHost.CreateDefaultBuilder (args)
             .UseStartup<Startup> ()
+            .UseNLog()
             .Build ();
     }
 }
