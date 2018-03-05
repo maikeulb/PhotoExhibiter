@@ -28,7 +28,7 @@ namespace PhotoExhibiter.Features.ManageUsers
 
         public ActionResult Details(string id)
         {
-            var user = _repository.GetUserById(id);
+            var user = _repository.GetPhotographer(id);
 
             if (user  == null)
                 return NotFound();
@@ -38,7 +38,7 @@ namespace PhotoExhibiter.Features.ManageUsers
 
         public ActionResult Edit(string id)
         {
-            var user = _repository.GetUserById(id);
+            var user = _repository.GetPhotographer(id);
 
             if (user == null)
                 return NotFound();
@@ -59,11 +59,17 @@ namespace PhotoExhibiter.Features.ManageUsers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ApplicationUser user)
         {
-            var userInDb = _repository.GetUserById(user.Id);
+            var userInDb = _repository.GetPhotographer(user.Id);
+
+            if (userInDb == null)
+                return NotFound();
 
             userInDb.Name = user.Name;
             userInDb.ImageUrl = user.ImageUrl;
             userInDb.IsSuspended = user.IsSuspended;
+
+            if (user.IsSuspended == true)
+                userInDb.Cancel();
 
             _repository.SaveAll();
 
@@ -79,5 +85,4 @@ namespace PhotoExhibiter.Features.ManageUsers
         public string ImageUrl { get; set; }
         public bool IsSuspended { get; set; }
     }
-
 }

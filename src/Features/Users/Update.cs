@@ -33,7 +33,7 @@ namespace PhotoExhibiter.Features.Users
 
             public Result Handle (Command message)
             {
-                var applicationUser = _repository.GetUserById (message.Id);
+                var applicationUser = _repository.GetPhotographer (message.Id);
 
                 if (applicationUser == null)
                     return Result.Fail<Command> ("User does not exit");

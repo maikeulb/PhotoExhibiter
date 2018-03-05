@@ -5,12 +5,13 @@ namespace PhotoExhibiter.Entities.Interfaces
 {
     public interface IExhibitRepository
     {
-        Exhibit GetExhibit (int exhibitId);
-        IEnumerable<Exhibit> GetUpcomingExhibitsByPhotographer (string photographerId);
-        Exhibit GetExhibitWithAttendees (int exhibitId);
-        IEnumerable<Exhibit> GetExhibitsUserAttending (string userId);
-        void Add (Exhibit exhibit);
+        IEnumerable<Exhibit> GetAllExhibits (string searchTerm = null);
         IEnumerable<Exhibit> GetUpcomingExhibits (string searchTerm = null);
+        IEnumerable<Exhibit> GetUpcomingExhibitsByPhotographer (string photographerId);
+        IEnumerable<Exhibit> GetExhibitsUserAttending (string userId);
+        Exhibit GetExhibit (int exhibitId);
+        Exhibit GetExhibitWithAttendees (int exhibitId);
+        void Add (Exhibit exhibit);
         bool SaveAll ();
     }
 }

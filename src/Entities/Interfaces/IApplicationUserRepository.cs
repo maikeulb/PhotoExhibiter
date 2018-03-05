@@ -5,10 +5,10 @@ namespace PhotoExhibiter.Entities.Interfaces
 {
     public interface IApplicationUserRepository
     {
-        IEnumerable<ApplicationUser> GetPhotographersFollowedBy (string userId);
-        IEnumerable<ApplicationUser> GetPhotographersFollowing (string userId);
-        string GetPhotographerEmailById (string userId);
-        ApplicationUser GetUserById (string userId);
+        IEnumerable<ApplicationUser> GetAllPhotographers (string id);
+        IEnumerable<ApplicationUser> GetPhotographerFollowers (string id);
+        IEnumerable<ApplicationUser> GetPhotographerFollowing (string id);
+        ApplicationUser GetPhotographer (string id);
         bool SaveAll ();
     }
 }

@@ -12,7 +12,14 @@ namespace PhotoExhibiter.Data.Repositories
 
         public ApplicationUserRepository (ApplicationDbContext context) => _context = context;
 
-        public IEnumerable<ApplicationUser> GetPhotographersFollowedBy (string id)
+        public IEnumerable<ApplicationUser> GetAllPhotographers (string searchTerm = null)
+        {
+            var photographers = _context.Users;;
+
+            return photographers.ToList ();
+        }
+
+        public IEnumerable<ApplicationUser> GetPhotographerFollowers (string id)
         {
             return _context.Followings
                 .Where (f => f.FollowerId == id)
@@ -20,7 +27,7 @@ namespace PhotoExhibiter.Data.Repositories
                 .ToList ();
         }
 
-        public IEnumerable<ApplicationUser> GetPhotographersFollowing (string id)
+        public IEnumerable<ApplicationUser> GetPhotographerFollowing (string id)
         {
             return _context.Followings
                 .Where (f => f.FolloweeId == id)
@@ -28,15 +35,7 @@ namespace PhotoExhibiter.Data.Repositories
                 .ToList ();
         }
 
-        public string GetPhotographerEmailById (string id)
-        {
-            return _context.Users
-                .Where (u => u.Id == id)
-                .Select (u => u.Email)
-                .SingleOrDefault();
-        }
-
-        public ApplicationUser GetUserById (string id)
+        public ApplicationUser GetPhotographer (string id)
         {
             return _context.Users
                 .Where (u => u.Id == id)

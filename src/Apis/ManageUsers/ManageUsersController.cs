@@ -18,18 +18,86 @@ namespace PhotoExhibiter.Apis.ManageUsers
     [Route ("api/[Controller]")]
     public class ManageUsersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationUserRepository _repository;
 
-        public ManageUsersController (ApplicationDbContext context) => _context = context;
+        public ManageUsersController (IApplicationUserRepository repository) => _repository = repository;
 
-        public IActionResult GetUsers (string query = null)
+        public IActionResult GetPhotographers (string query = null)
         {
-            var usersQuery = _context.Users;
+            var usersInDb = _repository.GetAllPhotographers(query);
 
-            var usersDtos = usersQuery
-                .ToList();
+            var usersDto = usersInDb.Select( u =>  new UserDto()
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email,
+                ImageUrl = u.ImageUrl,
+                IsSuspended = u.IsSuspended
+            });
             
-            return Ok(usersDtos);    
+            return Ok(usersDto);    
         }
+
+        public IActionResult GetPhotographer(string id)
+        {
+            var userInDb = _repository.GetPhotographer(id);
+
+            if (userInDb == null)
+                return NotFound();
+
+            var userDto = new UserDto
+            {
+                Id = userInDb.Id,
+                Name = userInDb.Name,
+                Email = userInDb.Email,
+                ImageUrl = userInDb.ImageUrl,
+                IsSuspended = userInDb.IsSuspended
+            };
+
+            return Ok(userDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditPhotographer(string id, UserDto userDto)
+        {
+            var userInDb = _repository.GetPhotographer(id);
+
+            if (userInDb == null)
+                return NotFound();
+
+            userInDb.Name = userDto.Name;
+            userInDb.ImageUrl = userDto.ImageUrl;
+
+            if (userDto.IsSuspended == true)
+                userInDb.Cancel();
+
+            _repository.SaveAll();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IActionResult CancelPhotographer(string id)
+        {
+            var userInDb = _repository.GetPhotographer (id);
+
+            if (userInDb == null)
+                return NotFound();
+
+            userInDb.Cancel();
+            _repository.SaveAll();
+
+            return Ok();
+        }
+    }
+
+    public class UserDto
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string ImageUrl { get; set; }
+        public bool IsSuspended { get; set; }
     }
 }
