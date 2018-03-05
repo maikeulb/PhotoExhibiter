@@ -59,9 +59,11 @@
         </div>
         <div >
             <span>
-              <a asp-controller="Users" asp-action="Index" asp-route-id="@exhibit.Photographer.Id"> 
+              <a asp-controller="Users" asp-action="Index"
+                asp-route-photographerId="@exhibit.Photographer.Id"> 
                 @exhibit.Photographer.Name
               </a> 
+
               <div class="date">
                 <span class="month">
                   @exhibit.DateTime.ToString("MMM")

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using FluentValidation;
 using MediatR;
-using PhotoExhibiter.Features;
-using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
+using PhotoExhibiter.Features;
+using PhotoExhibiter.Infrastructure;
 
 namespace PhotoExhibiter.Features.Exhibits
 {

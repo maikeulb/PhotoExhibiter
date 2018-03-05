@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Data.Context;
 using PhotoExhibiter.Data.Repositories;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
+using PhotoExhibiter.Infrastructure;
 
 namespace PhotoExhibiter
 {
@@ -44,10 +44,10 @@ namespace PhotoExhibiter
             services.AddScoped<INotificationRepository, NotificationRepository> ();
             services.AddScoped<IUserNotificationRepository, UserNotificationRepository> ();
 
-            services.AddMvc()
-            /* services.AddMvc (options => */
+            services.AddMvc ()
+                /* services.AddMvc (options => */
                 /* { */
-                    /* options.Filters.Add (typeof (ValidatorActionFilter)); */
+                /* options.Filters.Add (typeof (ValidatorActionFilter)); */
                 /* }) */
                 .AddFeatureFolders ()
                 .AddFluentValidation (cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup> (); });
@@ -56,7 +56,7 @@ namespace PhotoExhibiter
             services.AddAutoMapper ();
             Mapper.AssertConfigurationIsValid ();
 
-            services.AddMemoryCache();
+            services.AddMemoryCache ();
         }
 
         public void Configure (IApplicationBuilder app, IHostingEnvironment env)
@@ -77,7 +77,7 @@ namespace PhotoExhibiter
 
             // app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
-            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+            app.UseStatusCodePagesWithReExecute ("/StatusCode/{0}");
 
             app.UseMvc (routes =>
             {

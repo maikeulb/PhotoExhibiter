@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PhotoExhibiter.Data.Context;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
@@ -14,9 +15,8 @@ namespace PhotoExhibiter.Data.Repositories
 
         public IEnumerable<ApplicationUser> GetAllPhotographers (string searchTerm = null)
         {
-            var photographers = _context.Users;;
-
-            return photographers.ToList ();
+            return _context.Users
+                .ToList ();
         }
 
         public IEnumerable<ApplicationUser> GetPhotographerFollowers (string id)
@@ -39,9 +39,17 @@ namespace PhotoExhibiter.Data.Repositories
         {
             return _context.Users
                 .Where (u => u.Id == id)
-                .SingleOrDefault();
+                .SingleOrDefault ();
         }
-  
+
+        public ApplicationUser GetPhotographerWithExhibits (string id)
+        {
+            return _context.Users
+                .Include (u => u.Exhibits)
+                .Where (u => u.Id == id)
+                .SingleOrDefault ();
+        }
+
         public bool SaveAll () => _context.SaveChanges () > 0;
     }
 }

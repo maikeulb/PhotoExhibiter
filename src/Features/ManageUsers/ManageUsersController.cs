@@ -59,7 +59,7 @@ namespace PhotoExhibiter.Features.ManageUsers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ApplicationUser user)
         {
-            var userInDb = _repository.GetPhotographer(user.Id);
+            var userInDb = _repository.GetPhotographerWithExhibits(user.Id);
 
             if (userInDb == null)
                 return NotFound();

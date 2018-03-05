@@ -61,7 +61,7 @@ namespace PhotoExhibiter.Apis.ManageUsers
         [HttpDelete]
         public IActionResult Cancel([FromBody]CancelDto command)
         {
-            var userInDb = _repository.GetPhotographer (command.Id);
+            var userInDb = _repository.GetPhotographerWithExhibits (command.Id);
 
             if (userInDb == null)
                 return NotFound();
