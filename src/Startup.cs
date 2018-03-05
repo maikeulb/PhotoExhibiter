@@ -77,6 +77,8 @@ namespace PhotoExhibiter
 
             // app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+
             app.UseMvc (routes =>
             {
                 routes.MapRoute (

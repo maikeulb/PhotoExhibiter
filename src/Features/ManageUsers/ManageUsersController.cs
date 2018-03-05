@@ -69,7 +69,7 @@ namespace PhotoExhibiter.Features.ManageUsers
             userInDb.IsSuspended = user.IsSuspended;
 
             if (user.IsSuspended == true)
-                userInDb.Cancel();
+                userInDb.Suspend();
 
             _repository.SaveAll();
 

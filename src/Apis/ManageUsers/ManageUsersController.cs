@@ -51,7 +51,7 @@ namespace PhotoExhibiter.Apis.ManageUsers
             userInDb.ImageUrl = userDto.ImageUrl;
 
             if (userDto.IsSuspended == true)
-                userInDb.Cancel();
+                userInDb.Suspend();
 
             _repository.SaveAll();
 
@@ -66,7 +66,7 @@ namespace PhotoExhibiter.Apis.ManageUsers
             if (userInDb == null)
                 return NotFound();
 
-            userInDb.Cancel();
+            userInDb.Suspend();
             _repository.SaveAll();
 
             return Ok();

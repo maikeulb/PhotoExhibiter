@@ -12,10 +12,12 @@ namespace PhotoExhibiter.Entities
 
         private readonly List<Following> _followers = new List<Following> ();
         private readonly List<Following> _followees = new List<Following> ();
+        private readonly List<Exhibit> _exhibits = new List<Exhibit> ();
         private readonly List<UserNotification> _userNotifications = new List<UserNotification> ();
 
         public IEnumerable<Following> Followers => _followers.AsReadOnly ();
         public IEnumerable<Following> Followees => _followees.AsReadOnly ();
+        public IEnumerable<Exhibit> Exhibits => _exhibits.AsReadOnly ();
         public IEnumerable<UserNotification> UserNotifications => _userNotifications.AsReadOnly ();
 
         public ApplicationUser() : base() {} 
@@ -34,14 +36,14 @@ namespace PhotoExhibiter.Entities
 
         public void Notify (Notification notification) => _userNotifications.Add (UserNotification.Create (this, notification));
 
-        public void Cancel ()
+        public void Suspend ()
         {
             IsSuspended = true;
 
-            /* foreach (var exhibit in Exhibits) */
-            /* { */
-                /* exhibit.Cancel (); */
-            /* } */
+            foreach (var exhibit in Exhibits)
+            {
+                exhibit.Cancel ();
+            }
         }
     }
 }

@@ -12,6 +12,10 @@ namespace PhotoExhibiter.Data.Mappings
                 .IsRequired ()
                 .HasMaxLength (100);
 
+            builder.HasMany (au => au.Exhibits)
+                .WithOne (e => e.Photographer)
+                .OnDelete (DeleteBehavior.Restrict);
+
             builder.HasMany (au => au.Followers)
                 .WithOne (f => f.Followee)
                 .OnDelete (DeleteBehavior.Restrict);

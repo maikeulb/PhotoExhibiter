@@ -39,6 +39,10 @@ namespace PhotoExhibiter.Data.Context
                 .Metadata.FindNavigation(nameof(ApplicationUser.Followees))
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
 
+            builder.Entity<ApplicationUser>()
+                .Metadata.FindNavigation(nameof(ApplicationUser.Exhibits))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+
             base.OnModelCreating (builder);
         }
     }
