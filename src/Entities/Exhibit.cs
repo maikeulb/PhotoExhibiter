@@ -39,7 +39,7 @@ namespace PhotoExhibiter.Entities
         {
             IsCanceled = true;
 
-            var notification = Notification.ExhibitCanceled (this); // event maybe
+            var notification = Notification.ExhibitCanceled (this);
 
             foreach (var attendee in Attendances.Select (a => a.Attendee))
             {

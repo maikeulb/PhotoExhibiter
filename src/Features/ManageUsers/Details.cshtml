@@ -1,0 +1,32 @@
+@model PhotoExhibiter.Entities.ApplicationUser
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h2 class="text-center mt-3 mb-3">@Model.Name</h2>
+
+<main class="container">
+  <div class="row mt-4">
+    <div class="col-lg-6 col-sm-12 push-sm-12">
+      <ul class="list-group">
+        <li class="list-group-item">Name: @Model.Name</li>
+        <li class="list-group-item">Email: @Model.Email</li>
+        <li class="list-group-item">ImageUrl: @Model.ImageUrl</li>
+        <li class="list-group-item">IsSuspended: @Model.IsSuspended</li>
+      </ul>
+    </div>
+
+    <div class="col-lg-6 col-sm-12">
+      @if (String.IsNullOrEmpty(Model.ImageUrl))
+      {
+         <img src="http://placehold.it/400x300" class="img-target my-2"
+         style="max-height:400px; max-width:300px" />
+      }
+      else
+      {
+        <img src="@Model.ImageUrl" class="img-target my-2" 
+        style="max-heigth:400px max-width:300px" />
+      }
+    </div>
+  </div>
+</main>

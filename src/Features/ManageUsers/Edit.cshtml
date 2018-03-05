@@ -1,0 +1,65 @@
+@model PhotoExhibiter.Features.ManageUsers.UserViewModel
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h2 class="text-center mt-2">@Model.Name</h2>
+
+<main class="container">
+  <div class="row mt-4">
+    <div class="col-lg-6 col-sm-12 push-sm-12">
+
+      <form asp-controller="ManageUsers" asp-action="Edit" method="post"
+        class="form-group" role="form" novalidate>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="Id" name="Id" type="hidden" value="@Model.Id" />
+
+        <div class="form-group">
+          <label for="Name" asp-for="Name"></label>
+          <input asp-for="Name" type="text" class="form-control" required>
+          <div class="invalid-feedback">User needs a Name!</div>
+          <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="Email" asp-for="Email"></label>
+          <input asp-for="Email" type="text" class="form-control" required>
+          <div class="invalid-feedback">User needs an Email!</div>
+          <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="IsSuspended" asp-for="IsSuspended"></label>
+          <input asp-for="IsSuspended" type="text" class="form-control" required>
+          <div class="invalid-feedback">Is user active or Suspended?</div>
+          <span asp-validation-for="IsSuspended" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+          <label asp-for="ImageUrl"></label>
+          <input for="Image" asp-for="ImageUrl" type="url" class="form-control
+          img-inp" placeholder =
+          "http://" required>
+          <span asp-validation-for="ImageUrl" class="text-danger"></span>
+          <div class="invalid-feedback">Please upload and image!</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+
+    <div class="col-lg-6 col-sm-12">
+      @if (String.IsNullOrEmpty(Model.ImageUrl))
+      {
+         <img src="http://placehold.it/400x300" class="img-target my-2"
+         style="max-height:400px; max-width:300px" />
+      }
+      else
+      {
+        <img src="@Model.ImageUrl" class="img-target my-2" 
+        style="max-heigth:400px max-width:300px" />
+      }
+    </div>
+
+  </div>
+</main>

@@ -8,6 +8,7 @@ namespace PhotoExhibiter.Entities
     {
         public string Name { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsSuspended { get; set; }
 
         private readonly List<Following> _followers = new List<Following> ();
         private readonly List<Following> _followees = new List<Following> ();
@@ -32,5 +33,15 @@ namespace PhotoExhibiter.Entities
         }
 
         public void Notify (Notification notification) => _userNotifications.Add (UserNotification.Create (this, notification));
+
+        public void Cancel ()
+        {
+            IsSuspended = true;
+
+            /* foreach (var exhibit in Exhibits) */
+            /* { */
+                /* exhibit.Cancel (); */
+            /* } */
+        }
     }
 }
