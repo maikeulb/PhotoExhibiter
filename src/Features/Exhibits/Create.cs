@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using MediatR;
 using PhotoExhibiter.Entities;

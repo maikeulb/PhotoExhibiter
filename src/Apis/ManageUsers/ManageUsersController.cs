@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -39,26 +40,26 @@ namespace PhotoExhibiter.Apis.ManageUsers
             return Ok(usersDto);    
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin")]
-        public IActionResult EditPhotographer(string id, UserDto userDto)
-        {
-            var userInDb = _repository.GetPhotographer(id);
+        /* [HttpPost] */
+        /* [ValidateAntiForgeryToken] */
+        /* [Authorize(Roles="Admin")] */
+        /* public IActionResult EditPhotographer(string id, UserDto userDto) */
+        /* { */
+        /*     var userInDb = _repository.GetPhotographer(id); */
 
-            if (userInDb == null)
-                return NotFound();
+        /*     if (userInDb == null) */
+        /*         return NotFound(); */
 
-            userInDb.Name = userDto.Name;
-            userInDb.ImageUrl = userDto.ImageUrl;
+        /*     userInDb.Name = userDto.Name; */
+        /*     userInDb.ImageUrl = userDto.ImageUrl; */
 
-            if (userDto.IsSuspended == true)
-                userInDb.Suspend();
+        /*     if (userDto.IsSuspended == true) */
+        /*         userInDb.Suspend(); */
 
-            _repository.SaveAll();
+        /*     _repository.SaveAll(); */
 
-            return Ok();
-        }
+        /*     return Ok(); */
+        /* } */
 
         [HttpDelete]
         [Authorize(Roles="Admin")]

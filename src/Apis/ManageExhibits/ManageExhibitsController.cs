@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -42,29 +43,29 @@ namespace PhotoExhibiter.Apis.ManageExhibits
             return Ok(exhibitsDto);    
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin")]
-        public IActionResult EditExhibit(int id, ExhibitDto exhibitDto)
-        {
-            var exhibitInDb = _repository.GetExhibit(id);
+        /* [HttpPost] */
+        /* [ValidateAntiForgeryToken] */
+        /* [Authorize(Roles="Admin")] */
+        /* public IActionResult EditExhibit(int id, ExhibitDto exhibitDto) */
+        /* { */
+        /*     var exhibitInDb = _repository.GetExhibit(id); */
 
-            if (exhibitInDb == null)
-                return NotFound();
+        /*     if (exhibitInDb == null) */
+        /*         return NotFound(); */
 
-            exhibitInDb.ManagerUpdate( 
-                    exhibitDto.Location,
-                    exhibitDto.DateTime,
-                    exhibitDto.ImageUrl,
-                    exhibitDto.GenreId);
+        /*     exhibitInDb.ManagerUpdate( */ 
+        /*             exhibitDto.Location, */
+        /*             exhibitDto.DateTime, */
+        /*             exhibitDto.ImageUrl, */
+        /*             exhibitDto.GenreId); */
             
-            if (exhibitDto.IsCanceled == true)
-                exhibitInDb.Cancel();
+        /*     if (exhibitDto.IsCanceled == true) */
+        /*         exhibitInDb.Cancel(); */
 
-            _repository.SaveAll();
+        /*     _repository.SaveAll(); */
 
-            return Ok();
-        }
+        /*     return Ok(); */
+        /* } */
 
         [HttpDelete]
         [Authorize(Roles="Admin")]
