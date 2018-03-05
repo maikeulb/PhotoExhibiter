@@ -6,33 +6,33 @@ using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
-namespace PhotoExhibiter.Apis.ManageExhibits
+namespace PhotoExhibiter.Apis.ManageUsers
 {
     public class Cancel
     {
         public class Command : IRequest<Result>
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result>
         {
-            private readonly IExhibitRepository _repository;
+            private readonly IApplicationUserRepository _repository;
 
-            public Handler (IExhibitRepository repository)
+            public Handler (IApplicationUserRepository repository)
             {
                 _repository = repository;
             }
 
             public Result Handle (Command message)
             {
-                var exhibit = _repository.GetExhibitWithAttendees (message.Id);
-                if (exhibit == null)
+                var user = _repository.GetPhotographerWithExhibits (message.Id);
+                if (user == null)
                   return Result.Fail<Command> ("Exhibit does not exist");
-                if (exhibit.IsCanceled)
-                  return Result.Fail<Command> ("Exhibit is cancelled.");
+                if (user.IsSuspended)
+                  return Result.Fail<Command> ("Exhibit is already suspended.");
 
-                exhibit.Cancel ();
+                user.Suspend();
                 _repository.SaveAll ();
 
                 return Result.Ok ();

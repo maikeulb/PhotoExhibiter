@@ -19,75 +19,30 @@ namespace PhotoExhibiter.Apis.ManageUsers
     [Route ("api/[Controller]")]
     public class ManageUsersController : Controller
     {
-        private readonly IApplicationUserRepository _repository;
+        private readonly IMediator _mediator;
 
-        public ManageUsersController (IApplicationUserRepository repository) => _repository = repository;
-
-        [Authorize(Roles="Admin, DemoAdmin")]
-        public IActionResult GetPhotographers (string query = null)
+        public ManageUsersController (IMediator mediator)
         {
-            var usersInDb = _repository.GetAllPhotographers(query);
-
-            var usersDto = usersInDb.Select( u =>  new UserDto()
-            {
-                Id = u.Id,
-                Name = u.Name,
-                Email = u.Email,
-                ImageUrl = u.ImageUrl,
-                IsSuspended = u.IsSuspended
-            });
-            
-            return Ok(usersDto);    
+            _mediator = mediator;
         }
 
-        /* [HttpPost] */
-        /* [ValidateAntiForgeryToken] */
-        /* [Authorize(Roles="Admin")] */
-        /* public IActionResult EditPhotographer(string id, UserDto userDto) */
-        /* { */
-        /*     var userInDb = _repository.GetPhotographer(id); */
+        [Authorize(Roles="Admin, DemoAdmin")]
+        public async Task<IActionResult> GetPhotographers (GetPhotographers.Query query)
+        {
+            var model = await _mediator.Send (query);
 
-        /*     if (userInDb == null) */
-        /*         return NotFound(); */
-
-        /*     userInDb.Name = userDto.Name; */
-        /*     userInDb.ImageUrl = userDto.ImageUrl; */
-
-        /*     if (userDto.IsSuspended == true) */
-        /*         userInDb.Suspend(); */
-
-        /*     _repository.SaveAll(); */
-
-        /*     return Ok(); */
-        /* } */
+            return Ok(model);    
+        }
 
         [HttpDelete]
         [Authorize(Roles="Admin")]
-        public IActionResult Cancel([FromBody]CancelDto command)
+        public async Task<IActionResult> Cancel ([FromBody] Cancel.Command command)
         {
-            var userInDb = _repository.GetPhotographerWithExhibits (command.Id);
+            var result = await _mediator.Send (command);
 
-            if (userInDb == null)
-                return NotFound();
-
-            userInDb.Suspend();
-            _repository.SaveAll();
-
-            return Ok();
+            return result.IsSuccess ?
+            (IActionResult) Ok () :
+            (IActionResult) BadRequest (result.Error);
         }
-    }
-
-    public class CancelDto
-    {
-        public string Id { get; set; }
-    }
-
-    public class UserDto
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string ImageUrl { get; set; }
-        public bool IsSuspended { get; set; }
     }
 }

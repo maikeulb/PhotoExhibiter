@@ -19,87 +19,30 @@ namespace PhotoExhibiter.Apis.ManageExhibits
     [Route ("api/[Controller]")]
     public class ManageExhibitsController : Controller
     {
-        private readonly IExhibitRepository _repository;
+        private readonly IMediator _mediator;
 
-        public ManageExhibitsController (IExhibitRepository repository) => _repository = repository;
-
-        [Authorize(Roles="Admin, DemoAdmin")]
-        public IActionResult GetExhibits (string query = null)
+        public ManageExhibitsController (IMediator mediator)
         {
-            var exhibitsInDb = _repository.GetAllExhibits(query);
-
-            var exhibitsDto = exhibitsInDb.Select( e =>  new ExhibitDto()
-            {
-                Id = e.Id,
-                Genre = e.Genre.Name,
-                Photographer = e.Photographer.Name,
-                Date = e.DateTime.ToString ("d MMM yyyy"),
-                Location = e.Location,
-                ImageUrl = e.ImageUrl,
-                DateTime = e.DateTime,
-                IsCanceled = e.IsCanceled,
-            });
-            
-            return Ok(exhibitsDto);    
+            _mediator = mediator;
         }
 
-        /* [HttpPost] */
-        /* [ValidateAntiForgeryToken] */
-        /* [Authorize(Roles="Admin")] */
-        /* public IActionResult EditExhibit(int id, ExhibitDto exhibitDto) */
-        /* { */
-        /*     var exhibitInDb = _repository.GetExhibit(id); */
+        [Authorize(Roles="Admin, DemoAdmin")]
+        public async Task<IActionResult> GetExhibits (GetExhibits.Query query)
+        {
+            var model = await _mediator.Send (query);
 
-        /*     if (exhibitInDb == null) */
-        /*         return NotFound(); */
-
-        /*     exhibitInDb.ManagerUpdate( */ 
-        /*             exhibitDto.Location, */
-        /*             exhibitDto.DateTime, */
-        /*             exhibitDto.ImageUrl, */
-        /*             exhibitDto.GenreId); */
-            
-        /*     if (exhibitDto.IsCanceled == true) */
-        /*         exhibitInDb.Cancel(); */
-
-        /*     _repository.SaveAll(); */
-
-        /*     return Ok(); */
-        /* } */
+            return Ok(model);    
+        }
 
         [HttpDelete]
         [Authorize(Roles="Admin")]
-        public IActionResult Cancel([FromBody]CancelDto command)
+        public async Task<IActionResult> Cancel ([FromBody] Cancel.Command command)
         {
-            var exhibitInDb = _repository.GetExhibitWithAttendees (command.Id);
+            var result = await _mediator.Send (command);
 
-            if (exhibitInDb == null)
-                return NotFound();
-
-            exhibitInDb.Cancel();
-            _repository.SaveAll();
-
-            return Ok();
+            return result.IsSuccess ?
+            (IActionResult) Ok () :
+            (IActionResult) BadRequest (result.Error);
         }
-    }
-
-    public class ExhibitDto
-    {
-        public int Id { get; set; }
-        public int GenreId { get; set; }
-        public string Date { get; set; }
-        public string Genre { get; set; }
-        public string UserId { get; set; }
-        public string Location { get; set; }
-        public string Photographer { get; set; }
-        public string ImageUrl { get; set; }
-        public bool IsCanceled { get; set; }
-        public DateTime DateTime { get; set; }
-        public IEnumerable<Genre> Genres { get; set; }
-    }
-
-    public class CancelDto
-    {
-        public int Id { get; set; }
     }
 }
