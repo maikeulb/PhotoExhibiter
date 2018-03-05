@@ -1,17 +1,22 @@
 @model IEnumerable<PhotoExhibiter.Entities.Exhibit>
 
-<h2>Application Users</h2>
+<h2 class="text-center mt-3 mb-3">Manage Exhibits</h2>
 
-<table id="users" class="table table-bordered table-hover">
+<main class="container mt-4">
+  <table id="exhibits" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Photographer</th>
+            <th>Location</th>
+            <th>Date</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody></tbody>
-</table>
+  </table>
+</main>
+
 @section scripts
 {
     <script>
@@ -23,36 +28,53 @@
                 },
                 columns: [
                     {
-                        data: "name",
-                        render: function(data, type, user) {
-                            return "<a href='/manageusers/edit/" + user.id + "'>" +
-                            user.name + "</a>";
+                        data: "id",
+                        render: function(data, type, exhibit) {
+                            return "<a href='/manageexhibits/edit/" +
+                            exhibit.id + "'>" + exhibit.id + "</a>" ;
                        }
                     },
                     {
-                        data: "name",
-                        render: function(data, type, user) {
-                            return "<a href='/manageusers/edit/" + user.id + "'>" +
-                            user.name + "</a>";
+                        data: "location",
+                        render: function(data, type, exhibit) {
+                            return "<a href='/manageexhibits/edit/" +
+                            exhibit.id + "'>" + exhibit.location + "</a>" ;
+                        }
+                    },
+
+                    {
+                        data: "photographerid",
+                        render: function(data, type, exhibit) {
+                            return "<a href='/manageexhibits/edit/" +
+                            exhibit.id + "'>" + exhibit.photographerId + "</a>" ;
+                        }
+                    },
+
+                    {
+                        data: "genreid",
+                        render: function(data, type, exhibit) {
+                            return "<a href='/manageexhibits/edit/" +
+                            exhibit.id + "'>" + exhibit.genreId + "</a>" ;
                         }
                     },
                     {
                         data: "id",
                         render: function(data) {
-                            return "<button class='btn btn-secondary js-delete' data-user-id=" + data + ">Delete</button>";
+                            return "<button class='btn btn-secondary js-delete' data-exhibit-id=" + data + ">Delete</button>";
                         }
                     }
                 ]
             });
 
 
-            $("#users").on("click", ".js-delete", function () {
+            $("#exhibits").on("click", ".js-delete", function () {
                 var button = $(this);
 
-                bootbox.confirm("Are you sure you want to delete this user?", function (result) {
+                bootbox.confirm("Are you sure you want to delete this exhibit?", function (result) {
                     if (result) {
                         $.ajax({
-                            url: "/api/manageusers/" + button.attr("data-user-id"),
+                            url: "/api/manageexhibits/" +
+                          button.attr("data-exhibit-id"),
                             method: "DELETE",
                             success: function () {
                                 table.row(button.parents("tr")).remove().draw();

@@ -61,6 +61,19 @@ namespace PhotoExhibiter.Entities
                 attendee.Notify (notification);
         }
 
+        public void ManagerUpdate (string location, DateTime dateTime, string imageUrl, int genreId)
+        {
+            var notification = Notification.ExhibitUpdated (this, DateTime, Location);
+
+            Location = location;
+            DateTime = dateTime;
+            ImageUrl = imageUrl;
+            GenreId = genreId;
+
+            foreach (var attendee in Attendances.Select (a => a.Attendee))
+                attendee.Notify (notification);
+        }
+
         public void AddAttendance (Attendance attendance) => _attendances.Add (attendance);
 
         public void RemoveAttendance (Attendance attendance) => _attendances.Remove (attendance);

@@ -20,8 +20,8 @@ namespace PhotoExhibiter.Features.Exhibits
 
         public class Command : IRequest<Result>
         {
-            public int GenreId { get; set; }
             public int Id { get; set; }
+            public int GenreId { get; set; }
             public string UserId { get; set; }
             public string Location { get; set; }
             public string Date { get; set; }
@@ -55,8 +55,8 @@ namespace PhotoExhibiter.Features.Exhibits
 
                 var command = new Command
                 {
-                    Heading = "Edit an Exhibit",
                     Id = exhibit.Id,
+                    Heading = "Edit an Exhibit",
                     Genres = _genrerepository.GetGenres (),
                     Date = exhibit.DateTime.ToString ("d MMM yyyy"),
                     ImageUrl = exhibit.ImageUrl,

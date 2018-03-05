@@ -22,14 +22,14 @@ namespace PhotoExhibiter.Apis.ManageExhibits
 
         public ManageExhibitsController (ApplicationDbContext context) => _context = context;
 
-        public IActionResult GetUsers (string query = null)
+        public IActionResult GetExhibits (string query = null)
         {
-            var usersQuery = _context.Users;
+            var exhibitsQuery = _context.Exhibits;
 
-            var usersDtos = usersQuery
+            var exhibitsDtos = exhibitsQuery
                 .ToList();
             
-            return Ok(usersDtos);    
+            return Ok(exhibitsDtos);    
         }
     }
 }

@@ -1,0 +1,33 @@
+@model PhotoExhibiter.Features.ManageExhibits.ExhibitViewModel
+@{
+    ViewBag.Title = "Edit Exhibit";
+}
+
+<h2 class="text-center mt-3 mb-3">@Model.Photographer's exhibit</h2>
+
+<main class="container">
+  <div class="row mt-4">
+    <div class="col-lg-6 col-sm-12 push-sm-12">
+      <ul class="list-group">
+        <li class="list-group-item">Photographer: @Model.Photographer</li>
+        <li class="list-group-item">Genre: @Model.Genre</li>
+        <li class="list-group-item">Location: @Model.Location</li>
+        <li class="list-group-item">Date: @Model.Date</li>
+        <li class="list-group-item">IsCanceled: @Model.IsCanceled</li>
+      </ul>
+    </div>
+
+    <div class="col-lg-6 col-sm-12">
+      @if (String.IsNullOrEmpty(Model.ImageUrl))
+      {
+         <img src="http://placehold.it/400x300" class="img-target my-2"
+         style="max-height:400px; max-width:300px" />
+      }
+      else
+      {
+        <img src="@Model.ImageUrl" class="img-target my-2" 
+        style="max-heigth:400px max-width:300px" />
+      }
+    </div>
+  </div>
+</main>
