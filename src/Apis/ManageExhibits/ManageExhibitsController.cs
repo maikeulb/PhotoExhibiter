@@ -24,44 +24,44 @@ namespace PhotoExhibiter.Apis.ManageExhibits
 
         public IActionResult GetExhibits (string query = null)
         {
-            var exhibitsInDb = _repository.GetAllExhibits(query);
+            var exhibitsInDb = _repository.GetAllExhibits();
 
-            var exhibitsDto = exhibitsInDb.Select( e =>  new ExhibitDto()
-            {
-                Id = e.Id,
-                Genre = e.Genre.Name,
-                Photographer = e.Photographer.Name,
-                Date = e.DateTime.ToString ("d MMM yyyy"),
-                Location = e.Location,
-                ImageUrl = e.ImageUrl,
-                DateTime = e.DateTime,
-                IsCanceled = e.IsCanceled,
-            });
+            /* var exhibitsDto = exhibitsInDb.Select( e =>  new ExhibitDto() */
+            /* { */
+            /*     Id = e.Id, */
+            /*     Genre = e.Genre.Name, */
+            /*     Photographer = e.Photographer.Name, */
+            /*     Date = e.DateTime.ToString ("d MMM yyyy"), */
+            /*     Location = e.Location, */
+            /*     ImageUrl = e.ImageUrl, */
+            /*     DateTime = e.DateTime, */
+            /*     IsCanceled = e.IsCanceled, */
+            /* }).ToList(); */
             
-            return Ok(exhibitsDto);    
+            return Ok(exhibitsInDb);    
         }
 
-        public IActionResult GetExhibit(int id)
-        {
-            var exhibitInDb = _repository.GetExhibit(id);
+        /* public IActionResult GetExhibit(int id) */
+        /* { */
+        /*     var exhibitInDb = _repository.GetExhibit(id); */
 
-            if (exhibitInDb == null)
-                return NotFound();
+        /*     if (exhibitInDb == null) */
+        /*         return NotFound(); */
 
-            var exhibitDto = new ExhibitDto
-            {
-                Id = exhibitInDb.Id,
-                Genre = exhibitInDb.Genre.Name,
-                Photographer = exhibitInDb.Photographer.Name,
-                Date = exhibitInDb.DateTime.ToString ("d MMM yyyy"),
-                Location = exhibitInDb.Location,
-                ImageUrl = exhibitInDb.ImageUrl,
-                DateTime = exhibitInDb.DateTime,
-                IsCanceled = exhibitInDb.IsCanceled,
-            };
+        /*     var exhibitDto = new ExhibitDto */
+        /*     { */
+        /*         Id = exhibitInDb.Id, */
+        /*         Genre = exhibitInDb.Genre.Name, */
+        /*         Photographer = exhibitInDb.Photographer.Name, */
+        /*         Date = exhibitInDb.DateTime.ToString ("d MMM yyyy"), */
+        /*         Location = exhibitInDb.Location, */
+        /*         ImageUrl = exhibitInDb.ImageUrl, */
+        /*         DateTime = exhibitInDb.DateTime, */
+        /*         IsCanceled = exhibitInDb.IsCanceled, */
+        /*     }; */
 
-            return Ok(exhibitDto);
-        }
+        /*     return Ok(exhibitDto); */
+        /* } */
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -87,9 +87,9 @@ namespace PhotoExhibiter.Apis.ManageExhibits
         }
 
         [HttpDelete]
-        public IActionResult CancelExhibit(int id)
+        public IActionResult Cancel([FromBody]CancelDto command)
         {
-            var exhibitInDb = _repository.GetExhibitWithAttendees (id);
+            var exhibitInDb = _repository.GetExhibitWithAttendees (command.Id);
 
             if (exhibitInDb == null)
                 return NotFound();
@@ -114,5 +114,10 @@ namespace PhotoExhibiter.Apis.ManageExhibits
         public bool IsCanceled { get; set; }
         public DateTime DateTime { get; set; }
         public IEnumerable<Genre> Genres { get; set; }
+    }
+
+    public class CancelDto
+    {
+        public int Id { get; set; }
     }
 }

@@ -6,9 +6,10 @@
   <table id="users" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
      <thead>
        <tr>
+         <th>Email</th>
          <th>Name</th>
          <th>Edit</th>
-         <th>Delete</th>
+         <th>Suspend</th>
        </tr>
     </thead>
     <tbody></tbody>
@@ -17,51 +18,66 @@
 
 @section scripts
 {
-    <script>
-        $(document).ready(function () {
-            var table = $("#users").DataTable({
-                ajax: {
-                    url: "/api/manageusers",
-                    dataSrc: ""
-                },
-                columns: [
-                    {
-                        data: "name",
-                        render: function(data, type, user) {
-                            return "<a href='/manageusers/edit/" + user.id + "'>" + user.name + "</a>";
-                       }
-                    },
-                    {
-                        data: "name",
-                        render: function(data, type, user) {
-                            return "<a href='/manageusers/edit/" + user.id + "'>" +
-                            user.name + "</a>";
-                        }
-                    },
-                    {
-                        data: "id",
-                        render: function(data) {
-                            return "<button class='btn btn-secondary js-delete' data-user-id=" + data + ">Delete</button>";
-                        }
-                    }
-                ]
-            });
+  <script>
+    $(document).ready(function () {
+      var table = $("#users").DataTable({
+        ajax: {
+          url: "/api/manageusers",
+          dataSrc: ""
+        },
+        columns: [
+          {
+            data: "",
+            render: function(data, type, user) {
+              return "<a href='/ManageUsers/Details/" + 
+                user.id + "'>" + 
+                user.email + "</a>";
+           }
+          },
+          {
+            data: "",
+            render: function(data, type, user) {
+              return "<a href='/ManageUsers/Details/" + 
+                user.id + "'>" + 
+                user.name + "</a>";
+            }
+          },
+          {
+            data: "",
+            render: function(data, type, user) {
+              return "<a class ='btn btn-secondary' href='/ManageUsers/Edit/" + 
+                user.id + "'>" + 
+                "EDIT" + "</a>";
+            }
+          },
+          {
+            data: "id",
+            render: function(data) {
+                return "<button class='btn btn-secondary js-suspend' data-user-id=" + data + ">Suspend</button>";
+            }
+          }
+        ]
+      });
 
-            $("#users").on("click", ".js-delete", function () {
-                var button = $(this);
-
-                bootbox.confirm("Are you sure you want to delete this user?", function (result) {
-                    if (result) {
-                        $.ajax({
-                            url: "/api/manageusers/" + button.attr("data-user-id"),
-                            method: "DELETE",
-                            success: function () {
-                                table.row(button.parents("tr")).remove().draw();
-                            }
-                        });
-                    }
-                });
+      $("#users").on("click", ".js-suspend", function () {
+        var button = $(this);
+        var userId = button.attr("data-user-id");
+        bootbox.confirm("Are you sure you want to suspend this user?", function (result) {
+          if (result) {
+            $.ajax({
+              url: '/api/manageusers/',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                Id: userId 
+              }),
+              method: "DELETE",
+              success: function () {
+                alert('cool')
+              }
             });
+          }
         });
-    </script>
+      });
+    });
+  </script>
 }

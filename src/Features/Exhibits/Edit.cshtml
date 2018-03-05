@@ -7,7 +7,7 @@
 
 <main class="container">
   <div class="row justify-content-center mt-4">
-    <div class="col-lg-6 col-sm-12 push-sm-12">
+    <div class="col-lg-6 col-sm-12 push-sm-12 px-4">
 
       <form asp-controller="Exhibits" asp-action="Edit" method="post"
         class="form-group" role="form" novalidate>
@@ -48,19 +48,20 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>
+        <a button class="btn btn-secondary" asp-action="ManageExhibits">Go Back</a>
       </form>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="text-center col-lg-6 col-sm-12 px-4">
       @if (String.IsNullOrEmpty(Model.ImageUrl))
       {
-         <img src="http://placehold.it/400x300" class="img-target my-2"
-         style="max-height:400px;max-width:300px" />
+         <img src="http://placehold.it/600x400" class="img-target"
+         style="max-height:600px; max-width:400px" />
       }
       else
       {
         <img src="@Model.ImageUrl" class="img-target my-2" 
-        style="max-height:400px max-width:300px" />
+        style="max-heigth:600px; max-width:400px" />
       }
     </div>
 

@@ -38,25 +38,6 @@ namespace PhotoExhibiter.Apis.ManageUsers
             return Ok(usersDto);    
         }
 
-        public IActionResult GetPhotographer(string id)
-        {
-            var userInDb = _repository.GetPhotographer(id);
-
-            if (userInDb == null)
-                return NotFound();
-
-            var userDto = new UserDto
-            {
-                Id = userInDb.Id,
-                Name = userInDb.Name,
-                Email = userInDb.Email,
-                ImageUrl = userInDb.ImageUrl,
-                IsSuspended = userInDb.IsSuspended
-            };
-
-            return Ok(userDto);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditPhotographer(string id, UserDto userDto)
@@ -78,9 +59,9 @@ namespace PhotoExhibiter.Apis.ManageUsers
         }
 
         [HttpDelete]
-        public IActionResult CancelPhotographer(string id)
+        public IActionResult Cancel([FromBody]CancelDto command)
         {
-            var userInDb = _repository.GetPhotographer (id);
+            var userInDb = _repository.GetPhotographer (command.Id);
 
             if (userInDb == null)
                 return NotFound();
@@ -90,6 +71,11 @@ namespace PhotoExhibiter.Apis.ManageUsers
 
             return Ok();
         }
+    }
+
+    public class CancelDto
+    {
+        public string Id { get; set; }
     }
 
     public class UserDto

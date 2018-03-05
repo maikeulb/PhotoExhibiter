@@ -5,13 +5,14 @@
 <main class="container mt-4">
   <table id="exhibits" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
     <thead>
-        <tr>
-            <th>Photographer</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
+      <tr>
+        <th>Photographer</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Genre</th>
+        <th>Edit</th>
+        <th>Cancel</th>
+      </tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -19,70 +20,83 @@
 
 @section scripts
 {
-    <script>
-        $(document).ready(function () {
-            var table = $("#exhibits").DataTable({
-                ajax: {
-                    url: "/api/manageexhibits",
-                    dataSrc: ""
-                },
-                columns: [
-                    {
-                        data: "id",
-                        render: function(data, type, exhibit) {
-                            return "<a href='/manageexhibits/edit/" +
-                            exhibit.id + "'>" + exhibit.id + "</a>" ;
-                       }
-                    },
-                    {
-                        data: "location",
-                        render: function(data, type, exhibit) {
-                            return "<a href='/manageexhibits/edit/" +
-                            exhibit.id + "'>" + exhibit.location + "</a>" ;
-                        }
-                    },
+  <script>
+    $(document).ready(function () {
+      var table = $("#exhibits").DataTable({
+        ajax: {
+          url: "/api/manageexhibits",
+          dataSrc: ""
+        },
+        columns: [
+        {
+          data: "photographer",
+          render: function(data, type, exhibit) {
+            return "<a href='/ManageExhibits/Details/" +
+              exhibit.id + "'>" + 
+              exhibit.photographer.name + "</a>" ;
+          }
+        },
+        {
+          data: "",
+          render: function(data, type, exhibit) {
+            return "<a href='/ManageExhibits/Details/" + 
+              exhibit.id + "'>" + 
+              exhibit.location + "</a>" ;
+          }
+        },
+        {
+          data: "",
+          render: function(data, type, exhibit) {
+            return "<a href='/ManageExhibits/Details/" + 
+              exhibit.id + "'>" + 
+              moment(exhibit.dateTime).format("MMM D YY") + "</a>" ;
+          }
+        },
+        {
+          data: "",
+          render: function(data, type, exhibit) {
+            return "<a href='/ManageExhibits/Details/" + 
+              exhibit.id + "'>" + 
+              exhibit.genre.name + "</a>" ;
+          }
+        },
+        {
+          data: "",
+          render: function(data, type, exhibit) {
+            return "<a class='btn btn-secondary' href='/ManageExhibits/Edit/" + 
+              exhibit.id + "'>" + 
+              "EDIT" + "</a>" ;
+          }
+        },
+        {
+          data: "id",
+          render: function(data) {
+            return "<button class='btn btn-secondary js-cancel' type='button' data-exhibit-id=" + 
+              data + ">CANCEL</button>";
+          }
+        }
+        ]
+      });
 
-                    {
-                        data: "photographerid",
-                        render: function(data, type, exhibit) {
-                            return "<a href='/manageexhibits/edit/" +
-                            exhibit.id + "'>" + exhibit.photographerId + "</a>" ;
-                        }
-                    },
-
-                    {
-                        data: "genreid",
-                        render: function(data, type, exhibit) {
-                            return "<a href='/manageexhibits/edit/" +
-                            exhibit.id + "'>" + exhibit.genreId + "</a>" ;
-                        }
-                    },
-                    {
-                        data: "id",
-                        render: function(data) {
-                            return "<button class='btn btn-secondary js-delete' data-exhibit-id=" + data + ">Delete</button>";
-                        }
-                    }
-                ]
+      $("#exhibits").on("click", ".js-cancel", function () {
+        var button = $(this);
+        var exhibitId = button.attr("data-exhibit-id");
+        bootbox.confirm("Are you sure you want to cancel this exhibit?", function (result) {
+          if (result) {
+            $.ajax({
+              url: '/api/manageexhibits',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                Id: exhibitId 
+              }),
+              method: "DELETE",
+              success: function () {
+                    alert('cool')
+              }
             });
-
-
-            $("#exhibits").on("click", ".js-delete", function () {
-                var button = $(this);
-
-                bootbox.confirm("Are you sure you want to delete this exhibit?", function (result) {
-                    if (result) {
-                        $.ajax({
-                            url: "/api/manageexhibits/" +
-                          button.attr("data-exhibit-id"),
-                            method: "DELETE",
-                            success: function () {
-                                table.row(button.parents("tr")).remove().draw();
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+          }
+      });
+    });
+  });
+  </script>
 }

@@ -72,7 +72,8 @@ else
       }
       else
       {
-        <img src="@Model.ImageUrl" style="width:400px"/>
+      <img src="@Model.ImageUrl" 
+      style="max-height:600px; max-width:400px;" />
       }
       @if (Model.UserId == Model.PhotographerId)
       {
