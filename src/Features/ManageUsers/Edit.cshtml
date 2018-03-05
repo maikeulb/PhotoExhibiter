@@ -23,14 +23,15 @@
 
         <div class="form-group">
           <label for="Email" asp-for="Email"></label>
-          <input asp-for="Email" type="text" class="form-control" required>
+          <input asp-for="Email" type="text" class="form-control" readonly>
           <div class="invalid-feedback">User needs an Email!</div>
           <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="form-group">
           <label for="IsSuspended" asp-for="IsSuspended"></label>
-          <input asp-for="IsSuspended" type="text" class="form-control" required>
+          <input asp-for="IsSuspended" type="text" class="form-control"
+           readonly>
           <div class="invalid-feedback">Is user active or Suspended?</div>
           <span asp-validation-for="IsSuspended" class="text-danger"></span>
         </div>
@@ -44,8 +45,24 @@
           <div class="invalid-feedback">Please upload and image!</div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a class="btn btn-secondary" asp-action="Index">Go Back</a>
+        <div class= "text-lg-left text-md-center">
+          @if (User.IsInRole("Admin"))
+          {
+              <span>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary js-suspend"
+                  data-user-id="@Model.Id">Suspend</button>
+              </span>
+          }
+          else
+          {
+              <span>
+                <button type="submit" class="btn btn-primary" disabled>Save</button>
+                <button type="button" class="btn btn-primary" disabled>Suspend</button>
+              </span>
+          }
+          <a class="btn btn-secondary" asp-action="Index">Go Back</a>
+        </div>
 
       </form>
     </div>
@@ -62,6 +79,32 @@
         style="max-heigth:600px; max-width:400px" />
       }
     </div>
-
   </div>
 </main>
+
+@section scripts
+{
+  <script>
+      $(".js-suspend").on("click", function () {
+        var button = $(this);
+        var userId = button.attr("data-user-id");
+        bootbox.confirm("Are you sure you want to suspend this user?", function (result) {
+          if (result) {
+            $.ajax({
+              url: '/api/manageusers/',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                Id: userId 
+              }),
+              method: "DELETE",
+              success: function () {
+                new Noty({
+                   text: 'Account Suspended'
+               }).setTimeout(2000).show();
+              }
+            });
+          }
+        });
+      });
+  </script>
+}

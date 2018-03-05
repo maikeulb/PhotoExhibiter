@@ -22,49 +22,29 @@ namespace PhotoExhibiter.Apis.ManageExhibits
 
         public ManageExhibitsController (IExhibitRepository repository) => _repository = repository;
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public IActionResult GetExhibits (string query = null)
         {
-            var exhibitsInDb = _repository.GetAllExhibits();
+            var exhibitsInDb = _repository.GetAllExhibits(query);
 
-            /* var exhibitsDto = exhibitsInDb.Select( e =>  new ExhibitDto() */
-            /* { */
-            /*     Id = e.Id, */
-            /*     Genre = e.Genre.Name, */
-            /*     Photographer = e.Photographer.Name, */
-            /*     Date = e.DateTime.ToString ("d MMM yyyy"), */
-            /*     Location = e.Location, */
-            /*     ImageUrl = e.ImageUrl, */
-            /*     DateTime = e.DateTime, */
-            /*     IsCanceled = e.IsCanceled, */
-            /* }).ToList(); */
+            var exhibitsDto = exhibitsInDb.Select( e =>  new ExhibitDto()
+            {
+                Id = e.Id,
+                Genre = e.Genre.Name,
+                Photographer = e.Photographer.Name,
+                Date = e.DateTime.ToString ("d MMM yyyy"),
+                Location = e.Location,
+                ImageUrl = e.ImageUrl,
+                DateTime = e.DateTime,
+                IsCanceled = e.IsCanceled,
+            });
             
-            return Ok(exhibitsInDb);    
+            return Ok(exhibitsDto);    
         }
-
-        /* public IActionResult GetExhibit(int id) */
-        /* { */
-        /*     var exhibitInDb = _repository.GetExhibit(id); */
-
-        /*     if (exhibitInDb == null) */
-        /*         return NotFound(); */
-
-        /*     var exhibitDto = new ExhibitDto */
-        /*     { */
-        /*         Id = exhibitInDb.Id, */
-        /*         Genre = exhibitInDb.Genre.Name, */
-        /*         Photographer = exhibitInDb.Photographer.Name, */
-        /*         Date = exhibitInDb.DateTime.ToString ("d MMM yyyy"), */
-        /*         Location = exhibitInDb.Location, */
-        /*         ImageUrl = exhibitInDb.ImageUrl, */
-        /*         DateTime = exhibitInDb.DateTime, */
-        /*         IsCanceled = exhibitInDb.IsCanceled, */
-        /*     }; */
-
-        /*     return Ok(exhibitDto); */
-        /* } */
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin")]
         public IActionResult EditExhibit(int id, ExhibitDto exhibitDto)
         {
             var exhibitInDb = _repository.GetExhibit(id);
@@ -87,6 +67,7 @@ namespace PhotoExhibiter.Apis.ManageExhibits
         }
 
         [HttpDelete]
+        [Authorize(Roles="Admin")]
         public IActionResult Cancel([FromBody]CancelDto command)
         {
             var exhibitInDb = _repository.GetExhibitWithAttendees (command.Id);

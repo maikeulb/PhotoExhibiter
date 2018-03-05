@@ -1,9 +1,8 @@
 - polish fluent validation
 - route parameters, jsut ID
 
--check security
--check add/assign roles
-**Profile management, delete profile
-*ADD Admin -> profile page
+-check form display (genreId)
+-toggle cancel and suspension
+-toggle suspension
 **check to make sure entity ids are passed such, entity ids and not entityId
-**check model.title
+**check model.title all routes

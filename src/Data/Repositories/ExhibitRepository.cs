@@ -16,11 +16,10 @@ namespace PhotoExhibiter.Data.Repositories
 
         public IEnumerable<Exhibit> GetAllExhibits (string searchTerm = null)
         {
-            var upcomingExhibits = _context.Exhibits
+            return _context.Exhibits
                 .Include (g => g.Photographer)
-                .Include (g => g.Genre);
-
-            return upcomingExhibits.ToList ();
+                .Include (g => g.Genre)
+                .ToList();
         }
 
         public IEnumerable<Exhibit> GetUpcomingExhibits (string searchTerm = null)

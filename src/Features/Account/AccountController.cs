@@ -58,11 +58,11 @@ namespace PhotoExhibiter.Features.Account
                 var result = await _signInManager.PasswordSignInAsync (model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 var user = await _userManager.FindByEmailAsync (model.Email);
 
-                if (user.IsSuspended)  
+                if (user != null && user.IsSuspended)  
                 {
                     return RedirectToAction (nameof (Suspended));
                 }
-                if (result.Succeeded && !user.IsSuspended)
+                if (result.Succeeded)
                 {
                     _logger.LogInformation ("User logged in.");
                     return RedirectToLocal (returnUrl);

@@ -24,7 +24,7 @@
     $(document).ready(function () {
       var table = $("#exhibits").DataTable({
         ajax: {
-          url: "/api/manageexhibits",
+          url: "/api/manageexhibits/",
           dataSrc: ""
         },
         columns: [
@@ -33,7 +33,7 @@
           render: function(data, type, exhibit) {
             return "<a href='/ManageExhibits/Details/" +
               exhibit.id + "'>" + 
-              exhibit.photographer.name + "</a>" ;
+              exhibit.photographer + "</a>" ;
           }
         },
         {
@@ -49,7 +49,7 @@
           render: function(data, type, exhibit) {
             return "<a href='/ManageExhibits/Details/" + 
               exhibit.id + "'>" + 
-              moment(exhibit.dateTime).format("MMM D YY") + "</a>" ;
+              exhibit.date + "</a>" ;
           }
         },
         {
@@ -57,7 +57,7 @@
           render: function(data, type, exhibit) {
             return "<a href='/ManageExhibits/Details/" + 
               exhibit.id + "'>" + 
-              exhibit.genre.name + "</a>" ;
+              exhibit.genre + "</a>" ;
           }
         },
         {

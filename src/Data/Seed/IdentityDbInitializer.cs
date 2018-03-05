@@ -13,8 +13,8 @@ namespace PhotoExhibiter.Data.Seed
             IConfiguration configuration)
         {
             // Default User
-            var userPassword = configuration.GetSection("AppSettings")["UserPassword"];
             var userEmail = configuration.GetSection("AppSettings")["UserEmail"];
+            var userPassword = configuration.GetSection("AppSettings")["UserPassword"];
             var userName = "Gary";
             var userimageUrl = "http://www.atgetphotography.com/Images/Photos/GarryWinogrand/winogrand_8.jpg";
 
@@ -32,8 +32,8 @@ namespace PhotoExhibiter.Data.Seed
                 await userManager.CreateAsync(user, userPassword);
 
             // Admin User
-            var adminPassword = configuration.GetSection("AppSettings")["AdminPassword"];
             var adminEmail = configuration.GetSection("AppSettings")["AdminEmail"];
+            var adminPassword = configuration.GetSection("AppSettings")["AdminPassword"];
             var adminName = "Avedon";
             var adminImageUrl = "https://timenio.info/wp-content/uploads/2017/07/penn39.jpg";
 
@@ -61,10 +61,11 @@ namespace PhotoExhibiter.Data.Seed
             }
 
             // Demo Admin User
-            var demoAdminPassword = configuration.GetSection("AppSettings")["DemoAdminPassword"];
             var demoAdminEmail = configuration.GetSection("AppSettings")["DemoAdminEmail"];
+            var demoAdminPassword = configuration.GetSection("AppSettings")["DemoAdminPassword"];
             var demoAdminName = "Penn";
-            var demoAdminImageUrl = "https://static1.squarespace.com/static/54f5f960e4b0c6b83de5dc30/t/57aa5a89e6f2e16320a9a2fa/1470782091560/";
+            var demoAdminImageUrl = "https://i.pinimg.com/originals/af/ce/7c/afce7ca838d5c6c4b034e969d56d7037.jpg";
+
             string demoAdminRole = "DemoAdmin";
             IdentityResult demoAdminRoleResult;
 
@@ -81,7 +82,7 @@ namespace PhotoExhibiter.Data.Seed
                 demoAdminRoleResult = await roleManager.CreateAsync(new IdentityRole(demoAdminRole));
 
             var existDemoAdmin = await userManager.FindByEmailAsync(demoAdminEmail);
-            if (demoAdmin == null)
+            if (existDemoAdmin == null)
             {
                 var createDemoAdmin = await userManager.CreateAsync(demoAdmin, demoAdminPassword);
                 if (createDemoAdmin.Succeeded)

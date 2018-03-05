@@ -22,6 +22,7 @@ namespace PhotoExhibiter.Apis.ManageUsers
 
         public ManageUsersController (IApplicationUserRepository repository) => _repository = repository;
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public IActionResult GetPhotographers (string query = null)
         {
             var usersInDb = _repository.GetAllPhotographers(query);
@@ -40,6 +41,7 @@ namespace PhotoExhibiter.Apis.ManageUsers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin")]
         public IActionResult EditPhotographer(string id, UserDto userDto)
         {
             var userInDb = _repository.GetPhotographer(id);
@@ -59,6 +61,7 @@ namespace PhotoExhibiter.Apis.ManageUsers
         }
 
         [HttpDelete]
+        [Authorize(Roles="Admin")]
         public IActionResult Cancel([FromBody]CancelDto command)
         {
             var userInDb = _repository.GetPhotographerWithExhibits (command.Id);

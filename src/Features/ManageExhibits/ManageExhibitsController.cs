@@ -23,11 +23,13 @@ namespace PhotoExhibiter.Features.ManageExhibits
 
         public ManageExhibitsController (IExhibitRepository repository) => _repository = repository;
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public async Task<IActionResult> Index ()
         {
             return View ();
         }
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public ActionResult Details(int id)
         {
             var exhibit = _repository.GetExhibit(id);
@@ -50,6 +52,7 @@ namespace PhotoExhibiter.Features.ManageExhibits
             return View(viewModel);
         }
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public ActionResult Edit(int id)
         {
             var exhibit = _repository.GetExhibit(id);
@@ -74,6 +77,7 @@ namespace PhotoExhibiter.Features.ManageExhibits
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin")]
         public ActionResult Edit(Exhibit exhibit)
         {
             var exhibitInDb = _repository.GetExhibit(exhibit.Id);
@@ -96,6 +100,7 @@ namespace PhotoExhibiter.Features.ManageExhibits
     public class ExhibitViewModel
     {
         public int Id { get; set; }
+        [Display(Name = "Genre")]
         public int GenreId { get; set; }
         public string Date { get; set; }
         public string Genre { get; set; }

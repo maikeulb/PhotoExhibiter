@@ -21,11 +21,13 @@ namespace PhotoExhibiter.Features.ManageUsers
 
         public ManageUsersController (IApplicationUserRepository repository) => _repository = repository;
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public async Task<IActionResult> Index ()
         {
             return View ();
         }
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public ActionResult Details(string id)
         {
             var user = _repository.GetPhotographer(id);
@@ -36,6 +38,7 @@ namespace PhotoExhibiter.Features.ManageUsers
             return View(user);
         }
 
+        [Authorize(Roles="Admin, DemoAdmin")]
         public ActionResult Edit(string id)
         {
             var user = _repository.GetPhotographer(id);
@@ -57,6 +60,7 @@ namespace PhotoExhibiter.Features.ManageUsers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin")]
         public ActionResult Edit(ApplicationUser user)
         {
             var userInDb = _repository.GetPhotographerWithExhibits(user.Id);

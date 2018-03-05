@@ -42,13 +42,30 @@
         <div class="form-group">
           <label for="IsCanceled" asp-for="IsCanceled"></label>
           <input asp-for="IsCanceled" type="text" class="form-control" placeholder =
-          "Aperture Gallery" required>
+          "Aperture Gallery" readonly>
           <div class="invalid-feedback">Please let us know if the exhibit is
             cancelled!</div>
           <span asp-validation-for="Location" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a class="btn btn-secondary" asp-action="Index">Go Back</a>
+
+        <div class= "text-lg-left text-md-center">
+          @if (User.IsInRole("Admin"))
+          {
+              <span>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary js-cancel"
+                  data-exhibit-id="@Model.Id">Cancel</button>
+              </span>
+          }
+          else
+          {
+              <span>
+                <button type="submit" class="btn btn-primary" disabled>Save</button>
+                <button type="button" class="btn btn-primary" disabled>Cancel</button>
+              </span>
+          }
+          <a class="btn btn-secondary" asp-action="Index">Go Back</a>
+        </div>
       </form>
     </div>
 
@@ -67,3 +84,30 @@
 
   </div>
 </main>
+
+@section scripts
+{
+  <script>
+      $(".js-cancel").on("click", function () {
+        var button = $(this);
+        var exhibitId = button.attr("data-exhibit-id");
+        bootbox.confirm("Are you sure you want to cancel this exhibit?", function (result) {
+          if (result) {
+            $.ajax({
+              url: '/api/manageexhibits',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                Id: exhibitId 
+              }),
+              method: "DELETE",
+              success: function () {
+                new Noty({
+                   text: 'Account Suspended'
+               }).setTimeout(2000).show();
+              }
+            });
+          }
+        });
+      });
+  </script>
+}

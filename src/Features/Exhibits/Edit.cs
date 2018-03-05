@@ -21,6 +21,7 @@ namespace PhotoExhibiter.Features.Exhibits
         public class Command : IRequest<Result>
         {
             public int Id { get; set; }
+            [Display(Name = "Genre")]
             public int GenreId { get; set; }
             public string UserId { get; set; }
             public string Location { get; set; }
