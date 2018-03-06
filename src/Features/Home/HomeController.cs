@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhotoExhibiter.Entities;
-using PhotoExhibiter.Features;
 
 namespace PhotoExhibiter.Features.Home
 {
@@ -29,7 +27,7 @@ namespace PhotoExhibiter.Features.Home
         {
             query.UserId = _userManager.GetUserId (User);
             if (query.PhotographerId == null)
-              query.PhotographerId = query.UserId;
+                query.PhotographerId = query.UserId;
             query.ShowActions = _signInManager.IsSignedIn (User);
 
             var model = await _mediator.Send (query);

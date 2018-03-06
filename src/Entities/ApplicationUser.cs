@@ -20,13 +20,13 @@ namespace PhotoExhibiter.Entities
         public IEnumerable<Exhibit> Exhibits => _exhibits.AsReadOnly ();
         public IEnumerable<UserNotification> UserNotifications => _userNotifications.AsReadOnly ();
 
-        public ApplicationUser() : base() {} 
+        public ApplicationUser () : base () { }
 
-        public ApplicationUser(string userName, string name, string imageUrl) : base(userName)
+        public ApplicationUser (string userName, string name, string imageUrl) : base (userName)
         {
-           base.Email = userName;
-           Name = name;
-           ImageUrl = imageUrl;
+            base.Email = userName;
+            Name = name;
+            ImageUrl = imageUrl;
         }
 
         public void UpdateDetails (Update.Command command)

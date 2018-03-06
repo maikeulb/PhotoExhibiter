@@ -5,7 +5,6 @@ using FluentValidation;
 using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
-using PhotoExhibiter.Features;
 using PhotoExhibiter.Infrastructure;
 
 namespace PhotoExhibiter.Features.Exhibits
@@ -20,14 +19,16 @@ namespace PhotoExhibiter.Features.Exhibits
         public class Command : IRequest
         {
             public int Id { get; set; }
-            [Display(Name = "Genre")]
+
+            [Display (Name = "Genre")]
             public int GenreId { get; set; }
             public string UserId { get; set; }
             public string Location { get; set; }
             public string Date { get; set; }
             public string Heading { get; set; }
             public string ImageUrl { get; set; }
-            [Display(Name = "Date")]
+
+            [Display (Name = "Date")]
             public DateTime DateTime { get; set; }
             public IEnumerable<Genre> Genres { get; set; }
         }

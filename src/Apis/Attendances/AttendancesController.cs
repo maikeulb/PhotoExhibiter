@@ -1,13 +1,10 @@
-using System;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoExhibiter.Entities;
-using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.Attendances
 {

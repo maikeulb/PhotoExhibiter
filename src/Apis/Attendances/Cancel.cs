@@ -1,7 +1,6 @@
 using System.Linq;
 using CSharpFunctionalExtensions;
 using MediatR;
-using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.Attendances

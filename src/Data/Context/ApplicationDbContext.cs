@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PhotoExhibiter.Entities;
 using PhotoExhibiter.Data.Interfaces;
 using PhotoExhibiter.Data.Mappings;
+using PhotoExhibiter.Entities;
 
 namespace PhotoExhibiter.Data.Context
 {
@@ -27,21 +27,21 @@ namespace PhotoExhibiter.Data.Context
             builder.ApplyConfiguration (new NotificationConfiguration ());
             builder.ApplyConfiguration (new UserNotificationConfiguration ());
 
-            builder.Entity<Exhibit>()
-                .Metadata.FindNavigation(nameof(Exhibit.Attendances))
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Entity<Exhibit> ()
+                .Metadata.FindNavigation (nameof (Exhibit.Attendances))
+                .SetPropertyAccessMode (PropertyAccessMode.Field);
 
-            builder.Entity<ApplicationUser>()
-                .Metadata.FindNavigation(nameof(ApplicationUser.Followers))
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Entity<ApplicationUser> ()
+                .Metadata.FindNavigation (nameof (ApplicationUser.Followers))
+                .SetPropertyAccessMode (PropertyAccessMode.Field);
 
-            builder.Entity<ApplicationUser>()
-                .Metadata.FindNavigation(nameof(ApplicationUser.Followees))
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Entity<ApplicationUser> ()
+                .Metadata.FindNavigation (nameof (ApplicationUser.Followees))
+                .SetPropertyAccessMode (PropertyAccessMode.Field);
 
-            builder.Entity<ApplicationUser>()
-                .Metadata.FindNavigation(nameof(ApplicationUser.Exhibits))
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.Entity<ApplicationUser> ()
+                .Metadata.FindNavigation (nameof (ApplicationUser.Exhibits))
+                .SetPropertyAccessMode (PropertyAccessMode.Field);
 
             base.OnModelCreating (builder);
         }

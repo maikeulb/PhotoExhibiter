@@ -1,8 +1,5 @@
 using CSharpFunctionalExtensions;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using MediatR;
-using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Features.ManageUsers
@@ -27,14 +24,14 @@ namespace PhotoExhibiter.Features.ManageUsers
         {
             private readonly IApplicationUserRepository _repository;
 
-            public Handler(IApplicationUserRepository repository)
+            public Handler (IApplicationUserRepository repository)
             {
-                 _repository = repository;
+                _repository = repository;
             }
 
             public Result<Model> Handle (Query message)
             {
-                var user = _repository.GetPhotographer(message.Id);
+                var user = _repository.GetPhotographer (message.Id);
 
                 if (user == null)
                     return Result.Fail<Model> ("User does not exit");

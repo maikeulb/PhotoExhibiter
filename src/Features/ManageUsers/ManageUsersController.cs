@@ -1,14 +1,7 @@
-﻿using CSharpFunctionalExtensions;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Data.Context;
-using PhotoExhibiter.Entities;
-using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Features.ManageUsers
 {
@@ -21,42 +14,42 @@ namespace PhotoExhibiter.Features.ManageUsers
             _mediator = mediator;
         }
 
-        [Authorize(Roles="Admin, DemoAdmin")]
+        [Authorize (Roles = "Admin, DemoAdmin")]
         public IActionResult Index ()
         {
             return View ();
         }
 
-        [Authorize(Roles="Admin, DemoAdmin")]
+        [Authorize (Roles = "Admin, DemoAdmin")]
         public async Task<IActionResult> Details (Details.Query query)
         {
             var modelOrError = await _mediator.Send (query);
 
-            return modelOrError.IsSuccess
-                ? (IActionResult)View(modelOrError.Value)
-                : (IActionResult)BadRequest(modelOrError.Error);
+            return modelOrError.IsSuccess ?
+                (IActionResult) View (modelOrError.Value) :
+                (IActionResult) BadRequest (modelOrError.Error);
         }
 
-        [Authorize(Roles="Admin, DemoAdmin")]
+        [Authorize (Roles = "Admin, DemoAdmin")]
         public async Task<IActionResult> Edit (Edit.Query query)
         {
             var modelOrError = await _mediator.Send (query);
 
-            return modelOrError.IsSuccess
-                ? (IActionResult)View(modelOrError.Value)
-                : (IActionResult)BadRequest(modelOrError.Error);
+            return modelOrError.IsSuccess ?
+                (IActionResult) View (modelOrError.Value) :
+                (IActionResult) BadRequest (modelOrError.Error);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Admin")]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> Edit (Edit.Command command)
         {
             var result = await _mediator.Send (command);
 
-            return result.IsSuccess
-                ? (IActionResult)RedirectToAction ("Index")
-                : (IActionResult)BadRequest(result.Error);
+            return result.IsSuccess ?
+                (IActionResult) RedirectToAction ("Index") :
+                (IActionResult) BadRequest (result.Error);
         }
     }
 }

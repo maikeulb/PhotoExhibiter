@@ -1,7 +1,7 @@
-using CSharpFunctionalExtensions;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using CSharpFunctionalExtensions;
 using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
@@ -18,7 +18,8 @@ namespace PhotoExhibiter.Features.ManageExhibits
         public class Model : IRequest<Result>
         {
             public int Id { get; set; }
-            [Display(Name = "Genre")]
+
+            [Display (Name = "Genre")]
             public int GenreId { get; set; }
             public string Genre { get; set; }
             public string Date { get; set; }
@@ -34,14 +35,14 @@ namespace PhotoExhibiter.Features.ManageExhibits
         {
             private readonly IExhibitRepository _repository;
 
-            public Handler(IExhibitRepository repository)
+            public Handler (IExhibitRepository repository)
             {
-                 _repository = repository;
+                _repository = repository;
             }
 
             public Result<Model> Handle (Query message)
             {
-                var exhibit = _repository.GetExhibit(message.Id);
+                var exhibit = _repository.GetExhibit (message.Id);
 
                 if (exhibit == null)
                     return Result.Fail<Model> ("Exhibit does not exit");

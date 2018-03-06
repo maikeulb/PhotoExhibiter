@@ -1,14 +1,11 @@
-﻿using CSharpFunctionalExtensions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Features;
-using PhotoExhibiter.Features.Account;
-using PhotoExhibiter.Features.Home;
 using PhotoExhibiter.Entities;
+using PhotoExhibiter.Features.Account;
 
 namespace PhotoExhibiter.Features.Exhibits
 {
@@ -61,9 +58,9 @@ namespace PhotoExhibiter.Features.Exhibits
 
             var modelOrError = await _mediator.Send (query);
 
-            return modelOrError.IsSuccess
-                ? (IActionResult)View(modelOrError.Value)
-                : (IActionResult)BadRequest(modelOrError.Error);
+            return modelOrError.IsSuccess ?
+                (IActionResult) View (modelOrError.Value) :
+                (IActionResult) BadRequest (modelOrError.Error);
         }
 
         [HttpPost]
@@ -88,9 +85,9 @@ namespace PhotoExhibiter.Features.Exhibits
 
             var result = await _mediator.Send (command);
 
-            return result.IsSuccess
-                ? (IActionResult)RedirectToAction ("Index", "Users")
-                : (IActionResult)BadRequest(result.Error);
+            return result.IsSuccess ?
+                (IActionResult) RedirectToAction ("Index", "Users") :
+                (IActionResult) BadRequest (result.Error);
         }
     }
 }

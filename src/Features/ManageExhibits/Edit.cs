@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using CSharpFunctionalExtensions;
 using System.ComponentModel.DataAnnotations;
+using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
-using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
+using PhotoExhibiter.Infrastructure;
 
 namespace PhotoExhibiter.Features.ManageExhibits
 {
@@ -26,7 +26,8 @@ namespace PhotoExhibiter.Features.ManageExhibits
             public string Photographer { get; set; }
             public string ImageUrl { get; set; }
             public bool IsCanceled { get; set; }
-            [Display(Name = "Date")]
+
+            [Display (Name = "Date")]
             public DateTime DateTime { get; set; }
             public IEnumerable<Genre> Genres { get; set; }
         }
@@ -67,8 +68,8 @@ namespace PhotoExhibiter.Features.ManageExhibits
             public Validator ()
             {
                 RuleFor (m => m.Location)
-                    .NotNull ().WithMessage("Name is required.")
-                    .Length(1,100).WithMessage("Length must be between 1 and 100 characters");
+                    .NotNull ().WithMessage ("Name is required.")
+                    .Length (1, 100).WithMessage ("Length must be between 1 and 100 characters");
                 RuleFor (m => m.Date)
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
@@ -93,14 +94,14 @@ namespace PhotoExhibiter.Features.ManageExhibits
                 if (exhibit == null)
                     return Result.Fail<Command> ("Exhibit does not exit");
 
-                exhibit.ManagerUpdate( 
-                        message.Location,
-                        message.DateTime,
-                        message.ImageUrl);
+                exhibit.ManagerUpdate (
+                    message.Location,
+                    message.DateTime,
+                    message.ImageUrl);
 
                 if (message.IsCanceled == true)
-                    exhibit.Cancel();
-            
+                    exhibit.Cancel ();
+
                 _repository.SaveAll ();
 
                 return Result.Ok ();

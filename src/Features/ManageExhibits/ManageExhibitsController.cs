@@ -1,17 +1,7 @@
-﻿using CSharpFunctionalExtensions;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using PhotoExhibiter.Data.Context;
-using PhotoExhibiter.Entities;
-using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Features.ManageExhibits
 {

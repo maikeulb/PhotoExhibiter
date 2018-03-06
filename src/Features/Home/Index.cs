@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
@@ -25,7 +24,7 @@ namespace PhotoExhibiter.Features.Home
             public string UserId {get; set; }
             public string PhotographerId {get; set; }
             public bool ShowActions { get; set; }
-            public IEnumerable<Attendance> Attendances {get; set; } 
+            public IEnumerable<Attendance> Attendances {get; set; }
 
             public IPagedList<Exhibit> UpcomingExhibits { get; set; }
         }
@@ -36,7 +35,7 @@ namespace PhotoExhibiter.Features.Home
             private readonly IAttendanceRepository _attendanceRepository;
 
             public Handler(IExhibitRepository exhibitRepository,
-                           IAttendanceRepository attendanceRepository) 
+                           IAttendanceRepository attendanceRepository)
             {
                 _exhibitRepository = exhibitRepository;
                 _attendanceRepository = attendanceRepository;

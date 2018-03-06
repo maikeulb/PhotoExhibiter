@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
-using PhotoExhibiter.Infrastructure;
-using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Features.ManageUsers
@@ -37,7 +32,7 @@ namespace PhotoExhibiter.Features.ManageUsers
 
             public Result<Command> Handle (Query message)
             {
-                var user = _repository.GetPhotographer(message.Id);
+                var user = _repository.GetPhotographer (message.Id);
 
                 if (user == null)
                     return Result.Fail<Command> ("User does not exit");
@@ -60,7 +55,7 @@ namespace PhotoExhibiter.Features.ManageUsers
             public Validator ()
             {
                 RuleFor (m => m.Name)
-                    .NotNull ().WithMessage("Name is required.");
+                    .NotNull ().WithMessage ("Name is required.");
             }
         }
 
@@ -75,7 +70,7 @@ namespace PhotoExhibiter.Features.ManageUsers
 
             public Result Handle (Command message)
             {
-                var user = _repository.GetPhotographerWithExhibits(message.Id);
+                var user = _repository.GetPhotographerWithExhibits (message.Id);
 
                 if (user == null)
                     return Result.Fail<Command> ("User does not exit");
@@ -85,7 +80,7 @@ namespace PhotoExhibiter.Features.ManageUsers
                 user.IsSuspended = message.IsSuspended;
 
                 if (message.IsSuspended == true)
-                    user.Suspend();
+                    user.Suspend ();
 
                 _repository.SaveAll ();
 

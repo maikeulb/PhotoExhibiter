@@ -1,7 +1,5 @@
-using System.Linq;
 using CSharpFunctionalExtensions;
 using MediatR;
-using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.Attendances
@@ -29,7 +27,7 @@ namespace PhotoExhibiter.Apis.Attendances
                 _repository.Remove (following);
                 _repository.SaveAll ();
 
-                return Result.Ok(message.FolloweeId);
+                return Result.Ok (message.FolloweeId);
             }
         }
     }

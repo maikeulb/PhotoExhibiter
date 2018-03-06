@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
-using PhotoExhibiter.Features;
-using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
+using PhotoExhibiter.Infrastructure;
 
 namespace PhotoExhibiter.Features.Exhibits
 {
@@ -22,7 +21,8 @@ namespace PhotoExhibiter.Features.Exhibits
         public class Command : IRequest<Result>
         {
             public int Id { get; set; }
-            [Display(Name = "Genre")]
+
+            [Display (Name = "Genre")]
             public int GenreId { get; set; }
             public string UserId { get; set; }
             public string Location { get; set; }
@@ -75,8 +75,8 @@ namespace PhotoExhibiter.Features.Exhibits
             public Validator ()
             {
                 RuleFor (m => m.Location)
-                    .NotNull ().WithMessage("Name is required.")
-                    .Length(1,100).WithMessage("Length must be between 1 and 100 characters");
+                    .NotNull ().WithMessage ("Name is required.")
+                    .Length (1, 100).WithMessage ("Length must be between 1 and 100 characters");
                 RuleFor (m => m.Date)
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
@@ -98,7 +98,7 @@ namespace PhotoExhibiter.Features.Exhibits
 
             public Result Handle (Command message)
             {
-                message.DateTime = DateTime.Parse(string.Format("{0}", message.Date));
+                message.DateTime = DateTime.Parse (string.Format ("{0}", message.Date));
                 var exhibit = _repository.GetExhibit (message.Id);
 
                 if (exhibit == null)

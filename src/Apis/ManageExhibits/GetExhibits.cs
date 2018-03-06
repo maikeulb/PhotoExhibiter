@@ -1,6 +1,6 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using CSharpFunctionalExtensions;
 using MediatR;
 using PhotoExhibiter.Entities;
@@ -38,18 +38,18 @@ namespace PhotoExhibiter.Apis.ManageExhibits
 
             public IEnumerable<Model> Handle (Query message)
             {
-                var exhibits = _repository.GetAllExhibits();
+                var exhibits = _repository.GetAllExhibits ();
 
-                return exhibits.Select( e =>  new Model()
+                return exhibits.Select (e => new Model ()
                 {
                     Id = e.Id,
-                    Genre = e.Genre.Name,
-                    Photographer = e.Photographer.Name,
-                    Date = e.DateTime.ToString ("d MMM yyyy"),
-                    Location = e.Location,
-                    ImageUrl = e.ImageUrl,
-                    DateTime = e.DateTime,
-                    IsCanceled = e.IsCanceled,
+                        Genre = e.Genre.Name,
+                        Photographer = e.Photographer.Name,
+                        Date = e.DateTime.ToString ("d MMM yyyy"),
+                        Location = e.Location,
+                        ImageUrl = e.ImageUrl,
+                        DateTime = e.DateTime,
+                        IsCanceled = e.IsCanceled,
                 });
             }
         }

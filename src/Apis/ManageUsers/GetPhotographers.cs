@@ -1,9 +1,7 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 using MediatR;
-using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Apis.ManageUsers

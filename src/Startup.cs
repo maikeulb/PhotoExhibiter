@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,6 @@ using PhotoExhibiter.Data.Repositories;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure;
-using NLog.Web;
 
 namespace PhotoExhibiter
 {

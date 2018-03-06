@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
@@ -22,7 +21,7 @@ namespace PhotoExhibiter.Features.Exhibits
             public string SearchTerm { get; set; }
             public string UserId {get; set; }
             public IEnumerable<Exhibit> UpcomingExhibits { get; set; }
-            public IEnumerable<Attendance> Attendances {get; set; } 
+            public IEnumerable<Attendance> Attendances {get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Model>
@@ -31,7 +30,7 @@ namespace PhotoExhibiter.Features.Exhibits
             private readonly IAttendanceRepository _attendanceRepository;
 
             public Handler(IExhibitRepository repository,
-                           IAttendanceRepository attendanceRepository) 
+                           IAttendanceRepository attendanceRepository)
             {
                 _repository = repository;
                 _attendanceRepository = attendanceRepository;
