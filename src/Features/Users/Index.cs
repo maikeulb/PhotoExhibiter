@@ -23,8 +23,6 @@ namespace PhotoExhibiter.Features.Users
 
         public class Model
         {
-            /* private readonly List<Attendance> _attendances = new List<Attendance> (); */
-
             public string UserId {get; set; }
             public string PhotographerId {get; set; }
             public string PhotographerName {get; set; }
