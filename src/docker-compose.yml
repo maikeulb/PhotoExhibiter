@@ -10,3 +10,5 @@ services:
 
   db:
     image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "P@ssw0rd!"
