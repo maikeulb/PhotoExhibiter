@@ -23,6 +23,8 @@ namespace PhotoExhibiter.Features.Home
             _mediator = mediator;
         }
 
+        [HttpGet("Index")]
+        [HttpGet("")]
         public async Task<IActionResult> Index (Index.Query query)
         {
             query.UserId = _userManager.GetUserId (User);
