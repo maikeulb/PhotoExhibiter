@@ -9,7 +9,7 @@ namespace PhotoExhibiter.Data.Mappings
         public void Configure (EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.Property (au => au.Name)
-                .IsRequired ()
+                .IsRequired ();
 
             builder.Property (au => au.Name)
                 .IsRequired ()
