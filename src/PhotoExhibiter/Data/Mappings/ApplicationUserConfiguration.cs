@@ -10,6 +10,9 @@ namespace PhotoExhibiter.Data.Mappings
         {
             builder.Property (au => au.Name)
                 .IsRequired ()
+
+            builder.Property (au => au.Name)
+                .IsRequired ()
                 .HasMaxLength (100);
 
             builder.HasMany (au => au.Exhibits)

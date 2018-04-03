@@ -28,28 +28,26 @@
           <div class="form-group">
             <button type="submit" class="btn btn-secondary">Log in</button>
           </div>
-          <div class="form-group">
-            <p>
-              <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
-            </p>
-          </div>
+          <p class="text-left">
+            <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+          </p>
           <div id="demo_login" class="card-block">
-          <button 
+            <button 
               type="button"
               data-return-url = "@ViewData["ReturnUrl"]"
               data-email = "demouser@@email.com"
               data-password = "P@ssw0rd!"
               class="demo-user btn btn-seondary">
               Demo User
-          </button>
-          <button 
+            </button>
+            <button 
               type="button"
               data-return-url = "@ViewData["ReturnUrl"]"
               data-email = "demoadmin@email.com"
               data-password ="P@ssw0rd!"
               class="demo-user btn btn-seondary">
               Demo Admin
-          </button>
+            </button>
           </div>
         </form>
       </section>
