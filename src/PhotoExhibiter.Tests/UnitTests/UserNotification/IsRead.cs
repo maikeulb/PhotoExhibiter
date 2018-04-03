@@ -11,6 +11,7 @@ namespace PhotoExhibiter.Tests.Entities.UserNotificationTests
         private string _testUsername = "test_username";
         private string _testName = "test_name";
         private string _testImageUrl = "test_image_url";
+        private bool _testIsRead = true;
 
         [Fact]
         public void IsReadIsTrue()
@@ -32,10 +33,9 @@ namespace PhotoExhibiter.Tests.Entities.UserNotificationTests
             var exhibit = Exhibit.Create(exhibitCommand);
             var notification = Notification.ExhibitCreated(exhibit);
             var userNotification = UserNotification.Create(user, notification);
+            userNotification.Read();
 
-            /* Assert.Equal(_testCatalogItemId, firstItem.CatalogItemId); */
-            /* Assert.Equal(_testUnitPrice, firstItem.UnitPrice); */
-            /* Assert.Equal(_testQuantity, firstItem.Quantity); */
+            Assert.Equal(_testIsRead, userNotification.IsRead);
         }
     }
 }
