@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using PhotoExhibiter.Features.Exhibits;
+using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Entities
 {
-    public class Exhibit
+    public class Exhibit: IEntity
     {
         private readonly List<Attendance> _attendances = new List<Attendance> ();
 
