@@ -27,17 +27,18 @@ namespace PhotoExhibiter.Features.Exhibits
 
             [Display (Name = "Genre")]
             public int GenreId { get; set; }
-            public string UserId { get; set; }
+            public string UserId { get; set; } 
             public string Location { get; set; }
             public string Date { get; set; }
+            [Display (Name = "Date")]
+            public DateTime DateTime { get; set; } 
             public string Heading { get; set; }
+
             public IFormFile ImageUpload { get; set; }
             public string ImageName { get; set; }
             public string ImageUrl { get; set; }
 
-            [Display (Name = "Date")]
-            public DateTime DateTime { get; set; }
-            public IEnumerable<Genre> Genres { get; set; }
+            public IEnumerable<Genre> Genres { get; set; } // can embed genre class
         }
 
         public class QueryHandler : IRequestHandler<Query, Command>

@@ -29,11 +29,11 @@ namespace PhotoExhibiter.Features.Exhibits
             {
                 public int Id { get; set; }
                 public string PhotographerId { get; set; }
-                public GenreT Genre { get; set; }
                 public string Location { get; set; }
                 public string ImageUrl { get;  set; }
                 public DateTime DateTime { get; set; }
                 public bool IsCanceled { get;  set; }
+                public GenreT Genre { get; set; }
 
                 public class GenreT
                 {
