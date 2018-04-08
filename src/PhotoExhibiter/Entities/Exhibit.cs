@@ -75,7 +75,11 @@ namespace PhotoExhibiter.Entities
 
             Location = location;
             DateTime = dateTime;
-            ImageUrl = imageUrl;
+
+            if (command.ImageUrl != null)
+            {
+                ImageUrl = command.ImageUrl;
+            }
 
             if ((Attendances!= null) && (!Attendances.Any()))
             {
