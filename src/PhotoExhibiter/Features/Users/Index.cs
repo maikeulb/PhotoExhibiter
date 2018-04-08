@@ -104,7 +104,7 @@ namespace PhotoExhibiter.Features.Users
                 var attendingExhibits = _exhibitRepository.GetExhibitsUserAttending (message.PhotographerId);
 
                 var isFollowing = _followingRepository.GetFollowing(message.UserId, message.PhotographerId) != null;
-
+                
                 var model = new Model
                 {
                     PhotographerId = message.PhotographerId,
@@ -112,7 +112,6 @@ namespace PhotoExhibiter.Features.Users
                     PhotographerEmail = photographer.Email,
                     UserId = message.UserId,
                     ShowActions = message.ShowActions,
-                    ImageUrl = _urlComposer.ComposeImgUrl(photographer.ImageUrl),
                     Attendances = attendances.Select (a => new Model.Attendance
                     {
                         ExhibitId = a.ExhibitId,
@@ -121,6 +120,9 @@ namespace PhotoExhibiter.Features.Users
                     IsFollowing = isFollowing,
                     Heading = "[Users] Exhibits"
                 };
+
+                if (photographer.ImageUrl != null) 
+                    model.ImageUrl = _urlComposer.ComposeImgUrl(photographer.ImageUrl);
 
                 int pageSize = 4;
                 int upcomingPageNumber = (message.UpcomingPage ?? 1);
@@ -139,6 +141,7 @@ namespace PhotoExhibiter.Features.Users
                         Genre = new Model.Exhibit.GenreT { Name = ue.Genre.Name },
                         Photographer = new Model.PhotographerT { Name = ue.Photographer.Name }
                     }).ToPagedList(upcomingPageNumber,pageSize); 
+
                 model.AttendingExhibits = attendingExhibits.Select (ae => new Model.Exhibit
                     {
                         Id = ae.Id,
