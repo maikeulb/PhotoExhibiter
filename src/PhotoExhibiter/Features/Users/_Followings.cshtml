@@ -31,10 +31,7 @@
       </li>
     }
   </ul>
-  <nav class="d-flex justify-content-center">
-    @Html.PagedListPager( (IPagedList)Model.Following, followingPage =>
-    Url.Action("Index", new { FollowingPage = followingPage }) )
-  </nav>
+
 }
 else
 {

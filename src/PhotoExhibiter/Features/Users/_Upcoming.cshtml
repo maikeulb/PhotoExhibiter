@@ -62,10 +62,7 @@
       </li>
     }
   </ul>
-  <nav class="d-flex justify-content-center">
-    @Html.PagedListPager( (IPagedList)Model.UpcomingExhibits, upcomingPage =>
-    Url.Action("Index", new { UpcomingPage = upcomingPage }) )
-  </nav>
+
 }
 else
 {

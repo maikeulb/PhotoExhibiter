@@ -5,7 +5,6 @@ using MediatR;
 using PhotoExhibiter.Features;
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure.Interfaces;
-using X.PagedList;
 
 namespace PhotoExhibiter.Features.Users
 {
@@ -17,10 +16,6 @@ namespace PhotoExhibiter.Features.Users
             public string PhotographerId { get; set; }
             public string SearchTerm {get; set;}
             public bool ShowActions { get; set; }
-            public int? UpcomingPage { get; set; }
-            public int? AttendingPage { get; set; }
-            public int? FollowersPage { get; set; }
-            public int? FollowingPage { get; set; }
         }
 
         public class Model
@@ -35,10 +30,10 @@ namespace PhotoExhibiter.Features.Users
             public bool ShowActions { get; set; }
             public bool IsFollowing { get; set; }
             public IEnumerable<Attendance> Attendances {get; set;}
-            public IPagedList<Exhibit> UpcomingExhibits { get; set; }
-            public IPagedList<Exhibit> AttendingExhibits { get; set; }
-            public IPagedList<PhotographerT> Followers { get; set; }
-            public IPagedList<PhotographerT> Following { get; set; }
+            public List<Exhibit> UpcomingExhibits { get; set; }
+            public List<Exhibit> AttendingExhibits { get; set; }
+            public List<PhotographerT> Followers { get; set; }
+            public List<PhotographerT> Following { get; set; }
 
             public class Exhibit
             {
@@ -124,12 +119,6 @@ namespace PhotoExhibiter.Features.Users
                 if (photographer.ImageUrl != null) 
                     model.ImageUrl = _urlComposer.ComposeImgUrl(photographer.ImageUrl);
 
-                int pageSize = 4;
-                int upcomingPageNumber = (message.UpcomingPage ?? 1);
-                int attendingPageNumber = (message.AttendingPage ?? 1);
-                int followersPageNumber = (message.FollowersPage ?? 1);
-                int followingPageNumber = (message.FollowingPage ?? 1);
-
                 model.UpcomingExhibits = upcomingExhibits.Select (ue => new Model.Exhibit
                     {
                         Id = ue.Id,
@@ -140,7 +129,7 @@ namespace PhotoExhibiter.Features.Users
                         IsCanceled = ue.IsCanceled,
                         Genre = new Model.Exhibit.GenreT { Name = ue.Genre.Name },
                         Photographer = new Model.PhotographerT { Name = ue.Photographer.Name }
-                    }).ToPagedList(upcomingPageNumber,pageSize); 
+                    }).ToList();
 
                 model.AttendingExhibits = attendingExhibits.Select (ae => new Model.Exhibit
                     {
@@ -152,7 +141,7 @@ namespace PhotoExhibiter.Features.Users
                         IsCanceled = ae.IsCanceled,
                         Genre = new Model.Exhibit.GenreT { Name = ae.Genre.Name },
                         Photographer = new Model.PhotographerT { Name = ae.Photographer.Name }
-                    }).ToPagedList(attendingPageNumber,pageSize); 
+                    }).ToList();
 
                 model.Followers = followers.Select (f => new Model.PhotographerT
                     {
@@ -160,7 +149,7 @@ namespace PhotoExhibiter.Features.Users
                         Name = f.Name,
                         ImageUrl = _urlComposer.ComposeImgUrl(f.ImageUrl),
                         Email = f.Email,
-                    }).ToPagedList(followersPageNumber,pageSize);
+                    }).ToList();
 
                 model.Following = following.Select (f => new Model.PhotographerT
                     {
@@ -168,7 +157,7 @@ namespace PhotoExhibiter.Features.Users
                         Name = f.Name,
                         ImageUrl = _urlComposer.ComposeImgUrl(f.ImageUrl),
                         Email = f.Email,
-                    }).ToPagedList(followingPageNumber,pageSize); 
+                    }).ToList();
 
                 return model;
             }

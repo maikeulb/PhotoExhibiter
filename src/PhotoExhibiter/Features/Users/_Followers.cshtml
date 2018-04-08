@@ -31,10 +31,7 @@
       </li>
     }
   </ul>
-  <nav class="d-flex justify-content-center">
-    @Html.PagedListPager( (IPagedList)Model.Followers, followersPage =>
-    Url.Action("Index", new { FollowersPage = followersPage }) )
-  </nav>
+
 }
 else
 {
