@@ -43,7 +43,7 @@
           <label asp-for="ImageUrl"></label>
           <label class="btn btn-primary">
             Choose File 
-            <input name="ImageUpload" class="imgInp" type="file"
+            <input name="ImageUpload" class="img-inp" type="file"
             style="display: none"/>
           </label>
           <div class="invalid-feedback">Please upload and image!</div>
@@ -55,7 +55,7 @@
 
     <div class="text-center col-lg-6 col-sm-12 px-4">
       <br>
-      <img id="target" class="imgInp" src="http://placehold.it/600x400" alt="your image" style="max-height:600px; max-width:400px;" />
+      <img class="img-target" src="http://placehold.it/600x400" alt="your image" style="max-height:600px; max-width:400px;" />
     </div>
   </div>
 <main/>
@@ -68,13 +68,15 @@
          if (input.files && input.files[0]) {
            var reader = new FileReader();
            reader.onload = function (e) {
-             $('#target')
+             alert('adding result to target')
+             $('.img-target')
                .attr('src', e.target.result);
            };
            reader.readAsDataURL(input.files[0]);
          }
        }
-      $(".imgInp").change(function(){
+      $(".img-inp").change(function(){
+        alert('img-inp changed')
         readURL(this);
       });
     });
