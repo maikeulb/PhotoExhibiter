@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using MediatR;
 using PhotoExhibiter.Features;
-/* using PhotoExhibiter.Entities; */
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure.Interfaces;
 using X.PagedList;
@@ -51,12 +50,6 @@ namespace PhotoExhibiter.Features.Users
                 public string ImageUrl { get;  set; }
                 public DateTime DateTime { get; set; }
                 public bool IsCanceled { get;  set; }
-
-                /* public class PhotographerT */
-                /* { */
-                /*     public string Name { get; set; } */
-                /* } */
-
                 public class GenreT
                 {
                     public string Name{ get; set; }
@@ -119,7 +112,7 @@ namespace PhotoExhibiter.Features.Users
                     PhotographerEmail = photographer.Email,
                     UserId = message.UserId,
                     ShowActions = message.ShowActions,
-                    ImageUrl = photographer.ImageUrl,
+                    ImageUrl = _urlComposer.ComposeImgUrl(photographer.ImageUrl),
                     Attendances = attendances.Select (a => new Model.Attendance
                     {
                         ExhibitId = a.ExhibitId,
@@ -163,7 +156,7 @@ namespace PhotoExhibiter.Features.Users
                     {
                         Id = f.Id,
                         Name = f.Name,
-                        ImageUrl = f.ImageUrl,
+                        ImageUrl = _urlComposer.ComposeImgUrl(f.ImageUrl),
                         Email = f.Email,
                     }).ToList().ToPagedList(followersPageNumber,pageSize); // isToList necessary?
 
@@ -173,7 +166,7 @@ namespace PhotoExhibiter.Features.Users
                     {
                         Id = f.Id,
                         Name = f.Name,
-                        ImageUrl = f.ImageUrl,
+                        ImageUrl = _urlComposer.ComposeImgUrl(f.ImageUrl),
                         Email = f.Email,
                     }).ToList().ToPagedList(followingPageNumber,pageSize); // isToList necessary?
 

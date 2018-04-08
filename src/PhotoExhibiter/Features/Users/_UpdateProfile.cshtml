@@ -25,15 +25,21 @@
            <img src="@Model.ImageUrl" class="img-target img-thumbnail my-2" />
         }
         </div>
-        <form asp-controller="Users" asp-action="Update" method="post"
-          role="form" class="text-left my-2" novalidate>
+
+        <form method="post" enctype="multipart/form-data"
+          asp-controller="Users" asp-action="Update" role="form"
+          class="text-left my-2" novalidate>
+
           <div class="form-group">
             <label asp-for="ImageUrl"></label>
-            <input for="Image" asp-for="ImageUrl" type="url"
-            class="form-control img-inp" placeholder = "http://" required>
-            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            <label class="btn btn-primary">
+              Choose File 
+              <input name="ImageUpload" class="imgInp" type="file"
+              style="display: none"/>
+            </label>
             <div class="invalid-feedback">Please upload and image!</div>
           </div>
+
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -43,3 +49,24 @@
     </div>
   </div>
 </div>
+
+@section scripts
+{
+  <script>
+    $(document).ready(function () {
+       function readURL(input) {
+         if (input.files && input.files[0]) {
+           var reader = new FileReader();
+           reader.onload = function (e) {
+             $('.img-target')
+               .attr('src', e.target.result);
+           };
+           reader.readAsDataURL(input.files[0]);
+         }
+       }
+      $(".imgInp").change(function(){
+        readURL(this);
+      });
+    });
+  </script>
+}
