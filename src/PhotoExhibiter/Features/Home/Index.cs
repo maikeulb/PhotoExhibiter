@@ -27,7 +27,6 @@ namespace PhotoExhibiter.Features.Home
             public string PhotographerId {get; set; }
             public bool ShowActions { get; set; }
             public IEnumerable<Attendance> Attendances {get; set; }
-
             public IPagedList<Exhibit> UpcomingExhibits { get; set; }
 
             public class Exhibit
