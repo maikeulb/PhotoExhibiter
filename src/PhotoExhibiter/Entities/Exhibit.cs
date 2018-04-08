@@ -55,8 +55,12 @@ namespace PhotoExhibiter.Entities
             Id = command.Id;
             Location = command.Location;
             DateTime = command.DateTime;
-            ImageUrl = command.ImageUrl;
             GenreId = command.GenreId;
+
+            if (command.ImageUrl != null)
+            {
+                ImageUrl = command.ImageUrl;
+            }
 
             if ((Attendances!= null) && (!Attendances.Any()))
             {

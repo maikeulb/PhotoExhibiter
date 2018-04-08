@@ -120,12 +120,16 @@ namespace PhotoExhibiter.Features.Exhibits
                     return Result.Fail<Command> ("Unauthorized");
 
                 var uploadPath = Path.Combine (_environment.WebRootPath, "images/exhibits");
-                var ImageName = ContentDispositionHeaderValue.Parse (message.ImageUpload.ContentDisposition).FileName.Trim ('"');
-                using (var fileStream = new FileStream (Path.Combine (uploadPath, message.ImageUpload.FileName), FileMode.Create))
+                if (message.ImageUpload != null)
                 {
-                    await message.ImageUpload.CopyToAsync (fileStream);
-                    message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName;
+                    var ImageName = ContentDispositionHeaderValue.Parse (message.ImageUpload.ContentDisposition).FileName.Trim ('"');
+                    using (var fileStream = new FileStream (Path.Combine (uploadPath, message.ImageUpload.FileName), FileMode.Create))
+                    {
+                        await message.ImageUpload.CopyToAsync (fileStream);
+                        message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName;
+                    }
                 }
+
                 message.DateTime = DateTime.Parse (string.Format ("{0}", message.Date));
 
                 exhibit.UpdateDetails (message);

@@ -102,7 +102,7 @@ module.exports = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ExtractTextPlugin('styles.css'),
-    new CleanWebpackPlugin(['wwwroot'])
+    new CleanWebpackPlugin(['wwwroot']),
     new CopyWebpackPlugin([{
       from: 'images',
       to: 'images'
