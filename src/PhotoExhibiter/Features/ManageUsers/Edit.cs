@@ -1,6 +1,14 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using PhotoExhibiter.Entities.Interfaces;
 
 namespace PhotoExhibiter.Features.ManageUsers
@@ -17,8 +25,12 @@ namespace PhotoExhibiter.Features.ManageUsers
             public string Id { get; set; }
             public string Name { get; set; }
             public string Email { get; set; }
-            public string ImageUrl { get; set; }
             public bool IsSuspended { get; set; }
+
+            public IFormFile ImageUpload { get; set; }
+            public string ImageName { get; set; }
+            public string ImageUrl { get; set; }
+
         }
 
         public class QueryHandler : IRequestHandler<Query, Result<Command>>
@@ -59,21 +71,32 @@ namespace PhotoExhibiter.Features.ManageUsers
             }
         }
 
-        public class CommandHandler : IRequestHandler<Command, Result>
+        public class CommandHandler : IAsyncRequestHandler<Command, Result>
         {
             private readonly IApplicationUserRepository _repository;
+            private readonly IHostingEnvironment _environment;
 
-            public CommandHandler (IApplicationUserRepository repository)
+            public CommandHandler(IHostingEnvironment environment, 
+                    IApplicationUserRepository repository)
             {
+                _environment = environment;
                 _repository = repository;
             }
 
-            public Result Handle (Command message)
+            public async Task<Result> Handle (Command message)
             {
                 var user = _repository.GetPhotographerWithExhibits (message.Id);
 
                 if (user == null)
                     return Result.Fail<Command> ("User does not exit");
+
+                var uploadPath = Path.Combine (_environment.WebRootPath, "images/exhibits");
+                var ImageName = ContentDispositionHeaderValue.Parse (message.ImageUpload.ContentDisposition).FileName.Trim ('"');
+                using (var fileStream = new FileStream (Path.Combine (uploadPath, message.ImageUpload.FileName), FileMode.Create))
+                {
+                    await message.ImageUpload.CopyToAsync (fileStream);
+                    message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName;
+                }
 
                 user.Name = message.Name;
                 user.ImageUrl = message.ImageUrl;

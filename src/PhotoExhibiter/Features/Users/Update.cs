@@ -29,8 +29,8 @@ namespace PhotoExhibiter.Features.Users
         public class CommandHandler : IAsyncRequestHandler<Command, Result>
         {
             private readonly IApplicationUserRepository _repository;
-            private readonly ILogger _logger;
             private readonly IHostingEnvironment _environment;
+            private readonly ILogger _logger;
 
             public CommandHandler(IHostingEnvironment environment,
                     IApplicationUserRepository repository,
