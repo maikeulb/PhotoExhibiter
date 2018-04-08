@@ -40,10 +40,12 @@ namespace PhotoExhibiter.Entities
 
             var notification = Notification.ExhibitCanceled (this);
 
-            foreach (var attendee in Attendances.Select (a => a.Attendee))
+            if ((Attendances!= null) && (!Attendances.Any()))
             {
-                attendee.Notify (notification);
+                foreach (var attendee in Attendances.Select (a => a.Attendee))
+                    attendee.Notify (notification);
             }
+
         }
 
         public void UpdateDetails (Edit.Command command)
@@ -56,19 +58,26 @@ namespace PhotoExhibiter.Entities
             ImageUrl = command.ImageUrl;
             GenreId = command.GenreId;
 
-            foreach (var attendee in Attendances.Select (a => a.Attendee))
-                attendee.Notify (notification);
+            if ((Attendances!= null) && (!Attendances.Any()))
+            {
+                foreach (var attendee in Attendances.Select (a => a.Attendee))
+                    attendee.Notify (notification);
+            }
         }
 
-        public void ManagerUpdate (string location, DateTime dateTime)
+        public void ManagerUpdate (string location, DateTime dateTime, string imageUrl)
         {
             var notification = Notification.ExhibitUpdated (this, DateTime, Location);
 
             Location = location;
             DateTime = dateTime;
+            ImageUrl = imageUrl;
 
-            foreach (var attendee in Attendances.Select (a => a.Attendee))
-                attendee.Notify (notification);
+            if ((Attendances!= null) && (!Attendances.Any()))
+            {
+                foreach (var attendee in Attendances.Select (a => a.Attendee))
+                    attendee.Notify (notification);
+            }
         }
 
         public void AddAttendance (Attendance attendance) => _attendances.Add (attendance);

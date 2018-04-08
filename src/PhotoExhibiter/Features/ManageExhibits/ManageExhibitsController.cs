@@ -2,16 +2,20 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace PhotoExhibiter.Features.ManageExhibits
 {
     public class ManageExhibitsController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly ILogger _logger;
 
-        public ManageExhibitsController (IMediator mediator)
+        public ManageExhibitsController (IMediator mediator,
+            ILogger<ManageExhibitsController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [Authorize(Roles="Admin, DemoAdmin")]

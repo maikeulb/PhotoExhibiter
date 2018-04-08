@@ -31,10 +31,11 @@ namespace PhotoExhibiter.Features.Exhibits
             public int GenreId { get; set; }
             public string UserId { get; set; }
             public string Location { get; set; }
+            public string Heading { get; set; }
+
             public string Date { get; set; }
             [Display (Name = "Date")]
             public DateTime DateTime { get; set; }
-            public string Heading { get; set; }
 
             public IFormFile ImageUpload { get; set; }
             public string ImageName { get; set; }
@@ -49,8 +50,7 @@ namespace PhotoExhibiter.Features.Exhibits
             private readonly IGenreRepository _genrerepository;
             private readonly IUrlComposer _urlComposer;
 
-            public QueryHandler (
-                IExhibitRepository exhibitrepository,
+            public QueryHandler (IExhibitRepository exhibitrepository,
                 IGenreRepository genrerepository,
                 IUrlComposer urlComposer)
             {
@@ -112,7 +112,6 @@ namespace PhotoExhibiter.Features.Exhibits
 
             public async Task<Result> Handle (Command message)
             {
-                message.DateTime = DateTime.Parse (string.Format ("{0}", message.Date));
                 var exhibit = _repository.GetExhibit (message.Id);
 
                 if (exhibit == null)
@@ -127,6 +126,7 @@ namespace PhotoExhibiter.Features.Exhibits
                     await message.ImageUpload.CopyToAsync (fileStream);
                     message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName;
                 }
+                message.DateTime = DateTime.Parse (string.Format ("{0}", message.Date));
 
                 exhibit.UpdateDetails (message);
                 _repository.SaveAll ();

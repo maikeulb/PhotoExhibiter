@@ -20,7 +20,7 @@ namespace PhotoExhibiter.Features.Exhibits
         public ExhibitsController (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<AccountController> logger,
+            ILogger<ExhibitsController> logger,
             IMediator mediator)
         {
             _userManager = userManager;
