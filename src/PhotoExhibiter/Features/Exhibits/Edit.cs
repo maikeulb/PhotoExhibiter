@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
 using FluentValidation;
@@ -7,6 +8,7 @@ using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure;
+using PhotoExhibiter.Infrastructure.Interfaces;
 
 namespace PhotoExhibiter.Features.Exhibits
 {
@@ -37,13 +39,16 @@ namespace PhotoExhibiter.Features.Exhibits
         {
             private readonly IExhibitRepository _exhibitrepository;
             private readonly IGenreRepository _genrerepository;
+            private readonly IUrlComposer _urlComposer;
 
             public QueryHandler (
                 IExhibitRepository exhibitrepository,
-                IGenreRepository genrerepository)
+                IGenreRepository genrerepository,
+                IUrlComposer urlComposer)
             {
                 _exhibitrepository = exhibitrepository;
                 _genrerepository = genrerepository;
+                _urlComposer = urlComposer;
             }
 
             public Result<Command> Handle (Query message)
@@ -61,9 +66,9 @@ namespace PhotoExhibiter.Features.Exhibits
                     Heading = "Edit an Exhibit",
                     Genres = _genrerepository.GetGenres (),
                     Date = exhibit.DateTime.ToString ("d MMM yyyy"),
-                    ImageUrl = exhibit.ImageUrl,
                     GenreId = exhibit.GenreId,
-                    Location = exhibit.Location
+                    Location = exhibit.Location,
+                    ImageUrl = _urlComposer.ComposeImgUrl(exhibit.ImageUrl)
                 };
 
                 return Result.Ok (command);
@@ -81,8 +86,6 @@ namespace PhotoExhibiter.Features.Exhibits
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
                 RuleFor (m => m.GenreId)
-                    .NotNull ();
-                RuleFor (m => m.ImageUrl)
                     .NotNull ();
             }
         }

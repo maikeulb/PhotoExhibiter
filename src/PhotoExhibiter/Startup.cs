@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhotoExhibiter.Infrastructure;
+using PhotoExhibiter.Infrastructure.Interfaces;
 using PhotoExhibiter.Data.Context;
 using PhotoExhibiter.Data.Repositories;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
-using PhotoExhibiter.Infrastructure;
 
 namespace PhotoExhibiter
 {
@@ -40,6 +41,7 @@ namespace PhotoExhibiter
             services.AddScoped<IGenreRepository, GenreRepository> ();
             services.AddScoped<INotificationRepository, NotificationRepository> ();
             services.AddScoped<IUserNotificationRepository, UserNotificationRepository> ();
+            services.AddSingleton<IUrlComposer> (new UrlComposer (Configuration.Get<ExhibitSettings> ()));
 
             services.AddMvc (options =>
                 {

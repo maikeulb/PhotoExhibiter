@@ -17,7 +17,6 @@ namespace PhotoExhibiter.Entities
         public string ImageUrl { get; private set; }
         public DateTime DateTime { get; private set; }
         public bool IsCanceled { get; private set; }
-
         public ApplicationUser Photographer { get; private set; }
         public Genre Genre { get; private set; }
         public IEnumerable<Attendance> Attendances => _attendances.AsReadOnly ();
@@ -61,13 +60,12 @@ namespace PhotoExhibiter.Entities
                 attendee.Notify (notification);
         }
 
-        public void ManagerUpdate (string location, DateTime dateTime, string imageUrl)
+        public void ManagerUpdate (string location, DateTime dateTime)
         {
             var notification = Notification.ExhibitUpdated (this, DateTime, Location);
 
             Location = location;
             DateTime = dateTime;
-            ImageUrl = imageUrl;
 
             foreach (var attendee in Attendances.Select (a => a.Attendee))
                 attendee.Notify (notification);

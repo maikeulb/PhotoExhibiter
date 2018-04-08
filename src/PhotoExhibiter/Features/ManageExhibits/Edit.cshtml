@@ -32,8 +32,10 @@
 
         <div class="form-group">
           <label asp-for="ImageUrl"></label>
-          <input for="Image" asp-for="ImageUrl" type="url" class="form-control
-          img-inp" placeholder = "http://" required>
+          <label class="btn btn-primary">
+            Choose File 
+            <input name="ImageUpload" class="imgInp" type="file" style="display: none"/>
+          </label>
           <span asp-validation-for="ImageUrl" class="text-danger"></span>
           <div class="invalid-feedback">Please upload and image!</div>
         </div>
@@ -71,12 +73,12 @@
     <div class="text-center col-lg-6 col-sm-12 px-4">
       @if (String.IsNullOrEmpty(Model.ImageUrl))
       {
-         <img src="http://placehold.it/600x400" class="img-target"
+         <img src="http://placehold.it/600x400" class="imgInp"
          style="max-height:600px; max-width:400px" />
       }
       else
       {
-        <img src="@Model.ImageUrl" class="img-target" 
+        <img alt="@Model.Name" src="@Model.ImageUrl" class="imgInp my-2"
         style="max-heigth:600px; max-width:400px" />
       }
     </div>

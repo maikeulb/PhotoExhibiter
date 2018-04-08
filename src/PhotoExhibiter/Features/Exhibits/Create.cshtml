@@ -10,7 +10,8 @@
   <div class="row mt-4">
     <div class="col-lg-6 col-sm-12 push-sm-12 px-4">
 
-      <form asp-controller="Exhibits" asp-action="Create" method="post"
+      <form method="post" enctype="multipart/form-data"
+       asp-controller="Exhibits" asp-action="Create" 
         class="form-group" role="form" novalidate>
         <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -40,10 +41,11 @@
 
         <div class="form-group">
           <label asp-for="ImageUrl"></label>
-          <input for="Image" asp-for="ImageUrl" type="url" 
-          class="form-control img-inp" placeholder =
-          "http://" required>
-          <span asp-validation-for="ImageUrl" class="text-danger"></span>
+          <label class="btn btn-primary">
+            Choose File 
+            <input name="ImageUpload" class="imgInp" type="file"
+            style="display: none"/>
+          </label>
           <div class="invalid-feedback">Please upload and image!</div>
         </div>
 
@@ -53,8 +55,28 @@
 
     <div class="text-center col-lg-6 col-sm-12 px-4">
       <br>
-      <img class="img-target" src="http://placehold.it/600x400"
-      style="max-height:600px; max-width:400px;" />
+      <img id="target" class="imgInp" src="http://placehold.it/600x400" alt="your image" style="max-height:600px; max-width:400px;" />
     </div>
   </div>
 <main/>
+
+@section scripts
+{
+  <script>
+    $(document).ready(function () {
+       function readURL(input) {
+         if (input.files && input.files[0]) {
+           var reader = new FileReader();
+           reader.onload = function (e) {
+             $('#target')
+               .attr('src', e.target.result);
+           };
+           reader.readAsDataURL(input.files[0]);
+         }
+       }
+      $(".imgInp").change(function(){
+        readURL(this);
+      });
+    });
+  </script>
+}

@@ -5,6 +5,7 @@ using CSharpFunctionalExtensions;
 using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
+using PhotoExhibiter.Infrastructure.Interfaces;
 
 namespace PhotoExhibiter.Features.ManageExhibits
 {
@@ -34,10 +35,13 @@ namespace PhotoExhibiter.Features.ManageExhibits
         public class Handler : IRequestHandler<Query, Result<Model>>
         {
             private readonly IExhibitRepository _repository;
+            private readonly IUrlComposer _urlComposer;
 
-            public Handler (IExhibitRepository repository)
+            public Handler (IExhibitRepository repository,
+                IUrlComposer urlComposer)
             {
                 _repository = repository;
+                _urlComposer = urlComposer;
             }
 
             public Result<Model> Handle (Query message)
@@ -54,7 +58,7 @@ namespace PhotoExhibiter.Features.ManageExhibits
                     Photographer = exhibit.Photographer.Name,
                     Date = exhibit.DateTime.ToString ("d MMM yyyy"),
                     Location = exhibit.Location,
-                    ImageUrl = exhibit.ImageUrl,
+                    ImageUrl = _urlComposer.ComposeImgUrl(exhibit.ImageUrl),
                     DateTime = exhibit.DateTime,
                     IsCanceled = exhibit.IsCanceled,
                 };

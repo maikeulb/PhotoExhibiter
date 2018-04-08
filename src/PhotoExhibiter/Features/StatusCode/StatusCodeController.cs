@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace RolleiShop.Features.StatusCode
+namespace PhotoExhibiter.Features.StatusCode
 {
     public class StatusCodeController : Controller
     {

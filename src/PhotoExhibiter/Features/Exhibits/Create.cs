@@ -1,8 +1,13 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure;
@@ -26,6 +31,8 @@ namespace PhotoExhibiter.Features.Exhibits
             public string Location { get; set; }
             public string Date { get; set; }
             public string Heading { get; set; }
+            public IFormFile ImageUpload { get; set; }
+            public string ImageName { get; set; }
             public string ImageUrl { get; set; }
 
             [Display (Name = "Date")]
@@ -68,19 +75,34 @@ namespace PhotoExhibiter.Features.Exhibits
                     .SetValidator (new FutureDateValidator ());
                 RuleFor (m => m.GenreId)
                     .NotNull ();
-                RuleFor (m => m.ImageUrl)
+                RuleFor (m => m.ImageUpload) 
                     .NotNull ();
             }
         }
 
-        public class CommandHandler : IRequestHandler<Command>
+        public class CommandHandler : IAsyncRequestHandler<Command>
         {
             private readonly IExhibitRepository _repository;
+            private readonly IHostingEnvironment _environment;
 
             public CommandHandler (IExhibitRepository repository) => _repository = repository;
 
-            public void Handle (Command message)
+            public CommandHandler(IHostingEnvironment environment,
+                    IExhibitRepository repository)
             {
+                _environment = environment;
+                _repository = repository;
+            }
+
+            public async Task Handle (Command message)
+            {
+                var uploadPath = Path.Combine (_environment.WebRootPath, "images/exhibits");
+                var ImageName = ContentDispositionHeaderValue.Parse (message.ImageUpload.ContentDisposition).FileName.Trim ('"');
+                using (var fileStream = new FileStream (Path.Combine (uploadPath, message.ImageUpload.FileName), FileMode.Create))
+                {
+                    await message.ImageUpload.CopyToAsync (fileStream);
+                    message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName;
+                }
                 message.DateTime = DateTime.Parse (string.Format ("{0}", message.Date));
 
                 var exhibit = Exhibit.Create (message);

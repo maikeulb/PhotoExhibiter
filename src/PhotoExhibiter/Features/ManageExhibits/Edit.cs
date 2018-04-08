@@ -7,6 +7,7 @@ using MediatR;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure;
+using PhotoExhibiter.Infrastructure.Interfaces;
 
 namespace PhotoExhibiter.Features.ManageExhibits
 {
@@ -35,10 +36,13 @@ namespace PhotoExhibiter.Features.ManageExhibits
         public class QueryHandler : IRequestHandler<Query, Result<Command>>
         {
             private readonly IExhibitRepository _repository;
+            private readonly IUrlComposer _urlComposer;
 
-            public QueryHandler (IExhibitRepository repository)
+            public QueryHandler (IExhibitRepository repository,
+                IUrlComposer urlComposer)
             {
                 _repository = repository;
+                _urlComposer = urlComposer;
             }
 
             public Result<Command> Handle (Query message)
@@ -54,9 +58,9 @@ namespace PhotoExhibiter.Features.ManageExhibits
                     Photographer = exhibit.Photographer.Name,
                     Location = exhibit.Location,
                     Date = exhibit.DateTime.ToString ("d MMM yyyy"),
-                    ImageUrl = exhibit.ImageUrl,
                     DateTime = exhibit.DateTime,
                     IsCanceled = exhibit.IsCanceled,
+                    ImageUrl = _urlComposer.ComposeImgUrl(exhibit.ImageUrl)
                 };
 
                 return Result.Ok (command);
@@ -73,8 +77,6 @@ namespace PhotoExhibiter.Features.ManageExhibits
                 RuleFor (m => m.Date)
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
-                RuleFor (m => m.ImageUrl)
-                    .NotNull ();
             }
         }
 
@@ -96,8 +98,7 @@ namespace PhotoExhibiter.Features.ManageExhibits
 
                 exhibit.ManagerUpdate (
                     message.Location,
-                    message.DateTime,
-                    message.ImageUrl);
+                    message.DateTime);
 
                 if (message.IsCanceled == true)
                     exhibit.Cancel ();
