@@ -1,10 +1,14 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using PhotoExhibiter.Entities;
 using PhotoExhibiter.Entities.Interfaces;
 using PhotoExhibiter.Infrastructure;
@@ -30,9 +34,11 @@ namespace PhotoExhibiter.Features.Exhibits
             public string Location { get; set; }
             public string Date { get; set; }
             public string Heading { get; set; }
-            public string ImageUrl { get; set; }
             public DateTime DateTime { get; set; }
             public IEnumerable<Genre> Genres { get; set; }
+            public IFormFile ImageUpload { get; set; }
+            public string ImageName { get; set; }
+            public string ImageUrl { get; set; }
         }
 
         public class QueryHandler : IRequestHandler<Query, Result<Command>>
@@ -90,16 +96,19 @@ namespace PhotoExhibiter.Features.Exhibits
             }
         }
 
-        public class CommandHandler : IRequestHandler<Command, Result>
+        public class CommandHandler : IAsyncRequestHandler<Command, Result>
         {
             private readonly IExhibitRepository _repository;
+            private readonly IHostingEnvironment _environment;
 
-            public CommandHandler (IExhibitRepository repository)
+            public CommandHandler (IHostingEnvironment environment,
+                    IExhibitRepository repository)
             {
+                _environment = environment;
                 _repository = repository;
             }
 
-            public Result Handle (Command message)
+            public async Task<Result> Handle (Command message)
             {
                 message.DateTime = DateTime.Parse (string.Format ("{0}", message.Date));
                 var exhibit = _repository.GetExhibit (message.Id);
@@ -108,6 +117,14 @@ namespace PhotoExhibiter.Features.Exhibits
                     return Result.Fail<Command> ("Exhibit does not exit");
                 if (exhibit.PhotographerId != message.UserId)
                     return Result.Fail<Command> ("Unauthorized");
+
+                var uploadPath = Path.Combine (_environment.WebRootPath, "images/exhibits");
+                var ImageName = ContentDispositionHeaderValue.Parse (message.ImageUpload.ContentDisposition).FileName.Trim ('"');
+                using (var fileStream = new FileStream (Path.Combine (uploadPath, message.ImageUpload.FileName), FileMode.Create))
+                {
+                    await message.ImageUpload.CopyToAsync (fileStream);
+                    message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName;
+                }
 
                 exhibit.UpdateDetails (message);
                 _repository.SaveAll ();
