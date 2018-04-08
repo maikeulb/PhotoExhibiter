@@ -138,7 +138,7 @@ namespace PhotoExhibiter.Features.Users
                         IsCanceled = ue.IsCanceled,
                         Genre = new Model.Exhibit.GenreT { Name = ue.Genre.Name },
                         Photographer = new Model.PhotographerT { Name = ue.Photographer.Name }
-                    }).ToList().ToPagedList(upcomingPageNumber,pageSize); // isToList necessary?
+                    }).ToPagedList(upcomingPageNumber,pageSize); 
                 model.AttendingExhibits = attendingExhibits.Select (ae => new Model.Exhibit
                     {
                         Id = ae.Id,
@@ -149,8 +149,7 @@ namespace PhotoExhibiter.Features.Users
                         IsCanceled = ae.IsCanceled,
                         Genre = new Model.Exhibit.GenreT { Name = ae.Genre.Name },
                         Photographer = new Model.PhotographerT { Name = ae.Photographer.Name }
-                    }).ToList().ToPagedList(attendingPageNumber,pageSize); // isToList necessary?
-                /* model.AttendingExhibits = attendingExhibits.ToPagedList(attendingPageNumber, pageSize); */
+                    }).ToPagedList(attendingPageNumber,pageSize); 
 
                 model.Followers = followers.Select (f => new Model.PhotographerT
                     {
@@ -158,9 +157,7 @@ namespace PhotoExhibiter.Features.Users
                         Name = f.Name,
                         ImageUrl = _urlComposer.ComposeImgUrl(f.ImageUrl),
                         Email = f.Email,
-                    }).ToList().ToPagedList(followersPageNumber,pageSize); // isToList necessary?
-
-                /* model.Followers = followers.ToPagedList(followersPageNumber, pageSize); */
+                    }).ToPagedList(followersPageNumber,pageSize);
 
                 model.Following = following.Select (f => new Model.PhotographerT
                     {
@@ -168,9 +165,7 @@ namespace PhotoExhibiter.Features.Users
                         Name = f.Name,
                         ImageUrl = _urlComposer.ComposeImgUrl(f.ImageUrl),
                         Email = f.Email,
-                    }).ToList().ToPagedList(followingPageNumber,pageSize); // isToList necessary?
-
-                /* model.Following = following.ToPagedList(followingPageNumber, pageSize); */
+                    }).ToPagedList(followingPageNumber,pageSize); 
 
                 return model;
             }

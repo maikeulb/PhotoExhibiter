@@ -56,11 +56,6 @@ namespace PhotoExhibiter.Features.Users
                     message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName;
                 }
 
-                /* var command = new Command */
-                /* { */
-                /*     message.ImageUrl = "http://exhibitbaseurl/images/exhibits/" + ImageName */
-                /* }; */
-
                 applicationUser.ImageUrl = message.ImageUrl;
                 _repository.SaveAll ();
 
