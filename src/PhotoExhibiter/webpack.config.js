@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -17,13 +18,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.scss', '.css', '.ts'],
     modules: [
-      path.resolve('./'), 
+      path.resolve('./'),
       path.resolve('./node_modules')
     ],
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.exec\.js$/,
         use: ['script-loader']
       },
@@ -65,15 +65,15 @@ module.exports = {
         test: /\.(scss)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            {
+          use: [{
               loader: 'css-loader'
             },
             {
               loader: 'postcss-loader',
               options: {
                 plugins: function() {
-                  return [require('precss'), require('autoprefixer')];
+                  return [require('precss'), require(
+                    'autoprefixer')];
                 }
               }
             },
@@ -103,6 +103,10 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ExtractTextPlugin('styles.css'),
     new CleanWebpackPlugin(['wwwroot'])
+    new CopyWebpackPlugin([{
+      from: 'images',
+      to: 'images'
+    }])
   ],
   output: {
     filename: '[name].js',
