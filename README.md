@@ -8,24 +8,32 @@ with a rich, encapsulated domain<sup>1</sup> (private collections and setters).
 The error handling the errors are handled with command results (similar to F#'s
 Option Type or Haskell's Maybe monad).
 
-1. The only exceptions to this (as far as I'm aware) are the account classes
-   identity, which I did not want to rewrite.
+1. The only exceptions to this (as far as I'm aware) are is the application
+   user class because it interfaces with identity. I could have encapsulated
+   this entity but I didn't want to rewrite the scaffolded entity code.
 
 Technology
 ----------
-* ASP.NET Core
-* MySQL (with Entity Framework)
+* ASP.NET Core 2.0
+* Identity 2.0
+* MySQL
+* Entity Framework Core 2.0 
+* MediatR
+* FluentValidation
 * NLog
-* Bootstrap 4
+* CSharpFunctionalExtensions
+* Bootstrap 4 (with Font Awesome)
 * DataTables
 * Noty
+* Moment
 * Rellax
+* Google Maps API
 
 Screenshots
 ---
 ### Main  
 Display all upcoming exhibits from all photographers and get notified when any
-of your attended exhibit details changes or gets cancelled.
+of your attending exhibit details changes or gets cancelled.
 ![main](/screenshots/main.png?raw=true "Main")
 ### Exhibits
 Create exhibits so that others can attend.
@@ -41,8 +49,7 @@ exhibits, followers, and followings (switch content with tabs).
 ![followings](/screenshots/followings.png?raw=true "Followers")
 
 ### Admin 
-Admin users may manage the exhibits and application users, including the
-abilities to cancel exhibits and suspend users.
+Admin users may manage the exhibits and application users with abilities to cancel exhibits and suspend users.
 ![admin_exhibits](/screenshots/manage_exhibits.png?raw=true "Admin")
 ***
 ![admin_users](/screenshots/manage_users.png?raw=true "AdminUsers")
@@ -59,12 +66,11 @@ then open `appsettings.Development.json` and point the connection strings to
 your MySQL server. Install the javascript dependencies (e.g.
 `npm install`).
 
-`cd` into `./src/RolleiShop` (if you are not already) and run the following:
+`cd` into `./src/PhotoExhibiter` (if you are not already) and run the following:
 ```
 webpack
 dotnet restore
 dotnet ef database update 
-dotnet ef database update -c IdentityDbContext
 dotnet run
 Go to http://localhost:5000
 ```
@@ -80,3 +86,5 @@ TODO
 Dockerfile  
 Modularize javascript and configure webpack  
 Add more unit tests  
+Add pagination to the profiles page (figure out how to paginate multiple tabs
+and have the UI know which one to display)
