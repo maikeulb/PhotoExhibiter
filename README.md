@@ -3,14 +3,12 @@
 Social network where users showcase their photography exhibits and attend other
 users' exhibits. Admin users can manage the site content and users.
 
-The application is written following a vertically sliced, CQRS architecture
-with a rich, encapsulated domain<sup>1</sup> (private collections and setters).
-The error handling the errors are handled with command results (similar to F#'s
-Option Type or Haskell's Maybe monad).
+Architecture is vertically sliced, CQRS, with a rich, encapsulated
+domain<sup>1</sup> (private collections and setters). The errors are handled
+with command results (similar to F#'s Option Type or Haskell's Maybe monad).
 
-1. The only exceptions to this (as far as I'm aware) are is the application
-   user class because it interfaces with identity. I could have encapsulated
-   this entity but I didn't want to rewrite the scaffolded entity code.
+1. The only exception to this (as far as I'm aware) is the ApplicationUser
+   class which references Identity Framework.
 
 Technology
 ----------
@@ -57,16 +55,19 @@ Admin users may manage the exhibits and application users with abilities to canc
 
 Run
 ---
-If you have docker installed,
+
+With docker:
 ```
-TODO
+docker-compose build
+docker-compose up
+Go to http://localhost:5000
 ```
 Alternatively, you will need .NET Core 2.0 SDK. If you have the SDK installed,
 then open `appsettings.Development.json` and point the connection strings to
 your MySQL server. Install the javascript dependencies (e.g.
 `npm install`).
 
-`cd` into `./src/PhotoExhibiter` (if you are not already) and run the following:
+`cd` into `./src/PhotoExhibiter` (if you are not already); then run:
 ```
 webpack
 dotnet restore
@@ -76,6 +77,7 @@ Go to http://localhost:5000
 ```
 NOTE
 ----
+
 The resources I use to create this project were plentiful, coming from several
 projects and tutorials provided by Microsoft (mostly eShopOnWeb,
 eShopOnContainers, MVCMusicStore, and ContosoUniversity), Pluralsight, Jimmy
