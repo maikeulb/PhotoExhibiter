@@ -276,3 +276,4 @@ wwwroot/
 # Ignore temp backup files
 *.bak
 __OmniSharpScratch__
+.envrc
