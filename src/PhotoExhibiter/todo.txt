@@ -1,6 +1,0 @@
-add full-ext
-  add fix dockerfile - add email ( maybe )
-add fix dockerfile - add email ( maybe )
-  notifications -Mediatr
-  readme: look at equivnox mvcdd econ for inspirations
-  change to file upload
