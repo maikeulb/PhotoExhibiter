@@ -1,8 +1,7 @@
 # PhotoExhibiter
 
 Social network where users showcase their photography exhibits and attend other
-users' exhibits. Admin users can manage the photography exhibits and
-application users.
+users' exhibits. Admin users can manage the site content and users.
 
 The application is written following a vertically sliced, CQRS architecture
 with a rich, encapsulated domain<sup>1</sup> (private collections and setters).
@@ -35,12 +34,11 @@ Create exhibits so that others can attend.
 The default profile image is a gravatar but users have the ability to upload
 a photo. Next to the profile image are your upcoming exhibits, attending
 exhibits, followers, and followings (switch content with tabs).
-![profile](/screenshots/users.png?raw=true "Profile")
+![profile](/screenshots/profile.png?raw=true "Profile")
 ****
-![attending](/screenshots/users2.png?raw=true "Attending")
+![attending](/screenshots/attending.png?raw=true "Attending")
 ****
-![followers](/screenshots/users3.png?raw=true "Followers")
-![followers](/screenshots/users4.png?raw=true "Followers")
+![followings](/screenshots/followings.png?raw=true "Followers")
 
 ### Admin 
 Admin users may manage the exhibits and application users, including the
