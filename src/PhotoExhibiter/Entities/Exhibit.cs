@@ -40,11 +40,8 @@ namespace PhotoExhibiter.Entities
 
             var notification = Notification.ExhibitCanceled (this);
 
-            if ((Attendances!= null) && (!Attendances.Any()))
-            {
-                foreach (var attendee in Attendances.Select (a => a.Attendee))
-                    attendee.Notify (notification);
-            }
+            foreach (var attendee in Attendances.Select (a => a.Attendee))
+                attendee.Notify (notification);
 
         }
 
@@ -62,11 +59,8 @@ namespace PhotoExhibiter.Entities
                 ImageUrl = command.ImageUrl;
             }
 
-            if ((Attendances!= null) && (!Attendances.Any()))
-            {
-                foreach (var attendee in Attendances.Select (a => a.Attendee))
-                    attendee.Notify (notification);
-            }
+            foreach (var attendee in Attendances.Select (a => a.Attendee))
+                attendee.Notify (notification);
         }
 
         public void ManagerUpdate (string location, DateTime dateTime, string imageUrl)
@@ -76,12 +70,12 @@ namespace PhotoExhibiter.Entities
             Location = location;
             DateTime = dateTime;
 
-            if (command.ImageUrl != null)
+            if (imageUrl != null)
             {
-                ImageUrl = command.ImageUrl;
+                ImageUrl = imageUrl;
             }
 
-            if ((Attendances!= null) && (!Attendances.Any()))
+            if ((Attendances != null) && (!Attendances.Any()))
             {
                 foreach (var attendee in Attendances.Select (a => a.Attendee))
                     attendee.Notify (notification);

@@ -70,7 +70,7 @@ namespace PhotoExhibiter.Features.Exhibits
             {
                 RuleFor (m => m.Location)
                     .NotNull ().WithMessage ("Name is required.")
-                    .Length (1, 100).WithMessage ("Length must be between 1 and 100 characters");
+                    .Length (1, 22).WithMessage ("Length must be between 1 and 22 characters");
                 RuleFor (m => m.Date)
                     .NotNull ()
                     .SetValidator (new FutureDateValidator ());
