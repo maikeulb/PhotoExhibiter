@@ -85,7 +85,7 @@ Bogards Contoso University remake, and several blogs.
 
 TODO
 ----
-Dockerfile  
+Optimize Dockerfile (e.g. multi-stage)   
 Modularize javascript and configure webpack  
 Add more unit tests  
 Add pagination to the profiles page (figure out how to paginate multiple tabs

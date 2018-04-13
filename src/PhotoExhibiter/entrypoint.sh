@@ -1,9 +1,9 @@
 #!/bin/bash
 
 set -e
-run_cmd="dotnet run --server.urls http://*:80"
+run_cmd="dotnet /app/out/PhotoExhibiter.dll"
 
-echo waiting for web
+echo waiting for db
 ./wait-for-it.sh db:3306
 
 until dotnet ef database update; do
