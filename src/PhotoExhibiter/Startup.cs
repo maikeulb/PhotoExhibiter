@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.HttpOverrides;
 using PhotoExhibiter.Infrastructure;
 using PhotoExhibiter.Infrastructure.Interfaces;
 using PhotoExhibiter.Data.Context;
@@ -50,6 +51,12 @@ namespace PhotoExhibiter
                 .AddFeatureFolders ()
                 .AddFluentValidation (cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup> (); });
 
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = 
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
             services.AddMediatR ();
             services.AddAutoMapper ();
             Mapper.AssertConfigurationIsValid ();
@@ -68,6 +75,11 @@ namespace PhotoExhibiter
             }
 
             app.UseStaticFiles ();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication ();
 

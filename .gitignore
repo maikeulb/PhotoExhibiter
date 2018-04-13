@@ -277,3 +277,4 @@ wwwroot/
 *.bak
 __OmniSharpScratch__
 .envrc
+out
