@@ -55,19 +55,19 @@ Admin users may manage the exhibits and application users with abilities to canc
 
 Run
 ---
-
-With docker:
+You will need webpack. If you have webpack installed, then go ahead and install
+the javascript dependencies (e.g. `npm install`).
 ```
+webpack
 docker-compose build
 docker-compose up
 Go to http://localhost:5000
 ```
-Alternatively, you will need .NET Core 2.0 SDK. If you have the SDK installed,
+Alternatively, If you have the ASP.NET Core 2.0 SDK installed,
 then open `appsettings.Development.json` and point the connection strings to
 your MySQL server. Install the javascript dependencies (e.g.
 `npm install`).
 
-`cd` into `./src/PhotoExhibiter` (if you are not already); then run:
 ```
 webpack
 dotnet restore
@@ -85,8 +85,8 @@ Bogards Contoso University remake, and several blogs.
 
 TODO
 ----
-Optimize Dockerfile (e.g. multi-stage)   
-Modularize javascript and configure webpack  
-Add more unit tests  
-Add pagination to the profiles page (figure out how to paginate multiple tabs
-and have the UI know which one to display)
+Optimize Dockerfile (e.g. multi-stage)<br>
+Modularize javascript and prune npm<br>
+Add more unit tests<br>
+Add pagination to the profiles page<br>
+Add social Auth
