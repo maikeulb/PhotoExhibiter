@@ -278,3 +278,4 @@ wwwroot/
 __OmniSharpScratch__
 .envrc
 out
+.env

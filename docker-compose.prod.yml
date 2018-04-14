@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    env_file:
+      - ./src/PhotoExhibiter/.env
+
+  db:
+    env_file:
+      - ./src/PhotoExhibiter/.env
+
+  nginx:
+    ports:
+      - "5000:80"
