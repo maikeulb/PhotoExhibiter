@@ -8,10 +8,12 @@ services:
     networks:
       - photoexhibiter_web_nw
       - photoexhibiter_db_nw
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_URLS: "http://*:5000"
+      ConnectionStrings__ApplicationConnectionString: "Server=db;Port=3306;Database=photoexhibiter;Uid=root;Password=P@ssw0rd!;"
     depends_on:
       - db
-    environment:
-      ConnectionStrings__ApplicationConnectionString: "Server=db;Port=3306;Database=photoexhibiter;Uid=root;Password=P@ssw0rd!;"
 
   db:
     image: mysql:5.7.19
