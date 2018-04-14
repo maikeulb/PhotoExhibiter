@@ -6,8 +6,8 @@ services:
     volumes:
       - static:/app/wwwroot/
     networks:
-      - photoexhibiter_web_nw
-      - photoexhibiter_db_nw
+      - web_nw
+      - db_nw
     environment:
       ASPNETCORE_ENVIRONMENT: "Production"
       ASPNETCORE_URLS: "http://*:5000"
@@ -31,9 +31,9 @@ services:
       - web
 
 networks:
-  photoexhibiter_db_nw:
+  db_nw:
     driver: bridge
-  photoexhibiter_web_nw:
+  web_nw:
     driver: bridge
 
 
