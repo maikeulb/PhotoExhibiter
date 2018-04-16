@@ -58,7 +58,6 @@ Run
 You will need webpack. If you have webpack installed, then go ahead and install
 the javascript dependencies (e.g. `npm install`).
 ```
-webpack
 docker-compose build
 docker-compose up
 Go to http://localhost:5000
@@ -66,10 +65,10 @@ Go to http://localhost:5000
 Alternatively, If you have the ASP.NET Core 2.0 SDK installed,
 then open `appsettings.Development.json` and point the connection strings to
 your MySQL server. Install the javascript dependencies (e.g.
-`npm install`).
+`npm install`). You will also need the weback-cli to build the frontend.
 
 ```
-webpack
+npm run build
 dotnet restore
 dotnet ef database update 
 dotnet run
