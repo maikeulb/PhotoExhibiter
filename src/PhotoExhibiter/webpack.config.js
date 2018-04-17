@@ -3,8 +3,12 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+
+const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const cssnano = require("cssnano");
+const CompressionPlugin = require("compression-webpack-plugin");
+
 
 module.exports = {
   context: __dirname + '/Assets',
@@ -89,6 +93,8 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ExtractTextPlugin('styles.css'),
     new CleanWebpackPlugin(['wwwroot']),
+    new UglifyWebpackPlugin(),
+    new OptimizeCSSAssetsPlugin(),
     new CopyWebpackPlugin([{
       from: 'images',
       to: 'images'
