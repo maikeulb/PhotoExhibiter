@@ -19,14 +19,14 @@ services:
     volumes:
       - db:/var/lib/mysql
     networks:
-      - photoexhibiter_db_nw
+      - db_nw
 
   nginx:
     build: ./src/Nginx
     volumes:
       - static:/app/wwwroot/
     networks:
-      - photoexhibiter_web_nw
+      - web_nw
     depends_on:
       - web
 
