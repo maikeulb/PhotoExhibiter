@@ -84,8 +84,7 @@ Bogards Contoso University remake, and several blogs.
 
 TODO
 ----
-Optimize Dockerfile (e.g. multi-stage)<br>
-Modularize javascript and prune npm<br>
-Add more unit tests<br>
+Optimize Dockerfile to reduce build time/size<br>
+Prune npm dependencies<br>
 Add pagination to the profiles page<br>
 Add social Auth
