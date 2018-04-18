@@ -94,19 +94,29 @@
         var exhibitId = button.attr("data-exhibit-id");
         bootbox.confirm("Are you sure you want to cancel this exhibit?", function (result) {
           if (result) {
-            $.ajax({
-              url: '/api/manageexhibits',
-              contentType: 'application/json',
-              data: JSON.stringify({
-                Id: exhibitId 
-              }),
-              method: "DELETE",
-              success: function () {
-                new Noty({
-                   text: 'Account Suspended'
-               }).setTimeout(2000).show();
-              }
-            });
+          @if (User.IsInRole("Admin"))
+          {
+          @:  $.ajax({
+          @:    url: '/api/manageexhibits',
+          @:    contentType: 'application/json',
+          @:    data: JSON.stringify({
+          @:      Id: exhibitId 
+          @:    }),
+          @:    method: "DELETE",
+          @:    success: function () {
+          @:      new Noty({
+          @:         text: 'Account Suspended'
+          @:     }).setTimeout(2000).show();
+          @:    }
+          @:  });
+          }
+          else
+          {
+            @:new Noty({
+            @:  type: 'error',
+            @:  text: 'sorry, admins only'
+          @:  }).setTimeout(1500).show();
+          }
           }
         });
       });

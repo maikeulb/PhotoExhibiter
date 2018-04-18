@@ -61,22 +61,35 @@
         ]
       });
 
+
       $("#users").on("click", ".js-suspend", function () {
         var button = $(this);
         var userId = button.attr("data-user-id");
         bootbox.confirm("Are you sure you want to suspend this user?", function (result) {
           if (result) {
-            $.ajax({
-              url: '/api/manageusers/',
-              contentType: 'application/json',
-              data: JSON.stringify({
-                Id: userId 
-              }),
-              method: "DELETE",
-              success: function () {
-                  alert('deleted')
-              }
-            });
+          @if (User.IsInRole("Admin"))
+          {
+           @: $.ajax({
+           @:   url: '/api/manageusers/',
+           @:   contentType: 'application/json',
+           @:   data: JSON.stringify({
+           @:     Id: userId 
+           @:   }),
+           @:   method: "DELETE",
+           @:   success: function () {
+           @:    new Noty({
+           @:       text: 'Account Suspended'
+           @:   }).setTimeout(2000).show();
+           @:   }
+          @:  });
+          }
+          else
+          {
+            @:new Noty({
+            @:  type: 'error',
+            @:  text: 'sorry, admins only'
+          @:  }).setTimeout(1500).show();
+          }
           }
         });
       });
