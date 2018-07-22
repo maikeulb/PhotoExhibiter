@@ -36,7 +36,6 @@ networks:
   web_nw:
     driver: bridge
 
-
 volumes:
    db:
    static:
